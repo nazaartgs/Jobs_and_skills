@@ -24,15 +24,21 @@ header-includes:
 ---
 \newpage
 
-# Planteamiento de la investigación
+# Introducción
 
-## 1. Planteamiento del Problema
+
+
+\newpage
+
+# 1. Planteamiento de la investigación
+
+## 1.1 Planteamiento del Problema
 
 En la última década, el mercado laboral global ha experimentado una transformación sin precedentes. Factores como la digitalización acelerada, la normalización del trabajo remoto y la demanda de habilidades técnicas específicas han redefinido cómo se valoran los puestos de trabajo. Ya no basta con mirar el "título del cargo"; la compensación económica ahora parece estar sujeta a una red compleja de variables interconectadas.
 
 ¿Es el tamaño de la empresa un predictor fiable del sueldo? ¿Existe una penalización salarial por elegir la modalidad remota, o es ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades (skills) frente a la ubicación geográfica?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
 
-# Objetivos
+# 2. Objetivos
 
 ## 2.1 Objetivo General
 
@@ -50,6 +56,21 @@ Analizar el panorama laboral de los sectores tecnológicos emergentes mediante e
 
 * Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 
+# 3. Marco de Referencia
+
+## 3.1 Marco Teórico
+
+* **Teoría del Capital Humano:** Teoría del Capital Humano:La Teoría del Capital Humano fué desarrollada en la década de 1960, principalmente por el economista Gary Becker. Propone que el salario está directamente relacionado con la productividad del trabajador, la cual se mide a través de sus habilidades y educación.
+
+* **Teoría de los Salarios Compensatorios:** se refiere a la diferencia salarial que surge para compensar las características no monetarias de los diferentes puestos de trabajo. En esencia, los trabajadores están dispuestos a aceptar salarios más bajos por trabajos que ofrecen atributos más deseables, como un ambiente de trabajo más seguro o horarios más flexibles.
+
+* **Teoría de la segmentación del mercado laboral:** surgió a finales de los años sesenta para explicar fenómenos como las desigualdades salariales, la discriminación y el desempleo. Esta teoría sostiene que el mercado laboral está compuesto por varios segmentos, cada uno con diferentes mecanismos de determinación salarial y barreras a la movilidad entre ellos.
+
+# 4. Marco Metodológico
+
+## 4.1 Enfoque y tipo de investigación
+
+La investigación adopta un **enfoque cuantitativo** de tipo **descriptivo-correlacional**. No sólo busca describir las variables de forma aislada, sino también explorar la existencia y la forma de las relaciones entre ellas, sin llegar a establecer inferencias de causalidad.
 
 
 
