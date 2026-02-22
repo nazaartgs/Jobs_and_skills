@@ -1,2 +1,5 @@
 # Jobs_and_skills
-Un estudio estadístico creado con R y python para analizar las habilidades requeridas en el mercado laboral de la tecnología
+# Planteamiento del Problema
+En la última década, el mercado laboral global ha experimentado una transformación sin precedentes. Factores como la digitalización acelerada, la normalización del trabajo remoto y la demanda de habilidades técnicas específicas han redefinido cómo se valoran los puestos de trabajo. Ya no basta con mirar el "título del cargo"; la compensación económica ahora parece estar sujeta a una red compleja de variables interconectadas.
+¿Es el tamaño de la empresa un predictor fiable del sueldo? ¿Existe una penalización salarial por elegir la modalidad remota, o es ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades (skills) frente a la ubicación geográfica?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
+
