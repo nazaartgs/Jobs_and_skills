@@ -24,9 +24,19 @@ header-includes:
 ---
 \newpage
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
 # Introducción
 
+El mercado laboral contemporáneo está atravesando una fase de reconfiguración profunda, impulsada por una digitalización que ha dejado de ser una ventaja competitiva para convertirse en un requisito básico. En este nuevo ecosistema, la relación entre los puestos de trabajo y las competencias requeridas se ha vuelto más estrecha y compleja. Ya no basta con poseer un título académico; el valor real de un profesional en el mercado actual se mide por su conjunto de habilidades específicas (skills) y su capacidad para adaptarse a herramientas tecnológicas en constante evolución.
 
+Esta estrecha vinculación entre el perfil técnico y la oferta laboral ha generado una diversificación en las escalas salariales, ya las organizaciones no solo compiten por cubrir vacantes, sino por atraer talento que domine dichos conocimientos muy particulares. En consecuencia, entender cómo ciertas habilidades impactan directamente en la remuneración económica se ha vuelto una tarea fundamental tanto para las empresas que buscan optimizar su captación de talento, como para los profesionales que desean orientar su crecimiento de carrera de manera estratégica.
+
+Además de las competencias técnicas, otros factores han entrado en juego para redefinir la estructura de las compensaciones. La modalidad de trabajo, la ubicación geográfica y la cultura organizacional, o más conocida como "la personalidad de la organización" (que guía el comportamiento de los empleados, la toma de decisiones y el abiente laboral), son variables que ahora interactúan directamente con el perfil de habilidades para determinar el valor final de una posición. Esta variedad de factores crea un ruido informativo que hace difícil discernir qué es lo que realmente mueve la aguja en el mercado laboral tecnológico.
+
+Es aquí donde el análisis de datos se convierte en una herramienta indispensable. El presente estudio nace de la necesidad de aplicar un enfoque científico y cuantitativo a esta realidad. Utilizando estadística descriptiva y el lenguaje de programación R y Python, analizaremos un conjunto de datos que vincula roles, niveles salariales y requerimientos técnicos.
 
 \newpage
 
@@ -71,6 +81,17 @@ Analizar el panorama laboral de los sectores tecnológicos emergentes mediante e
 ## 4.1 Enfoque y tipo de investigación
 
 La investigación adopta un **enfoque cuantitativo** de tipo **descriptivo-correlacional**. No sólo busca describir las variables de forma aislada, sino también explorar la existencia y la forma de las relaciones entre ellas, sin llegar a establecer inferencias de causalidad.
+
+## 4.2 Fuente de datos
+
+Se utiliza el conjunto de datos `job_y_skills(2).csv` que contienen los registros de las habilidades requeridas según el trabajo solicitado. Las variables clave para este análisis son: `job_title`, `industry`, `location`, `salary_usd`, `skills_required`, 
+`remote_option`, `company_size`, `posting_date`
+
+## 4.3 Período de Referencia
+
+El conjunto de datos se registra durante el año **2025**
+
+## 4.4 Procesamiento y Análisis de Datos
 
 
 
