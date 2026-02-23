@@ -1,10 +1,9 @@
 ---
 # --- Metadatos Básicos ---
-title: "Analisis del Mercado de Videojuegos"
-author:
-   - Primer participante
-   - Segundo participante
-   - Tercer participante
+title: "Análisis de los determinantes salariales en el mercado moderno: un estudio estadístico"
+author: 
+  - Santiago López
+  - Vianney Becerra
 date: "Febrero 2026"
 
 # --- Metadatos Específicos de Plantilla ---
@@ -33,7 +32,7 @@ output:
 
 # --- Resumen (Abstract) ---
 abstract: |
-  En el presente informe se realiza un análisis exploratorio de los datos de ventas de videojuegos a nivel global. Se examinan las tendencias históricas, la predominancia de géneros y el desempeño por regiones (NA, EU, JP), aplicando técnicas estadísticas descriptivas y visualización de datos con R.
+  Este estudio analiza los factores que determinan la compensación económica en el mercado laboral actual, caracterizado por la digitalización y la diversidad de modalidades de trabajo. El objetivo principal es identificar cómo variables como el tamaño de la empresa, la ubicación geográfica, las habilidades técnicas específicas (skills) y la opción de trabajo remoto influyen en el salario final del trabajador. Para lograrlo, la investigación utiliza un enfoque cuantitativo basado en el análisis de un conjunto de datos (dataset) que incluye sectores de vanguardia como Blockchain, Quantum Computing y Green Tech. La metodología se apoya en el uso de lenguajes de programación como R y Python, además de la plataforma GitHub para la gestión del proyecto. Los resultados buscan aportar claridad estadística sobre si el salario actual depende más de las competencias técnicas del individuo o de las características estructurales de la organización, proporcionando una visión transparente sobre la valoración del talento en la economía moderna.
 ---
 
 ```{r setup, include=FALSE}
@@ -57,7 +56,7 @@ library(scales)
 
 \newpage
 
-# Introducción
+\chapter*{Introducción}
 
 El mercado laboral contemporáneo está atravesando una fase de reconfiguración profunda, impulsada por una digitalización que ha dejado de ser una ventaja competitiva para convertirse en un requisito básico. En este nuevo ecosistema, la relación entre los puestos de trabajo y las competencias requeridas se ha vuelto más estrecha y compleja. Ya no basta con poseer un título académico; el valor real de un profesional en el mercado actual se mide por su conjunto de habilidades específicas (skills) y su capacidad para adaptarse a herramientas tecnológicas en constante evolución.
 
@@ -67,60 +66,75 @@ Además de las competencias técnicas, otros factores han entrado en juego para 
 
 Es aquí donde el análisis de datos se convierte en una herramienta indispensable. El presente estudio nace de la necesidad de aplicar un enfoque científico y cuantitativo a esta realidad. Utilizando estadística descriptiva y el lenguaje de programación R y Python, analizaremos un conjunto de datos que vincula roles, niveles salariales y requerimientos técnicos.
 
-\newpage
+\chapter{Planteamiento de la investigación}
 
-# 1. Planteamiento de la investigación
-
-## 1.1 Planteamiento del Problema
+\section{Planteamiento del Problema}
 
 En la última década, el mercado laboral global ha experimentado una transformación sin precedentes. Factores como la digitalización acelerada, la normalización del trabajo remoto y la demanda de habilidades técnicas específicas han redefinido cómo se valoran los puestos de trabajo. Ya no basta con mirar el "título del cargo"; la compensación económica ahora parece estar sujeta a una red compleja de variables interconectadas.
 
 ¿Es el tamaño de la empresa un predictor fiable del sueldo? ¿Existe una penalización salarial por elegir la modalidad remota, o es ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades (skills) frente a la ubicación geográfica?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
 
-# 2. Objetivos
+\section{Justificación}
 
-## 2.1 Objetivo General
+La importancia de este estudio reside en la necesidad de entender cómo se construye el salario en una era donde las reglas del mercado laboral han cambiado. Actualmente, existe una gran incertidumbre tanto para los profesionales como para las empresas sobre qué factores determinan realmente el pago de un trabajador. No se trata solo de un cargo, sino de una combinación de variables que este estudio analiza a fondo.
+
+\section{Objetivos} 
+
+\subsection{Objetivo General} 
 
 Analizar el panorama laboral de los sectores tecnológicos emergentes mediante estadística descriptiva para identificar las variables que más impactan en la oferta salarial y la demanda de talento.
 
-## 2.2 Objetivos Específicos
+\subsection{Objetivos Específicos} 
 
-* Determinar el promedio, mediana y desviación estándar de los salarios por industria para identificar cuál es la más rentable.
+\begin{enumerate}
+  \item Determinar el promedio, mediana y desviación estándar de los salarios por industria para identificar cuál es la más rentable.
+  \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una "penalización" o beneficio económico por la modalidad.
+  \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
+  \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
+  \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
+\end{enumerate}
 
-* Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una "penalización" o beneficio económico por la modalidad.
+\section{Variables} 
 
-* Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
+La variable principal en estudio (Variable Dependiente/Objetivo) es **`salary_usd`**, que representa el salario ofrecido a cada título de trabajo, según su localidad y habilidades requeridas.
 
-* Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
+Como variables explicativas o independientes se analizan:
 
-* Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
+\begin{enumerate}
+  \item Variables Temporales: \textbf{posting date}
+  \item Variables Categóricas: \textbf{job title}, \textbf{industry}, \textbf{skills required}, \textbf{remote option}, \textbf{company size}
+  \item Variables Geográficas: \textbf{location}
+\end{enumerate}
 
-# 3. Marco de Referencia
+\chapter{Marco de Referencia} 
 
-## 3.1 Marco Teórico
+\section{Marco Teórico} 
 
-* **Teoría del Capital Humano:** Teoría del Capital Humano:La Teoría del Capital Humano fué desarrollada en la década de 1960, principalmente por el economista Gary Becker. Propone que el salario está directamente relacionado con la productividad del trabajador, la cual se mide a través de sus habilidades y educación.
+* **Teoría del Capital Humano:** fué desarrollada en la década de 1960, principalmente por el economista Gary Becker. Propone que el salario está directamente relacionado con la productividad del trabajador, la cual se mide a través de sus habilidades y educación.
 
 * **Teoría de los Salarios Compensatorios:** se refiere a la diferencia salarial que surge para compensar las características no monetarias de los diferentes puestos de trabajo. En esencia, los trabajadores están dispuestos a aceptar salarios más bajos por trabajos que ofrecen atributos más deseables, como un ambiente de trabajo más seguro o horarios más flexibles.
 
 * **Teoría de la segmentación del mercado laboral:** surgió a finales de los años sesenta para explicar fenómenos como las desigualdades salariales, la discriminación y el desempleo. Esta teoría sostiene que el mercado laboral está compuesto por varios segmentos, cada uno con diferentes mecanismos de determinación salarial y barreras a la movilidad entre ellos.
 
-# 4. Marco Metodológico
+\section{Marco metodológico} 
 
-## 4.1 Enfoque y tipo de investigación
+\subsection{Enfoque y tipo de investigación}
 
 La investigación adopta un **enfoque cuantitativo** de tipo **descriptivo-correlacional**. No sólo busca describir las variables de forma aislada, sino también explorar la existencia y la forma de las relaciones entre ellas, sin llegar a establecer inferencias de causalidad.
 
-## 4.2 Fuente de datos
+\subsection{Fuente de datos}
 
 Se utiliza el conjunto de datos `job_y_skills(2).csv` que contienen los registros de las habilidades requeridas según el trabajo solicitado. Las variables clave para este análisis son: `job_title`, `industry`, `location`, `salary_usd`, `skills_required`, 
 `remote_option`, `company_size`, `posting_date`
 
-## 4.3 Período de Referencia
+\subsection{Período de Referencia}
 
 El conjunto de datos se registra durante el año **2025**
 
-## 4.4 Procesamiento y Análisis de Datos
+\subsection{Procesamiento y Análisis de Datos}
 
+\chapter{Análisis de Resultados}
+
+\chapter{Conclusiones y Recomendaciones}
 
 
