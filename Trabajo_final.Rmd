@@ -88,7 +88,7 @@ Analizar el panorama laboral de los sectores tecnológicos emergentes mediante e
 
 \begin{enumerate}
   \item Determinar el promedio, mediana y desviación estándar de los salarios por industria para identificar cuál es la más rentable.
-  \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una "penalización" o beneficio económico por la modalidad.
+  \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una diferencia en el beneficio económico por la modalidad.
   \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
   \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
   \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
@@ -124,7 +124,7 @@ La investigación adopta un **enfoque cuantitativo** de tipo **descriptivo-corre
 
 \subsection{Fuente de datos}
 
-Se utiliza el conjunto de datos `job_y_skills(2).csv` que contienen los registros de las habilidades requeridas según el trabajo solicitado. Las variables clave para este análisis son: `job_title`, `industry`, `location`, `salary_usd`, `skills_required`, 
+Se utiliza el conjunto de datos `job_y_skills.csv` que contienen los registros de las habilidades requeridas según el trabajo solicitado. Las variables clave para este análisis son: `job_title`, `industry`, `location`, `salary_usd`, `skills_required`, 
 `remote_option`, `company_size`, `posting_date`
 
 \subsection{Período de Referencia}
