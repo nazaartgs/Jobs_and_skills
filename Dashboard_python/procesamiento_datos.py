@@ -1,8 +1,16 @@
 import pandas as pd
+import os
 
 def cargar_datos():
+    # 1. Obtenemos la ruta de la carpeta donde está este script
+    ruta_actual = os.path.dirname(__file__) 
+    
+    # 2. Construimos la ruta subiendo un nivel y entrando a Data
+    # Nota: Usamos 'Data' con D mayúscula como en tu imagen
+    ruta_csv = os.path.join(ruta_actual, "..", "Data", "Data_sinprocesar", "10. Job y Skills.csv")
+    
     #cargamos el dataset que vamos a analizar.
-    df =pd.read_csv("Data/Data_sinprocesar/10. Job y Skills.csv")
+    df =pd.read_csv(ruta_csv)
 
     return df
 
