@@ -2,7 +2,7 @@ import pandas as pd
 
 def cargar_datos():
     #cargamos el dataset que vamos a analizar.
-    df =pd.read_csv("data/Data_sinprocesar/10. Job y Skills.csv")
+    df =pd.read_csv("Data/Data_sinprocesar/10. Job y Skills.csv")
 
     return df
 
