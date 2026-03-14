@@ -30,15 +30,15 @@ def exploracion_datos(datos_sinprocesar):
     return datos_sinprocesar
 
 datos_explo = exploracion_datos(datos_sinprocesar)
-data_pais = datos_explo.groupby('location')['salary_usd'].agg(['mean', 'count']).reset_index()
-top_ciudades = data_pais.sort_values('location', ascending=True)
+top_pais = datos_explo.groupby('location')['salary_usd'].agg(['mean', 'count']).reset_index()
+top_ciudades = top_pais.sort_values('location', ascending=True)
 
-print(data_pais)
+print(top_pais)
 
-def skills_copy():
+def skills_copy(datos_sinprocesar):
     
     #creamos una copia de la columna
-    df_skills = datos_explo.copy()
+    df_skills = datos_sinprocesar.copy()
 
     #separamos los datos de la columna en listas
     df_skills["skills_required"] = df_skills["skills_required"].str.split(',')
@@ -46,7 +46,20 @@ def skills_copy():
     #le asignamo una fila a cada skill
     df_skills = df_skills.explode('skills_required')
 
-    print(df_skills)
-    return skills_copy
+    #limpieza de cadenas
+    df_skills["skills_required"] = df_skills["skills_required"].str.strip()
 
-datos_skills = skills_copy()
+
+    print(df_skills)
+
+    
+
+    return df_skills
+
+datos_skills = skills_copy(datos_sinprocesar)
+
+
+skills_count = datos_skills.groupby(['skills_required','industry'])['salary_usd' ].agg([ 'mean', 'count']).reset_index()
+top_skills = skills_count.sort_values('count', ascending=True)
+
+print(top_skills)
