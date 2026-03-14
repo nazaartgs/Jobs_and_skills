@@ -3,6 +3,9 @@ import plotly.express as px
 #importacion de scripts
 from procesamiento_datos import cargar_datos, exploracion_datos, skills_copy
 from pestaña_resumenDataset import Dataset
+from pestaña_salario import salario
+from pestaña_remoto import remoto
+
 
 #configuramos la app web
 st.set_page_config(page_title="Mercado Laboral 2025", page_icon="💼", layout="wide", initial_sidebar_state="expanded")
@@ -83,12 +86,12 @@ with pestaña_resumen_dataset:
 #2. Pestaña salarial
 with pestaña_salarial:
     st.header("Estadistica descriptiva del salario en las industrias")
-    
+    salario()
 
 #3. Pestaña de trabajo remoto
 with pestaña_remoto:
     st.header("Análisis del impacto salarial en los trabajos remotos")
-    
+    remoto()
     
 
 #4. Pestaña de geografia
