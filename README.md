@@ -6,3 +6,4 @@ En la última década, el mercado laboral global ha experimentado una transforma
 
 ¿Es el tamaño de la empresa un predictor fiable del sueldo? ¿Existe una penalización salarial por elegir la modalidad remota, o es ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades (skills) frente a la ubicación geográfica?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
 
+Link Dashboard: https://mercadolaboral.streamlit.app/
