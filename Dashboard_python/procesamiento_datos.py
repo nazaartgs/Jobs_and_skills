@@ -6,36 +6,32 @@ def cargar_datos():
 
     return df
 
-datos_sinprocesar = cargar_datos()
 
-def exploracion_datos(datos_sinprocesar):
+def exploracion_datos(cargar_datos, top_ciudades):
     #exploramos las 10 primeras filas del data set
     print(" ")
     print("--- Primeras 10 filas del Dataset ---")
-    print(datos_sinprocesar.head(10))
+    print(cargar_datos.head(10))
 
     #evaluamos la informacion del dataset
     print(" ")
     print("--- Informacion del Dataset ---")
-    print(datos_sinprocesar.info())
+    print(cargar_datos.info())
 
 
     #Hacemos una descripcion estadistica del Dataset
     print(" ")
     print("--- Descripcion estadistica del Dataset ---")
-    print(datos_sinprocesar.describe())
+    print(cargar_datos.describe())
     print(" ")
 
-    
-    return datos_sinprocesar
+    top_pais = cargar_datos.groupby('location')['salary_usd'].agg(['mean', 'count']).reset_index()
+    top_ciudades = top_pais.sort_values('location', ascending=True)
 
-datos_explo = exploracion_datos(datos_sinprocesar)
-top_pais = datos_explo.groupby('location')['salary_usd'].agg(['mean', 'count']).reset_index()
-top_ciudades = top_pais.sort_values('location', ascending=True)
+    return cargar_datos, top_ciudades
 
-print(top_pais)
 
-def skills_copy(datos_sinprocesar):
+def skills_copy(datos_sinprocesar, top_skills):
     
     #creamos una copia de la columna
     df_skills = datos_sinprocesar.copy()
@@ -52,14 +48,8 @@ def skills_copy(datos_sinprocesar):
 
     print(df_skills)
 
-    
-
-    return df_skills
-
-datos_skills = skills_copy(datos_sinprocesar)
+    skills_count = df_skills.groupby(['skills_required','industry'])['salary_usd' ].agg([ 'mean', 'count']).reset_index()
+    top_skills = skills_count.sort_values('count', ascending=True)
 
 
-skills_count = datos_skills.groupby(['skills_required','industry'])['salary_usd' ].agg([ 'mean', 'count']).reset_index()
-top_skills = skills_count.sort_values('count', ascending=True)
-
-print(top_skills)
+    return df_skills, top_skills
