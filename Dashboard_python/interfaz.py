@@ -77,7 +77,7 @@ pestaña_resumen_dataset, pestaña_salarial, pestaña_remoto, pestaña_geogafria
 
 #1. Pestaña resumen
 with pestaña_resumen_dataset:
-    st.header("Analisis descriptivo del Dataset")
+    st.header("Analisis descriptivo del Dataset 📁")
     Dataset()
 
 #2. Pestaña salarial
