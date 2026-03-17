@@ -94,7 +94,7 @@ with pestaña_remoto:
 #4. Pestaña de geografia
 with pestaña_geogafria:
     st.header("Globo Terráqueo de Empleos 🌍")
-    tierra(Data_aprocesar)
+    tierra()
 
 #5. Pestaña de habilidades
 with pestaña_skills:
