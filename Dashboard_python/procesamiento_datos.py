@@ -1,63 +1,35 @@
+import streamlit as st
 import pandas as pd
 import os
 
+@st.cache_data
+
 def cargar_datos():
-    # 1. Obtenemos la ruta de la carpeta donde está este script
+    #Obtenemos la ruta de la carpeta donde está este script
     ruta_actual = os.path.dirname(__file__) 
     
-    # 2. Construimos la ruta subiendo un nivel y entrando a Data
-    # Nota: Usamos 'Data' con D mayúscula como en tu imagen
+    #Construimos la ruta subiendo un nivel y entrando a Data
     ruta_csv = os.path.join(ruta_actual, "..", "Data", "Data_sinprocesar", "10. Job y Skills.csv")
     
     #cargamos el dataset que vamos a analizar.
     df =pd.read_csv(ruta_csv)
 
+    #Limpieza: Eliminas filas duplicadas, el drop_duplicates evita contar dos veces el mismo empleo
+    df = df.drop_duplicates()
+
+    #Limpieza: manejo de valores nulos (vacios)
+    #Limpieza: si falta un dato de salario, dropna elimina la fila donde falta informacion critica
+    df = df.dropna(subset=['salary_usd'])
+
+    #Limpieza: si falta la habilidad, fillna rellena huecos con texto por defecto como "no especificado"
+    df['skills_required'] = df['skills_required'].fillna("Skills no especificado") 
+
+    #Limpieza: astype cambia el formato de los datos, en este caso a enteros
+    df['salary_usd'] = df['salary_usd'].astype(int)
+
+    #A la izquierda creamos una variable donde gurdaremos el resultado
+    #a la derecha colocamos la funcion to_datatime para tranformar el archivo a fecha 
+    df['posting_date'] = pd.to_datetime(df['posting_date'])
+
     return df
 
-
-def exploracion_datos(cargar_datos, top_ciudades):
-    #exploramos las 10 primeras filas del data set
-    print(" ")
-    print("--- Primeras 10 filas del Dataset ---")
-    print(cargar_datos.head(10))
-
-    #evaluamos la informacion del dataset
-    print(" ")
-    print("--- Informacion del Dataset ---")
-    print(cargar_datos.info())
-
-
-    #Hacemos una descripcion estadistica del Dataset
-    print(" ")
-    print("--- Descripcion estadistica del Dataset ---")
-    print(cargar_datos.describe())
-    print(" ")
-
-    top_pais = cargar_datos.groupby('location')['salary_usd'].agg(['mean', 'count']).reset_index()
-    top_ciudades = top_pais.sort_values('location', ascending=True)
-
-    return cargar_datos, top_ciudades
-
-
-def skills_copy(datos_sinprocesar, top_skills):
-    
-    #creamos una copia de la columna
-    df_skills = datos_sinprocesar.copy()
-
-    #separamos los datos de la columna en listas
-    df_skills["skills_required"] = df_skills["skills_required"].str.split(',')
-
-    #le asignamo una fila a cada skill
-    df_skills = df_skills.explode('skills_required')
-
-    #limpieza de cadenas
-    df_skills["skills_required"] = df_skills["skills_required"].str.strip()
-
-
-    print(df_skills)
-
-    skills_count = df_skills.groupby(['skills_required','industry'])['salary_usd' ].agg([ 'mean', 'count']).reset_index()
-    top_skills = skills_count.sort_values('count', ascending=True)
-
-
-    return df_skills, top_skills

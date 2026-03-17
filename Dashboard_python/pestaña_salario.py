@@ -1,12 +1,11 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from procesamiento_datos import cargar_datos as data
 
-def salario():
+def salario(Datos_para_pestaña):
     
     #llamamos la funcion data
-    resumen_dataset = data()
+    resumen_dataset = Datos_para_pestaña
 
     m1, m2, m3, m4 = st.columns(4)
     
@@ -118,15 +117,15 @@ def salario():
      
 
     fig_box.update_layout(
-        bargap=0.1,  # CAMBIO: Se usa bargap en lugar de boxgap
+        bargap=0.1,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        showlegend=True, # RECOMENDACIÓN: Como ya tienes los nombres en el eje X, la leyenda sobra
+        showlegend=True,
         title_font_color=mi_color,
         font=dict(color=mi_color),
         legend=dict(
-        title_font_color=mi_color, # Color del título de la leyenda
-        font=dict(color=mi_color),  # Color de los textos de la leyenda
+            title_font_color=mi_color, # Color del título de la leyenda
+            font=dict(color=mi_color),  # Color de los textos de la leyenda
         #bordercolor=mi_color,       # Opcional: borde de la leyenda
         #borderwidth=1
         ))

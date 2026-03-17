@@ -1,12 +1,11 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from procesamiento_datos import cargar_datos
 
-def remoto():
+def remoto(Datos_para_pestaña):
     
     #Llamamos la funcion cargar_limpiar_datos as cld del archivo Cargar_datos
-    data_remo = cargar_datos()
+    data_remo = Datos_para_pestaña
 
     st.subheader("Comparativa Salarial: Remoto vs. Presencial")
 

@@ -1,16 +1,14 @@
 import streamlit as st
-import plotly.express as px
 #importacion de scripts
-from procesamiento_datos import cargar_datos, exploracion_datos, skills_copy
+from procesamiento_datos import cargar_datos
 from pestaña_resumenDataset import Dataset
 from pestaña_salario import salario
 from pestaña_remoto import remoto
+from pestaña_geogafria import tierra
 
 
 #configuramos la app web
 st.set_page_config(page_title="Mercado Laboral 2025", page_icon="💼", layout="wide", initial_sidebar_state="expanded")
-
-@st.cache_data
 
 def cambiar_fondo_color(color):
     st.markdown(
@@ -64,9 +62,8 @@ aplicar_estilos_globales("#FFFFFF", "#1E3A8A", "#0F172A")
 #Llamamos las funcion cargar_datos y cargamos los datos en cache
 Data_aprocesar = cargar_datos()
 
-
 #creamos titulo de la pagina
-st.title("Mercado laboral - Industria Alta Tecnologia 2025")
+st.title("Mercado laboral - Alta Tecnologia 2025")
 
 #creamos las pestañas con nombres referentes a nuestros objetivos.
 pestaña_resumen_dataset, pestaña_salarial, pestaña_remoto, pestaña_geogafria, pestaña_skills, pestaña_empresa = st.tabs([
@@ -81,29 +78,29 @@ pestaña_resumen_dataset, pestaña_salarial, pestaña_remoto, pestaña_geogafria
 #1. Pestaña resumen
 with pestaña_resumen_dataset:
     st.header("Analisis descriptivo del Dataset 📁")
-    Dataset()
+    Dataset(Data_aprocesar)
 
 #2. Pestaña salarial
 with pestaña_salarial:
     st.header("Estadistica descriptiva del salario en las industrias")
-    salario()
+    salario(Data_aprocesar)
 
 #3. Pestaña de trabajo remoto
 with pestaña_remoto:
     st.header("Análisis del impacto salarial en los trabajos remotos")
-    remoto()
+    remoto(Data_aprocesar)
     
 
 #4. Pestaña de geografia
 with pestaña_geogafria:
-    st.header("Análisis geografico del mercado laboral")
-    
+    st.header("Globo Terráqueo de Empleos 🌍")
+    tierra(Data_aprocesar)
 
-#1. Pestaña de habilidades
+#5. Pestaña de habilidades
 with pestaña_skills:
     st.header("Habilidades más demandadas por Sector")
     
 
-#1. Pestaña tamaño de la empresa
+#6. Pestaña tamaño de la empresa
 with pestaña_empresa:
     st.header("Análisis de Rentabilidad por Industria")
