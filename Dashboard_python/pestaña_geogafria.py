@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 
-def tierra(Data_aprocesar):  
+def tierra():  
 
     #Datos
     df_prueba = pd.DataFrame({
