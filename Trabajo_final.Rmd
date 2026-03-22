@@ -133,6 +133,70 @@ El conjunto de datos se registra durante el año **2025**
 
 \subsection{Procesamiento y Análisis de Datos}
 
+Como primer paso, nos aseguraríamos de tener instalada la librería de tidyverse, después, cargaríamos los datos copiando su respectiva ruta. Luego, replicamos la exploración de datos que se aplicó en el dashboard en la línea 36 de "procesamiento_datos.py", donde se agrupa por **location** y se calcula el promedio y el conteo de **salary_usd**. En R, usamos el operador *%>%* para encadenar estas acciones.
+
+Lo siguiente sería la limpieza de habilidades (**skills_copy**), Esta es la parte más importante para que no falten datos. en el dashboard se  separan las habilidades por comas y crea una fila por cada una. En R, la función mágica para esto es *separate_rows()*.
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+# Cargar el dataset
+ruta_csv <- "Data/Data_sinprocesar/10. Job y Skills.csv"
+datos_sin_procesar <- read_csv(ruta_csv)
+```
+
+
+```{r}
+# Replicando el agrupamiento de países/ciudades
+top_pais <- datos_sin_procesar %>%
+  group_by(location) %>%
+  summarise(
+    mean_salary = mean(salary_usd, na.rm = TRUE),
+    count = n()
+  ) %>%
+  arrange(location) # Esto equivale al sort_values(ascending=True)
+```
+
+
+```{r}
+# Limpieza de habilidades (Equivalente a skills_copy)
+df_skills <- datos_sin_procesar %>%
+  # 1. Separar la columna por comas y crear nuevas filas (Equivale a split + explode)
+  separate_rows(skills_required, sep = ",") %>%
+  # 2. Eliminar espacios en blanco extra (Equivale a str.strip)
+  mutate(skills_required = str_trim(skills_required))
+
+# Agrupar por habilidad e industria para el conteo
+skills_count <- df_skills %>%
+  group_by(skills_required, industry) %>%
+  summarise(
+    mean_salary = mean(salary_usd, na.rm = TRUE),
+    count = n(),
+    .groups = 'drop'
+  ) %>%
+  arrange(count) # Ordenar por frecuencia
+```
+
+Ya con estos pasos principales, podriamos reflejar qué datos faltantes tenemos en nuestra data, y en el caso de tenerlos, saber cómo proceder
+```{r}
+# Función para diagnosticar datos faltantes
+diagnosticar_nulos <- function(df) {
+  df %>%
+    summarise(across(everything(), ~sum(is.na(.)))) %>%
+    pivot_longer(cols = everything(), names_to = "Columna", values_to = "Total_Nulos") %>%
+    mutate(Porcentaje = (Total_Nulos / nrow(df)) * 100)
+}
+
+# Ejecutar el diagnóstico antes de la limpieza
+reporte_inicial <- diagnosticar_nulos(datos_sin_procesar)
+print(reporte_inicial)
+```
+
+Como no hay nada en la data que represente algún problema, siendo una data perfecta y limpia para trabajar con todos los datos, podemos avanzar en los cálculos
+
 \chapter{Análisis de Resultados}
 
 \chapter{Conclusiones y Recomendaciones}
