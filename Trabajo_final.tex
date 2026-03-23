@@ -280,42 +280,79 @@ El conjunto de datos se registra durante el año \textbf{2025}
 
 \subsection{Procesamiento y Análisis de Datos}
 
-Como primer paso, nos aseguraríamos de tener instalada la librería de
-tidyverse, después, cargaríamos los datos copiando su respectiva ruta.
-Luego, replicamos la exploración de datos que se aplicó en el dashboard
-en la línea 36 de ``procesamiento\_datos.py'', donde se agrupa por
-\textbf{location} y se calcula el promedio y el conteo de
-\textbf{salary\_usd}. En R, usamos el operador \emph{\%\textgreater\%}
-para encadenar estas acciones.
+Como se observa en la siguiente tabla, se realizó un diagnóstico inicial
+sobre la data \emph{job y skills.csv} para identificar la presencia de
+valores nulos. Este paso es fundamental para garantizar que los cálculos
+posteriores de promedio y dispersión salarial no se vean afectados por
+datos faltantes.
 
-Lo siguiente sería la limpieza de habilidades (\textbf{skills\_copy}),
-Esta es la parte más importante para que no falten datos. en el
-dashboard se separan las habilidades por comas y crea una fila por cada
-una. En R, la función mágica para esto es \emph{separate\_rows()}.
-
-Ya con estos pasos principales, podriamos reflejar qué datos faltantes
-tenemos en nuestra data, y en el caso de tenerlos, saber cómo proceder
-
-\begin{verbatim}
-## # A tibble: 9 x 3
-##   Columna         Total_Nulos Porcentaje
-##   <chr>                 <int>      <dbl>
-## 1 job_id                    0          0
-## 2 job_title                 0          0
-## 3 industry                  0          0
-## 4 location                  0          0
-## 5 salary_usd                0          0
-## 6 skills_required           0          0
-## 7 remote_option             0          0
-## 8 company_size              0          0
-## 9 posting_date              0          0
-\end{verbatim}
-
-Como no hay nada en la data que represente algún problema, siendo una
-data perfecta y limpia para trabajar con todos los datos, podemos
-avanzar en los cálculos
+\begin{longtable}[]{@{}lrr@{}}
+\caption{Estado Inicial: Conteo de valores faltantes por
+columna}\tabularnewline
+\toprule\noalign{}
+Variable & Total Nulos & Porcentaje (\%) \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Variable & Total Nulos & Porcentaje (\%) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+job\_id & 0 & 0 \\
+job\_title & 0 & 0 \\
+industry & 0 & 0 \\
+location & 0 & 0 \\
+salary\_usd & 0 & 0 \\
+skills\_required & 0 & 0 \\
+remote\_option & 0 & 0 \\
+company\_size & 0 & 0 \\
+posting\_date & 0 & 0 \\
+\end{longtable}
 
 \chapter{Análisis de Resultados}
+
+la data además de poseer 10 mil datos completos, tiene en ella 9
+columnas, de la cual tomaremos 7 (\texttt{job\_title},
+\texttt{industry}, \texttt{location}, \texttt{salary\_usd},
+\texttt{skills\_required}, \texttt{remote\_option},
+\texttt{company\_size}, \texttt{posting\_date}) y calcularemos una por
+una para así darle respuesta a los objetivos y planes que se tienen con
+nuestro trabajo
+
+\section{\texorpdfstring{\emph{Salary\_usd}}{Salary\_usd}}\label{salary_usd}
+
+En este apartado se analiza la estructura salarial de las distintas
+industrias representadas en el dataset. Tras procesar los datos, se
+observa que:
+
+\begin{longtable}[]{@{}lr@{}}
+\caption{Salarios Promedio por Industria}\tabularnewline
+\toprule\noalign{}
+industry & Promedio \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+industry & Promedio \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Quantum Computing & 151130.7 \\
+AI & 150672.4 \\
+Blockchain & 149383.8 \\
+Green Tech & 149329.9 \\
+\end{longtable}
+
+\emph{interpretación acá}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/grafico_barras_final-1} \end{center}
+
+\emph{interpretacion acá}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/grafico_cajas_final-1} \end{center}
+
+\emph{interpretación acá}
 
 \chapter{Conclusiones y Recomendaciones}
 
