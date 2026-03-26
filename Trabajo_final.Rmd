@@ -91,7 +91,6 @@ Analizar el panorama laboral de los sectores tecnológicos emergentes mediante e
   \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una diferencia en el beneficio económico por la modalidad.
   \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
   \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
-  \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 \end{enumerate}
 
 \section{Variables} 
@@ -152,7 +151,7 @@ datos_finales <- raw_data %>%
   # 3. Filtro de seguridad: quitamos filas sin salario para no romper los promedios
   filter(!is.na(salary_usd))
 
-# C. Exploración rápida (Opcional, para que tú veas que todo está bien)
+# C. Exploración rápida (Opcional, para ver que todo está bien)
 # top_pais <- datos_finales %>% 
 #   group_by(location) %>% 
 #   summarise(mean_salary = mean(salary_usd), count = n()) %>%
@@ -170,12 +169,12 @@ diagnosticar_nulos <- function(df) {
     mutate(Porcentaje = (Total_Nulos / nrow(df)) * 100)
 }
 
-# 2. CARGAMOS LOS REPORTES (Aquí creamos los objetos para que no den error)
+# 2. cargamos los reportes (Aquí creamos los objetos para que no den error)
 # Usamos 'raw_data' para el estado inicial y 'datos_finales' para el final
 reporte_inicial <- diagnosticar_nulos(raw_data)
 reporte_final   <- diagnosticar_nulos(datos_finales)
 
-# 3. CREAMOS LA TABLA ELEGANTE PARA EL PDF
+# 3. CREAMOS LA TABLA PARA EL PDF
 library(knitr)
 kable(reporte_inicial, 
       caption = "Estado Inicial: Conteo de valores faltantes por columna",
@@ -193,31 +192,43 @@ la data además de poseer 10 mil datos completos, tiene en ella 9 columnas, de l
 
 En este apartado se analiza la estructura salarial de las distintas industrias representadas en el dataset. Tras procesar los datos, se observa que:
 
-```{r calculo_promedios_seguro, echo=FALSE, message=FALSE, warning=FALSE}
+```{r tabla_estilo_dashboard, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
 library(knitr)
+library(kableExtra) # Librería clave para PDF
 
-# Calculamos todo
-promedio_total <- mean(datos_finales$salary_usd, na.rm = TRUE)
-desviacion_total <- sd(datos_finales$salary_usd, na.rm = TRUE)
-
-# Formateamos como TEXTO simple para que LaTeX no se confunda
-prom_txt <- format(round(promedio_total, 2), big.mark = ",")
-desv_txt <- format(round(desviacion_total, 2), big.mark = ",")
-
-# Tabla por industria
-tabla_resumen <- datos_finales %>%
+# 1. Realizamos los calculos
+estadisticas_industria <- datos_finales %>%
   group_by(industry) %>%
-  summarise(Promedio = mean(salary_usd, na.rm = TRUE)) %>%
+  summarise(
+    Promedio = mean(salary_usd, na.rm = TRUE),
+    Mediana = median(salary_usd, na.rm = TRUE),
+    Desv_Estandar = sd(salary_usd, na.rm = TRUE),
+     # CV es (Desviación / Promedio) * 100
+    CV_Porcentaje = (sd(salary_usd, na.rm = TRUE) / mean(salary_usd, na.rm = TRUE)) * 100,
+    Casos = n()
+  ) %>%
   arrange(desc(Promedio))
 
-# Usamos format = "pandoc" que es más amigable que el estándar de LaTeX
-kable(tabla_resumen, 
-      format = "pandoc",
-      caption = "Salarios Promedio por Industria")
+# 2. Creación de la tabla con formato profesional
+estadisticas_industria %>%
+  kable(
+    format = "latex", # Forzamos formato LaTeX para PDF
+    caption = "Análisis Detallado de Salarios por Sector Industrial",
+    col.names = c("Industria", "Promedio", "Mediana", "Desv. Est.", "CV (%)", "N° Casos"),
+    digits = 2,
+    format.args = list(big.mark = ","),
+    booktabs = TRUE # Estilo de tabla académica
+  ) %>%
+  kable_styling(
+    latex_options = c("striped", "hold_position", "scale_down"), # Rayas grises y ajuste de ancho
+    full_width = F,
+    position = "center"
+  ) %>%
+  column_spec(1, bold = T, border_right = T) # Resalta la columna de Industrias
 ```
 
-*interpretación acá*
+La computación cuántica lidera tanto en promedio ($151,130.7) como en mediana, es la industria "mejor pagada" de la lista, aunque por un margen muy pequeño. La tabla destaca que la diferencia entre el salario más alto (Quantum) y el más bajo (Green Tech) es de apenas unos $1,800 dólares anuales, sugiriendo que el mercado laboral para estas tecnologías está muy equilibrado. Mientras que la desviación estándar es alta (cerca de $57,000 en todas), esto significa que, aunque el promedio sea 150k, hay gente ganando mucho menos o gente ganando mucho más. Y el CV (Coeficiente de Variación) de ~38% confirma que hay una variabilidad moderada-alta en los sueldos.
 
 ```{r grafico_barras_final, echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=6}
 library(ggplot2)
@@ -233,7 +244,7 @@ estadisticas_salario <- datos_finales %>%
 # 2. Colores
 mis_colores <- c("dodgerblue", "springgreen3", "gold", "deeppink")
 
-# 3. Gráfico mejorado
+# 3. Gráfico
 ggplot(estadisticas_salario, aes(x = reorder(industry, -Promedio), y = Promedio, fill = industry)) +
   geom_col(color = "black", size = 0.3, width = 0.7) +
   # Ajuste del número: vjust = -1.5 para alejarlo de la punta
@@ -259,7 +270,7 @@ ggplot(estadisticas_salario, aes(x = reorder(industry, -Promedio), y = Promedio,
   )
 ```
 
-*interpretacion acá*
+Lo que salta a la vista es que las cuatro barras tienen casi la misma altura, visualmente, no existe una brecha salarial significativa entre ser experto en IA, Blockchain o Green Tech. Todas las industrias analizadas se encuentran en el "club de los $150k".
 
 ```{r grafico_cajas_final, echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=6}
 library(ggplot2)
@@ -267,7 +278,7 @@ library(scales)
 library(dplyr)
 
 # 1. Aseguramos el orden de las industrias por el promedio de salario
-# (Esto hace que las cajas se vean en escalera descendente, muy elegante)
+# (Esto hace que las cajas se vean en escalera descendente)
 datos_ordenados <- datos_finales %>%
   mutate(industry = reorder(industry, -salary_usd, FUN = mean))
 
@@ -299,7 +310,9 @@ ggplot(datos_ordenados, aes(x = industry, y = salary_usd, fill = industry)) +
   )
 ```
 
-*interpretación acá*
+Todas las cajas empiezan cerca de los $100k y terminan cerca de los $200k, esto significa que el 50% central de los trabajadores en cualquier sector gana en ese rango. Por otro lado, Las medianas (la línea negra dentro de la caja) están casi justo en el centro, indicando que la distribución de los salarios es bastante simétrica o "normal"; no hay un sesgo exagerado hacia salarios muy bajos o muy altos.
+
+El gráfico también menciona puntos rojos (aunque en la imagen se ven poco), que serían los salarios "estrella" o muy bajos, entonces al no haber puntos extremadamente alejados de los bigotes, se entiende que los sueldos están bien compactados en el rango de $60k a $240k. Finalmente el Green Tech es el único que tiene la mediana ligeramente más abajo que las demás, lo que coincide con que es el promedio más bajo de la tabla.
 
 \chapter{Conclusiones y Recomendaciones}
 

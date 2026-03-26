@@ -212,7 +212,6 @@ impactan en la oferta salarial y la demanda de talento.
   \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una diferencia en el beneficio económico por la modalidad.
   \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
   \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
-  \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 \end{enumerate}
 
 \section{Variables}
@@ -326,33 +325,56 @@ En este apartado se analiza la estructura salarial de las distintas
 industrias representadas en el dataset. Tras procesar los datos, se
 observa que:
 
-\begin{longtable}[]{@{}lr@{}}
-\caption{Salarios Promedio por Industria}\tabularnewline
-\toprule\noalign{}
-industry & Promedio \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-industry & Promedio \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Quantum Computing & 151130.7 \\
-AI & 150672.4 \\
-Blockchain & 149383.8 \\
-Green Tech & 149329.9 \\
-\end{longtable}
+\begin{table}[!h]
+\centering
+\caption{\label{tab:tabla_estilo_dashboard}Análisis Detallado de Salarios por Sector Industrial}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\begin{tabular}[t]{>{}l|rrrrr}
+\toprule
+Industria & Promedio & Mediana & Desv. Est. & CV (\%) & N° Casos\\
+\midrule
+\textbf{\cellcolor{gray!10}{Quantum Computing}} & \cellcolor{gray!10}{151,130.7} & \cellcolor{gray!10}{151,810.0} & \cellcolor{gray!10}{57,284.85} & \cellcolor{gray!10}{37.90} & \cellcolor{gray!10}{5,038}\\
+\textbf{AI} & 150,672.4 & 151,389.5 & 57,852.50 & 38.40 & 4,984\\
+\textbf{\cellcolor{gray!10}{Blockchain}} & \cellcolor{gray!10}{149,383.8} & \cellcolor{gray!10}{150,395.0} & \cellcolor{gray!10}{57,606.61} & \cellcolor{gray!10}{38.56} & \cellcolor{gray!10}{4,998}\\
+\textbf{Green Tech} & 149,329.9 & 147,856.5 & 57,386.34 & 38.43 & 4,980\\
+\bottomrule
+\end{tabular}}
+\end{table}
 
-\emph{interpretación acá}
+La computación cuántica lidera tanto en promedio (\$151,130.7) como en
+mediana, es la industria ``mejor pagada'' de la lista, aunque por un
+margen muy pequeño. La tabla destaca que la diferencia entre el salario
+más alto (Quantum) y el más bajo (Green Tech) es de apenas unos \$1,800
+dólares anuales, sugiriendo que el mercado laboral para estas
+tecnologías está muy equilibrado. Mientras que la desviación estándar es
+alta (cerca de \$57,000 en todas), esto significa que, aunque el
+promedio sea 150k, hay gente ganando mucho menos y gente ganando mucho
+más. Y el CV (Coeficiente de Variación) de \textasciitilde38\% confirma
+que hay una variabilidad moderada-alta en los sueldos.
 
 \begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/grafico_barras_final-1} \end{center}
 
-\emph{interpretacion acá}
+Lo que salta a la vista es que las cuatro barras tienen casi la misma
+altura, visualmente, no existe una brecha salarial significativa entre
+ser experto en IA, Blockchain o Green Tech. Todas las industrias
+analizadas se encuentran en el ``club de los \$150k''.
 
 \begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/grafico_cajas_final-1} \end{center}
 
-\emph{interpretación acá}
+Todas las cajas empiezan cerca de los \$100k y terminan cerca de los
+\$200k, esto significa que el 50\% central de los trabajadores en
+cualquier sector gana en ese rango. Por otro lado, Las medianas (la
+línea negra dentro de la caja) están casi justo en el centro, indicando
+que la distribución de los salarios es bastante simétrica o ``normal'';
+no hay un sesgo exagerado hacia salarios muy bajos o muy altos.
+
+El gráfico también menciona puntos rojos (aunque en la imagen se ven
+poco), que serían los salarios ``estrella'' o muy bajos, entonces al no
+haber puntos extremadamente alejados de los bigotes, se entiende que los
+sueldos están bien compactados en el rango de \$60k a \$240k. Finalmente
+el Green Tech es el único que tiene la mediana ligeramente más abajo que
+las demás, lo que coincide con que es el promedio más bajo de la tabla.
 
 \chapter{Conclusiones y Recomendaciones}
 
