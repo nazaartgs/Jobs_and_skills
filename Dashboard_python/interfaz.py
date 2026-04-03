@@ -5,7 +5,7 @@ from pestaña_resumenDataset import Dataset
 from pestaña_salario import salario
 from pestaña_remoto import remoto
 from pestaña_geogafria import tierra
-#from pestaña_skills import habilidades
+from pestaña_skills import habilidades
 from pestaña_empresa import empresa
 
 
@@ -101,7 +101,7 @@ with pestaña_geogafria:
 #5. Pestaña de habilidades
 with pestaña_skills:
     st.header("Habilidades más demandadas por Sector")
-    
+    habilidades(Data_aprocesar)
 
 #6. Pestaña tamaño de la empresa
 with pestaña_empresa:
