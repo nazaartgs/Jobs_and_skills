@@ -6,8 +6,9 @@ def habilidades(Datos_para_pestaña):
     
     df_skills = Datos_para_pestaña.copy()
     
-    if df_skills['skills_required'].dtype == 'object':
-        df_skills['skills_required'] = df_skills['skills_required'].str.split(',')
+    df_skills['skills_required'] = df_skills['skills_required'].apply(
+        lambda x: x.split(',') if isinstance(x, str) else x
+    )
     
     df_exploded = df_skills.explode('skills_required')
     
