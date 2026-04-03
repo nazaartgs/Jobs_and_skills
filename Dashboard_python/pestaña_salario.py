@@ -18,12 +18,10 @@ def salario(Datos_para_pestaña):
         st.metric("Mediana Global", f"{mediana_total:,.2f} USD")
         
     with m3:
-        # Calculamos la desviación estándar para ver la variabilidad
         desviacion_total = resumen_dataset['salary_usd'].std()
         st.metric("Desviación Estándar", f"{desviacion_total:,.2f} USD")
 
     with m4:
-        # Calculamos el coeficiente de variacion
         coeficiente_variacion = float(resumen_dataset['salary_usd'].std() / resumen_dataset['salary_usd'].mean()) * 100
         st.metric("Coeficiente de Variación", f"{coeficiente_variacion:,.2f} %")
 
@@ -113,8 +111,6 @@ def salario(Datos_para_pestaña):
         title="Dispersión Salarial: ¿Dónde hay más variedad de sueldos?",
         color_discrete_sequence=px.colors.qualitative.G10
     )
-    
-     
 
     fig_box.update_layout(
         bargap=0.1,
@@ -153,7 +149,7 @@ def salario(Datos_para_pestaña):
 
     st.divider()
 
-    st.subheader("Conclusiones del Análisis")
+    st.subheader("Conclusión del Análisis")
 
     # Extraemos datos para que la conclusión sea inteligente
     industria_max = df_grafico.iloc[0]['Industria']

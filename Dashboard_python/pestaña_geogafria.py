@@ -1,12 +1,9 @@
 import streamlit as st
-import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-import numpy as np
 
 def tierra():  
 
-    #Datos
     df_prueba = pd.DataFrame({
         'ciudad': ['Singapore', 'Tokyo', 'London', 'New York', 'Dubai', 'Berlin'],
         'salario_promedio': [150194, 149483, 152260, 152266, 148622, 147965],
@@ -15,14 +12,13 @@ def tierra():
         'lon': [103.8198, 139.6917, -0.1278, -74.0060, 55.2708, 13.4050]
     })
 
-    #Construcción de la figura con Graph Objects
     fig = go.Figure(
         data=go.Scattergeo(
             lat=df_prueba['lat'],
             lon=df_prueba['lon'],
             mode='markers',
             marker=dict(
-                size=df_prueba['vacantes']/50, # Ajuste de tamaño
+                size=df_prueba['vacantes']/50, 
                 color=df_prueba['salario_promedio'],
                 colorscale='Plasma',
                 showscale=True,
@@ -30,15 +26,16 @@ def tierra():
                     title="Salario Promedio (USD)",
                     orientation="h",
                     x=0.5, y=1.1,
-                    xanchor="center"
+                    xanchor="center",
+                    len=0.4
                 )
             ),
             text=df_prueba['ciudad'],
-            hoverinfo="text+lat+lon"
+            hovertemplate=(
+                "<b>%{text}</b><br>" + "Salario: $%{marker.color:,.0f}<br>" + "Lat: %{lat:.2f}, Lon: %{lon:.2f}" + "<extra></extra>")
         ),
     )
 
-    #Configuración estética de la esfera
     fig.update_geos(
         projection_type="orthographic",
         showcountries=True, countrycolor="white",
@@ -48,7 +45,6 @@ def tierra():
         resolution=110
     )
 
-    # ⚙️ Configuración del Layout
     fig.update_layout(
         height=800,
         paper_bgcolor='rgba(0,0,0,0)',
