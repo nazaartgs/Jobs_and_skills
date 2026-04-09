@@ -72,7 +72,7 @@ Es aquí donde el análisis de datos se convierte en una herramienta indispensab
 
 En la última década, el mercado laboral global ha experimentado una transformación sin precedentes. Factores como la digitalización acelerada, la normalización del trabajo remoto y la demanda de habilidades técnicas específicas han redefinido cómo se valoran los puestos de trabajo. Ya no basta con mirar el "título del cargo"; la compensación económica ahora parece estar sujeta a una red compleja de variables interconectadas.
 
-¿Es el tamaño de la empresa un predictor fiable del sueldo? ¿Existe una penalización salarial por elegir la modalidad remota, o es ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades (skills) frente a la ubicación geográfica?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
+¿Existe una penalización salarial por elegir la modalidad remota, o es ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades (skills) frente a la ubicación geográfica?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
 
 \section{Justificación}
 
@@ -91,6 +91,7 @@ Analizar el panorama laboral de los sectores tecnológicos emergentes mediante e
   \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una diferencia en el beneficio económico por la modalidad.
   \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
   \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
+  \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 \end{enumerate}
 
 \section{Variables} 
@@ -134,30 +135,24 @@ El conjunto de datos se registra durante el año **2025**
 
 Como se observa en la siguiente tabla, se realizó un diagnóstico inicial sobre la data *job y skills.csv* para identificar la presencia de valores nulos. Este paso es fundamental para garantizar que los cálculos posteriores de promedio y dispersión salarial no se vean afectados por datos faltantes.
 
-```{r}
+```{r carga_y_limpieza_final, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
-library(ggplot2)
 
-# A. Carga
+# A. Carga del archivo único
 ruta_csv <- "Data/Data_sinprocesar/10. Job y Skills.csv"
-raw_data <- read_csv(ruta_csv)
+raw_data <- read_csv(ruta_csv, show_col_types = FALSE)
 
-# B. Limpieza (Aquí creamos 'datos_finales' que es la que usaremos SIEMPRE)
+# B. Limpieza 
 datos_finales <- raw_data %>%
-  # 1. Separar habilidades por coma (Equivale al .split + .explode de Python)
+  # 1. Separamos habilidades 
   separate_rows(skills_required, sep = ",") %>%
-  # 2. Quitar espacios en blanco (Equivale al .str.strip)
+  # 2. Quitamos espacios en blanco
   mutate(skills_required = str_trim(skills_required)) %>%
-  # 3. Filtro de seguridad: quitamos filas sin salario para no romper los promedios
-  filter(!is.na(salary_usd))
-
-# C. Exploración rápida (Opcional, para ver que todo está bien)
-# top_pais <- datos_finales %>% 
-#   group_by(location) %>% 
-#   summarise(mean_salary = mean(salary_usd), count = n()) %>%
-#   arrange(location)
+  # 3. Filtro de seguridad para salarios
+  filter(!is.na(salary_usd)) %>%
+  # 4.Eliminamos los duplicados creados por separate_rows
+  distinct(job_id, .keep_all = TRUE) 
 ```
-
 
 
 ```{r}
@@ -188,7 +183,7 @@ kable(reporte_inicial,
 la data además de poseer 10 mil datos completos, tiene en ella 9 columnas, de la cual tomaremos 7 (`job_title`, `industry`, `location`, `salary_usd`, `skills_required`, 
 `remote_option`, `company_size`, `posting_date`) y calcularemos una por una para así darle respuesta a los objetivos y planes que se tienen con nuestro trabajo
 
-# *Salary_usd*
+\section{Distribución Salarial}
 
 En este apartado se analiza la estructura salarial de las distintas industrias representadas en el dataset. Tras procesar los datos, se observa que:
 
@@ -197,35 +192,35 @@ library(dplyr)
 library(knitr)
 library(kableExtra) # Librería clave para PDF
 
-# 1. Realizamos los calculos
+#calculos
 estadisticas_industria <- datos_finales %>%
   group_by(industry) %>%
   summarise(
     Promedio = mean(salary_usd, na.rm = TRUE),
     Mediana = median(salary_usd, na.rm = TRUE),
     Desv_Estandar = sd(salary_usd, na.rm = TRUE),
-     # CV es (Desviación / Promedio) * 100
     CV_Porcentaje = (sd(salary_usd, na.rm = TRUE) / mean(salary_usd, na.rm = TRUE)) * 100,
-    Casos = n()
+    
+    Casos = n_distinct(job_id) 
   ) %>%
   arrange(desc(Promedio))
 
-# 2. Creación de la tabla con formato profesional
+#Tabla
 estadisticas_industria %>%
   kable(
-    format = "latex", # Forzamos formato LaTeX para PDF
+    format = "latex",
     caption = "Análisis Detallado de Salarios por Sector Industrial",
     col.names = c("Industria", "Promedio", "Mediana", "Desv. Est.", "CV (%)", "N° Casos"),
     digits = 2,
     format.args = list(big.mark = ","),
-    booktabs = TRUE # Estilo de tabla académica
+    booktabs = TRUE 
   ) %>%
   kable_styling(
-    latex_options = c("striped", "hold_position", "scale_down"), # Rayas grises y ajuste de ancho
+    latex_options = c("striped", "hold_position", "scale_down"),
     full_width = F,
     position = "center"
   ) %>%
-  column_spec(1, bold = T, border_right = T) # Resalta la columna de Industrias
+  column_spec(1, bold = T, border_right = T)
 ```
 
 La computación cuántica lidera tanto en promedio ($151,130.7) como en mediana, es la industria "mejor pagada" de la lista, aunque por un margen muy pequeño. La tabla destaca que la diferencia entre el salario más alto (Quantum) y el más bajo (Green Tech) es de apenas unos $1,800 dólares anuales, sugiriendo que el mercado laboral para estas tecnologías está muy equilibrado. Mientras que la desviación estándar es alta (cerca de $57,000 en todas), esto significa que, aunque el promedio sea 150k, hay gente ganando mucho menos o gente ganando mucho más. Y el CV (Coeficiente de Variación) de ~38% confirma que hay una variabilidad moderada-alta en los sueldos.
@@ -278,7 +273,6 @@ library(scales)
 library(dplyr)
 
 # 1. Aseguramos el orden de las industrias por el promedio de salario
-# (Esto hace que las cajas se vean en escalera descendente)
 datos_ordenados <- datos_finales %>%
   mutate(industry = reorder(industry, -salary_usd, FUN = mean))
 
@@ -313,6 +307,101 @@ ggplot(datos_ordenados, aes(x = industry, y = salary_usd, fill = industry)) +
 Todas las cajas empiezan cerca de los $100k y terminan cerca de los $200k, esto significa que el 50% central de los trabajadores en cualquier sector gana en ese rango. Por otro lado, Las medianas (la línea negra dentro de la caja) están casi justo en el centro, indicando que la distribución de los salarios es bastante simétrica o "normal"; no hay un sesgo exagerado hacia salarios muy bajos o muy altos.
 
 El gráfico también menciona puntos rojos (aunque en la imagen se ven poco), que serían los salarios "estrella" o muy bajos, entonces al no haber puntos extremadamente alejados de los bigotes, se entiende que los sueldos están bien compactados en el rango de $60k a $240k. Finalmente el Green Tech es el único que tiene la mediana ligeramente más abajo que las demás, lo que coincide con que es el promedio más bajo de la tabla.
+
+\section{Impacto Remoto}
+
+Aquí analizamos qué tanto varía el salario según la modalidad que ofrezcen para cada industria, ¿Pagarían más si trabajaramos desde casa o llendo presencialmente al puesto de trabajo?
+
+```{r comparativa_remoto, echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=6}
+# No repetimos dplyr ni ggplot2 si ya estan anteriormente en otro chunk
+# Solo cargamos 'tidyr' por si necesitamos reordenar algo.
+library(tidyr)
+
+# 1. Preparación de datos
+# Agrupamos por industria y opción de remoto
+comparativa_data <- datos_finales %>%
+  group_by(industry, remote_option) %>%
+  summarise(Promedio = mean(salary_usd, na.rm = TRUE), .groups = 'drop')
+```
+
+
+```{r, Gráfico de Barras Agrupadas (Brecha Salarial)}
+
+ggplot(comparativa_data, aes(x = industry, y = Promedio, fill = remote_option)) +
+  # 'position_dodge' pone las barras una al lado de la otra
+  geom_col(position = position_dodge(width = 0.8), width = 0.7, color = "black", size = 0.2) +
+  # Etiquetas de datos sobre cada barra con un pequeño ajuste (vjust)
+  geom_text(aes(label = dollar(Promedio, accuracy = 1)), 
+            position = position_dodge(width = 0.8), 
+            vjust = -1, size = 3, fontface = "bold") +
+  # Colores profesionales (Azul para remoto, Gris para presencial por ejemplo)
+  scale_fill_manual(values = c("Yes" = "#8B1A1A", "No" = "snow4"),
+                    labels = c("No" = "Presencial", "Yes" = "Remoto")) +
+  scale_y_continuous(labels = dollar_format(), expand = expansion(mult = c(0, 0.2))) +
+  labs(title = "Brecha Salarial: Remoto vs. Presencial por Sector",
+       subtitle = "Comparativa de promedios salariales mensuales (USD)",
+       x = "Industria", y = "Salario Promedio", fill = "Modalidad") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 0, size = 10), # Texto horizontal
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank(),
+    plot.title = element_text(face = "bold", size = 14)
+  )
+```
+
+Lo primero que salta a la vista es que las barras de cada sector tienen alturas casi idénticas, indicando una semejanza salarial entre las modalidades remota y presencial en las industrias tecnológicas analizadas. Es decir, que en el mercado laboral moderno de alta tecnología (AI, Quantum, etc.), las empresas están valorando el talento y el resultado por encima de la ubicación física del trabajador. Si lo analizamos por industria, podemos ver que en *AI*, el trabajo remoto ($151,753) paga ligeramente más que el presencial ($149,600) y en *Quantum Computing*, ocurre lo mismo ($151,824 remoto vs $150,412 presencial). Esto sugiere que las empresas están dispuestas a pagar primas incluso superiores para captar especialistas globales en áreas críticas, sin importar dónde residan. Por otro lado, En *Blockchain* el salario presencial lidera por un margen mínimo ($149,961 vs $148,836) y en *Green Tech*, la diferencia es de menos de $800 dólares mensuales, aquí la modalidad es prácticamente indiferente para la compensación económica. 
+
+```{r}
+# 3. Tabla Resumen
+# Transformamos los datos para que salgan en dos columnas: Remoto | Presencial
+comparativa_data %>%
+  pivot_wider(names_from = remote_option, values_from = Promedio) %>%
+  rename(Industria = industry, Presencial = No, Remoto = Yes) %>%
+  kable(format = "latex", booktabs = TRUE, digits = 2,
+        caption = "Comparativa Numérica de Salarios por Modalidad",
+        format.args = list(big.mark = ",")) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+En resumen la diferencia salarial es mínima, lo que sugiere que el talento se valora por igual sin importar la modalidad, donde las brechas oscilan entre $700 y $2,100 USD aproximadamente, lo cual es estadísticamente poco significativo en salarios de este rango ($150k). 
+
+```{r tabla_estadistica_segura, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(knitr)
+
+# Generamos los cálculos
+analisis_modalidad <- datos_finales %>%
+  group_by(industry, remote_option) %>%
+  summarise(
+    n= n(),
+    Promedio = mean(salary_usd, na.rm = TRUE),
+    Desviacion = sd(salary_usd, na.rm = TRUE),
+    CV = (Desviacion / Promedio) * 100,
+    .groups = 'drop'
+  ) %>%
+  # Redondeamos antes de mostrar para evitar problemas de formato
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
+
+# Usamos kable con formato "pandoc" que es el que menos errores da en LaTeX
+kable(analisis_modalidad, 
+      format = "pandoc", 
+      caption = "Análisis de Salarios por Industria y Modalidad",
+      col.names = c("Industria", "Remoto", "N", "Media (USD)", "Desv. Est.", "CV %"))
+```
+
+
+Ahora bien, en la parte estadística podemos observar algunas cosas:
+
+* **El tamaño de la muestra "N":** Observamos que la muestra está muy bien balanceada entre las modalidades de opcion remota (Yes, No) en todos los sectores. Cada subgrupo tiene un poco más de 1,200 observaciones, desde el punto de vista estadístico, esto le da una robustez alta a los resultados, ya que se supera por mucho el mínimo necesario para que los promedios sean estables y significativos.
+
+* **Estabilidad Salarial (El Coeficiente de Variación - CV):** el *CV* es casi idéntico para el trabajo presencial y remoto en todas las industrias, situándose alrededor del 38%. Esto indica que el "riesgo" o la variabilidad del salario no cambia por la modalidad, y no es que en remoto haya más disparidad que en presencial; la estructura de sueldos sigue la misma lógica de distribución en ambos casos. Además, en estadística, un CV entre el 30% y 40% se considera una variabilidad moderada-alta, esto es normal en tecnología, ya que refleja la brecha natural entre puestos Junior y Senior.
+
+* **La desviación estándar:** se mantiene constante cerca de los $57,000 - $58,000 USD. Esto refuerza la idea de la equidad salarial. Las empresas no solo están pagando promedios similares, sino que están ofreciendo rangos de sueldos (mínimos y máximos) muy parecidos, sin importar si el empleado está en la oficina o en su casa.
+
+\section{Análisis Geográfico}
+
+
 
 \chapter{Conclusiones y Recomendaciones}
 

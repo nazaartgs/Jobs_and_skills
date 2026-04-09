@@ -178,15 +178,14 @@ puestos de trabajo. Ya no basta con mirar el ``título del cargo''; la
 compensación económica ahora parece estar sujeta a una red compleja de
 variables interconectadas.
 
-¿Es el tamaño de la empresa un predictor fiable del sueldo? ¿Existe una
-penalización salarial por elegir la modalidad remota, o es ahora un
-estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades
-(skills) frente a la ubicación geográfica?. A pesar de la abundancia de
-ofertas de trabajo, existe una falta de claridad sobre cuáles son los
-verdaderos determinantes del salario en el mercado actual, por lo cual,
-este estudio busca aclarar esas dudas mediante la estadística
-descriptiva y el uso de la plataforma GitHub y lenguajes de programación
-conocidos como R y Python.
+¿Existe una penalización salarial por elegir la modalidad remota, o es
+ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas
+habilidades (skills) frente a la ubicación geográfica?. A pesar de la
+abundancia de ofertas de trabajo, existe una falta de claridad sobre
+cuáles son los verdaderos determinantes del salario en el mercado
+actual, por lo cual, este estudio busca aclarar esas dudas mediante la
+estadística descriptiva y el uso de la plataforma GitHub y lenguajes de
+programación conocidos como R y Python.
 
 \section{Justificación}
 
@@ -212,6 +211,7 @@ impactan en la oferta salarial y la demanda de talento.
   \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una diferencia en el beneficio económico por la modalidad.
   \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
   \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
+  \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 \end{enumerate}
 
 \section{Variables}
@@ -319,7 +319,7 @@ columnas, de la cual tomaremos 7 (\texttt{job\_title},
 una para así darle respuesta a los objetivos y planes que se tienen con
 nuestro trabajo
 
-\section{\texorpdfstring{\emph{Salary\_usd}}{Salary\_usd}}\label{salary_usd}
+\section{Distribución Salarial}
 
 En este apartado se analiza la estructura salarial de las distintas
 industrias representadas en el dataset. Tras procesar los datos, se
@@ -334,10 +334,10 @@ observa que:
 \toprule
 Industria & Promedio & Mediana & Desv. Est. & CV (\%) & N° Casos\\
 \midrule
-\textbf{\cellcolor{gray!10}{Quantum Computing}} & \cellcolor{gray!10}{151,130.7} & \cellcolor{gray!10}{151,810.0} & \cellcolor{gray!10}{57,284.85} & \cellcolor{gray!10}{37.90} & \cellcolor{gray!10}{5,038}\\
-\textbf{AI} & 150,672.4 & 151,389.5 & 57,852.50 & 38.40 & 4,984\\
-\textbf{\cellcolor{gray!10}{Blockchain}} & \cellcolor{gray!10}{149,383.8} & \cellcolor{gray!10}{150,395.0} & \cellcolor{gray!10}{57,606.61} & \cellcolor{gray!10}{38.56} & \cellcolor{gray!10}{4,998}\\
-\textbf{Green Tech} & 149,329.9 & 147,856.5 & 57,386.34 & 38.43 & 4,980\\
+\textbf{\cellcolor{gray!10}{Quantum Computing}} & \cellcolor{gray!10}{151,130.7} & \cellcolor{gray!10}{151,810.0} & \cellcolor{gray!10}{57,290.54} & \cellcolor{gray!10}{37.91} & \cellcolor{gray!10}{2,519}\\
+\textbf{AI} & 150,672.4 & 151,389.5 & 57,858.30 & 38.40 & 2,492\\
+\textbf{\cellcolor{gray!10}{Blockchain}} & \cellcolor{gray!10}{149,383.8} & \cellcolor{gray!10}{150,395.0} & \cellcolor{gray!10}{57,612.37} & \cellcolor{gray!10}{38.57} & \cellcolor{gray!10}{2,499}\\
+\textbf{Green Tech} & 149,329.9 & 147,856.5 & 57,392.10 & 38.43 & 2,490\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -349,7 +349,7 @@ más alto (Quantum) y el más bajo (Green Tech) es de apenas unos \$1,800
 dólares anuales, sugiriendo que el mercado laboral para estas
 tecnologías está muy equilibrado. Mientras que la desviación estándar es
 alta (cerca de \$57,000 en todas), esto significa que, aunque el
-promedio sea 150k, hay gente ganando mucho menos y gente ganando mucho
+promedio sea 150k, hay gente ganando mucho menos o gente ganando mucho
 más. Y el CV (Coeficiente de Variación) de \textasciitilde38\% confirma
 que hay una variabilidad moderada-alta en los sueldos.
 
@@ -375,6 +375,105 @@ haber puntos extremadamente alejados de los bigotes, se entiende que los
 sueldos están bien compactados en el rango de \$60k a \$240k. Finalmente
 el Green Tech es el único que tiene la mediana ligeramente más abajo que
 las demás, lo que coincide con que es el promedio más bajo de la tabla.
+
+\section{Impacto Remoto}
+
+Aquí analizamos qué tanto varía el salario según la modalidad que
+ofrezcen para cada industria, ¿Pagarían más si trabajaramos desde casa o
+llendo presencialmente al puesto de trabajo?
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/Gráfico de Barras Agrupadas (Brecha Salarial)-1} \end{center}
+
+Lo primero que salta a la vista es que las barras de cada sector tienen
+alturas casi idénticas, indicando una semejanza salarial entre las
+modalidades remota y presencial en las industrias tecnológicas
+analizadas. Es decir, que en el mercado laboral moderno de alta
+tecnología (AI, Quantum, etc.), las empresas están valorando el talento
+y el resultado por encima de la ubicación física del trabajador. Si lo
+analizamos por industria, podemos ver que en \emph{AI}, el trabajo
+remoto (\$151,753) paga ligeramente más que el presencial (\$149,600) y
+en \emph{Quantum Computing}, ocurre lo mismo (\$151,824 remoto vs
+\$150,412 presencial). Esto sugiere que las empresas están dispuestas a
+pagar primas incluso superiores para captar especialistas globales en
+áreas críticas, sin importar dónde residan. Por otro lado, En
+\emph{Blockchain} el salario presencial lidera por un margen mínimo
+(\$149,961 vs \$148,836) y en \emph{Green Tech}, la diferencia es de
+menos de \$800 dólares mensuales, aquí la modalidad es prácticamente
+indiferente para la compensación económica.
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:unnamed-chunk-2}Comparativa Numérica de Salarios por Modalidad}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+Industria & Presencial & Remoto\\
+\midrule
+\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{151,753.3} & \cellcolor{gray!10}{149,600.1}\\
+Blockchain & 149,961.5 & 148,836.2\\
+\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{149,726.1} & \cellcolor{gray!10}{148,951.1}\\
+Quantum Computing & 150,412.1 & 151,824.1\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En resumen la diferencia salarial es mínima, lo que sugiere que el
+talento se valora por igual sin importar la modalidad, donde las brechas
+oscilan entre \$700 y \$2,100 USD aproximadamente, lo cual es
+estadísticamente poco significativo en salarios de este rango (\$150k).
+
+\begin{longtable}[]{@{}llrrrr@{}}
+\caption{Análisis de Salarios por Industria y Modalidad}\tabularnewline
+\toprule\noalign{}
+Industria & Remoto & N & Media (USD) & Desv. Est. & CV \% \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Industria & Remoto & N & Media (USD) & Desv. Est. & CV \% \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AI & No & 1241 & 151753.3 & 58219.95 & 38.36 \\
+AI & Yes & 1251 & 149600.1 & 57500.49 & 38.44 \\
+Blockchain & No & 1216 & 149961.5 & 57513.37 & 38.35 \\
+Blockchain & Yes & 1283 & 148836.2 & 57723.13 & 38.78 \\
+Green Tech & No & 1217 & 149726.1 & 57440.01 & 38.36 \\
+Green Tech & Yes & 1273 & 148951.1 & 57366.28 & 38.51 \\
+Quantum Computing & No & 1237 & 150412.1 & 56908.09 & 37.83 \\
+Quantum Computing & Yes & 1282 & 151824.1 & 57670.87 & 37.99 \\
+\end{longtable}
+
+Ahora bien, en la parte estadística podemos observar algunas cosas:
+
+\begin{itemize}
+\item
+  \textbf{El tamaño de la muestra ``N'':} Observamos que la muestra está
+  muy bien balanceada entre las modalidades de opcion remota (Yes, No)
+  en todos los sectores. Cada subgrupo tiene un poco más de 1,200
+  observaciones, desde el punto de vista estadístico, esto le da una
+  robustez alta a los resultados, ya que se supera por mucho el mínimo
+  necesario para que los promedios sean estables y significativos.
+\item
+  \textbf{Estabilidad Salarial (El Coeficiente de Variación - CV):} el
+  \emph{CV} es casi idéntico para el trabajo presencial y remoto en
+  todas las industrias, situándose alrededor del 38\%. Esto indica que
+  el ``riesgo'' o la variabilidad del salario no cambia por la
+  modalidad, y no es que en remoto haya más disparidad que en
+  presencial; la estructura de sueldos sigue la misma lógica de
+  distribución en ambos casos. Además, en estadística, un CV entre el
+  30\% y 40\% se considera una variabilidad moderada-alta, esto es
+  normal en tecnología, ya que refleja la brecha natural entre puestos
+  Junior y Senior.
+\item
+  \textbf{La desviación estándar:} se mantiene constante cerca de los
+  \$57,000 - \$58,000 USD. Esto refuerza la idea de la equidad salarial.
+  Las empresas no solo están pagando promedios similares, sino que están
+  ofreciendo rangos de sueldos (mínimos y máximos) muy parecidos, sin
+  importar si el empleado está en la oficina o en su casa.
+\end{itemize}
+
+\section{Análisis Geográfico}
 
 \chapter{Conclusiones y Recomendaciones}
 
