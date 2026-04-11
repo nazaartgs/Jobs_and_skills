@@ -285,13 +285,11 @@ valores nulos. Este paso es fundamental para garantizar que los cálculos
 posteriores de promedio y dispersión salarial no se vean afectados por
 datos faltantes.
 
+\begin{center}
+\textbf{Tabla 2.2.4 Conteo de valores faltantes por columna}
+\end{center}
+
 \begin{longtable}[]{@{}lrr@{}}
-\caption{Estado Inicial: Conteo de valores faltantes por
-columna}\tabularnewline
-\toprule\noalign{}
-Variable & Total Nulos & Porcentaje (\%) \\
-\midrule\noalign{}
-\endfirsthead
 \toprule\noalign{}
 Variable & Total Nulos & Porcentaje (\%) \\
 \midrule\noalign{}
@@ -325,12 +323,14 @@ En este apartado se analiza la estructura salarial de las distintas
 industrias representadas en el dataset. Tras procesar los datos, se
 observa que:
 
+\begin{center}
+\textbf{Tabla 3.1 Análisis Detallado de Salarios por Sector Industrial}
+\end{center}
+
 \begin{table}[!h]
 \centering
-\caption{\label{tab:tabla_estilo_dashboard}Análisis Detallado de Salarios por Sector Industrial}
-\centering
 \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
-\begin{tabular}[t]{>{}l|rrrrr}
+\begin{tabular}{>{}l|rrrrr}
 \toprule
 Industria & Promedio & Mediana & Desv. Est. & CV (\%) & N° Casos\\
 \midrule
@@ -401,11 +401,13 @@ pagar primas incluso superiores para captar especialistas globales en
 menos de \$800 dólares mensuales, aquí la modalidad es prácticamente
 indiferente para la compensación económica.
 
+\begin{center}
+\textbf{Tabla 3.2.1 Comparativa Numérica de Salarios por Modalidad}
+\end{center}
+
 \begin{table}[!h]
 \centering
-\caption{\label{tab:unnamed-chunk-2}Comparativa Numérica de Salarios por Modalidad}
-\centering
-\begin{tabular}[t]{lrr}
+\begin{tabular}{lrr}
 \toprule
 Industria & Presencial & Remoto\\
 \midrule
@@ -422,12 +424,11 @@ talento se valora por igual sin importar la modalidad, donde las brechas
 oscilan entre \$700 y \$2,100 USD aproximadamente, lo cual es
 estadísticamente poco significativo en salarios de este rango (\$150k).
 
+\begin{center}
+\textbf{Tabla 3.2.2 Análisis de Salarios por Industria y Modalidad}
+\end{center}
+
 \begin{longtable}[]{@{}llrrrr@{}}
-\caption{Análisis de Salarios por Industria y Modalidad}\tabularnewline
-\toprule\noalign{}
-Industria & Remoto & N & Media (USD) & Desv. Est. & CV \% \\
-\midrule\noalign{}
-\endfirsthead
 \toprule\noalign{}
 Industria & Remoto & N & Media (USD) & Desv. Est. & CV \% \\
 \midrule\noalign{}
@@ -474,6 +475,109 @@ Ahora bien, en la parte estadística podemos observar algunas cosas:
 \end{itemize}
 
 \section{Análisis Geográfico}
+
+En lugar de una sola industria ganando en todo el mundo, vemos que el
+liderazgo depende de la ubicación:
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/grafico_lineas_geo-1} \end{center}
+
+New York y London son los ``picos'' del gráfico. Si nos fijamos, Quantum
+Computing alcanza su máximo en New York, mientras que AI domina
+claramente en London, esto sugiere que estas ciudades son un punto
+central especializados para esas tecnologías. A cambio Singapore y
+Tokyo, muestran una caída general en casi todas las líneas, ya que
+aunque son centros tecnológicos y potencias mundiales en tecnología (los
+datos aquí siempre tienen una explicación económica detrás), el rango
+salarial promedio en estas ciudades asiáticas es ligeramente más
+conservador en comparación con el mercado de habla inglés para estas
+industrias específicas. Además, Quantum Computing (Línea Morada) es la
+más ``saltarina'', ya que tiene picos muy altos en New York y Berlín,
+pero cae fuerte en Singapore, mientras que Blockchain (Línea Verde) es
+una de las más estables en el centro del gráfico (Dubai, London, New
+York) y parece ser una industria con sueldos más estandarizados a nivel
+global. La línea de Green Tech muestra un comportamiento de alta
+volatilidad y contrastes marcados dependiendo de la ubicación
+geográfica. La caída más estrepitosa, alcanzando el punto más bajo de
+todo el gráfico (aproximadamente \$146,333 según las tablas de
+respaldo), que en industrias como Blockchain suben en Dubái, Green Tech
+parece tener la menor prioridad salarial en esta ubicación. Tras su
+caída en Dubái, la línea muestra una tendencia hacia arriba constante al
+pasar por Londres hasta llegar a su máximo en New York (alcanzando cerca
+de \$153,675). En esta ciudad, Green Tech se posiciona como la segunda
+industria mejor pagada, solo por debajo de Quantum Computing.
+
+\begin{center}
+\textbf{Tabla 3.3 Análisis Salarial por Ubicación e Industria}
+\end{center}
+
+Ahora, los datos de la tabla nos da el ``por qué'' de lo que sucede en
+las líneas del gráfico
+
+\begingroup\fontsize{10}{12}\selectfont
+
+\begin{longtable}{lrrrr}
+\toprule
+\cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{Industria}}} & \cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{N° Vacantes}}} & \cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{Sueldo Promedio}}} & \cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{Desv. Estándar}}} & \cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{CV (\%)}}}\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{Berlin}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{405} & \cellcolor{gray!10}{150,973.3} & \cellcolor{gray!10}{57,725.0} & \cellcolor{gray!10}{38.2}\\
+\hspace{1em}Blockchain & 406 & 147,499.7 & 56,860.1 & 38.5\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{410} & \cellcolor{gray!10}{149,263.6} & \cellcolor{gray!10}{57,156.9} & \cellcolor{gray!10}{38.3}\\
+\hspace{1em}Quantum Computing & 419 & 152,965.1 & 56,990.4 & 37.3\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{Dubai}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{429} & \cellcolor{gray!10}{149,590.6} & \cellcolor{gray!10}{58,053.3} & \cellcolor{gray!10}{38.8}\\
+\hspace{1em}Blockchain & 386 & 151,904.4 & 56,475.2 & 37.2\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{428} & \cellcolor{gray!10}{146,333.6} & \cellcolor{gray!10}{56,924.8} & \cellcolor{gray!10}{38.9}\\
+\hspace{1em}Quantum Computing & 417 & 150,366.8 & 59,238.7 & 39.4\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{London}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{389} & \cellcolor{gray!10}{154,976.3} & \cellcolor{gray!10}{58,226.0} & \cellcolor{gray!10}{37.6}\\
+\hspace{1em}Blockchain & 423 & 150,033.0 & 58,484.6 & 39.0\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{400} & \cellcolor{gray!10}{152,419.4} & \cellcolor{gray!10}{57,888.4} & \cellcolor{gray!10}{38.0}\\
+\hspace{1em}Quantum Computing & 444 & 151,861.8 & 57,612.8 & 37.9\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{New York}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{413} & \cellcolor{gray!10}{149,882.0} & \cellcolor{gray!10}{59,496.9} & \cellcolor{gray!10}{39.7}\\
+\hspace{1em}Blockchain & 423 & 149,812.4 & 59,495.1 & 39.7\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{429} & \cellcolor{gray!10}{153,675.9} & \cellcolor{gray!10}{59,698.2} & \cellcolor{gray!10}{38.8}\\
+\hspace{1em}Quantum Computing & 424 & 155,611.7 & 56,820.5 & 36.5\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{Singapore}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{429} & \cellcolor{gray!10}{150,491.1} & \cellcolor{gray!10}{56,749.4} & \cellcolor{gray!10}{37.7}\\
+\hspace{1em}Blockchain & 432 & 150,590.0 & 57,404.3 & 38.1\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{413} & \cellcolor{gray!10}{146,985.9} & \cellcolor{gray!10}{55,776.5} & \cellcolor{gray!10}{37.9}\\
+\hspace{1em}Quantum Computing & 408 & 146,231.1 & 55,652.8 & 38.1\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{Tokyo}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{427} & \cellcolor{gray!10}{148,499.4} & \cellcolor{gray!10}{57,079.3} & \cellcolor{gray!10}{38.4}\\
+\hspace{1em}Blockchain & 429 & 146,621.3 & 56,957.9 & 38.8\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{410} & \cellcolor{gray!10}{147,323.6} & \cellcolor{gray!10}{56,696.7} & \cellcolor{gray!10}{38.5}\\
+\hspace{1em}Quantum Computing & 407 & 149,470.7 & 57,216.5 & 38.3\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+En el caso de New York y Quantum Computing, según el gráfico, esta es la
+línea que llega más alto (\$155,611), si se ve la tabla, tiene el CV más
+bajo (36.5\%) de ese grupo,es decir, en otras industrias/países Un CV
+cercano al 39\% (como en AI en New York o Green Tech en Dubai) indica
+que hay mucha diferencia entre los sueldos más bajos y los más altos, es
+un mercado más ``impredecible'' pero en Quantum (NY) al ser el más bajo,
+significa que los salarios están más concentrados cerca del promedio
+(\$155,611). Si se consigue un trabajo allí, es mucho más probable que
+el sueldo real esté muy cerca de esa cifra y no mucho más abajo. Además,
+en el número de vacantes por industria en cada ciudad es muy similar
+(alrededor de 400-440 por sector), Demostrando que los datos están
+balanceados. En resumen, a pesar de las subidas y bajadas, todas las
+líneas se mueven en un rango estrecho (entre \$146k y \$156k), así que
+la dispersión geográfica existe pero es moderada. ¿Pero por qué hay
+tanto cruces en las lineas? es evidencia de que no existe una
+``industria reina'', sino que cada país compite ofreciendo mejores
+sueldos en el área donde quiere ser líder tecnológico.
+
+\section{Habilidades}
 
 \chapter{Conclusiones y Recomendaciones}
 

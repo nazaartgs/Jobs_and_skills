@@ -154,6 +154,9 @@ datos_finales <- raw_data %>%
   distinct(job_id, .keep_all = TRUE) 
 ```
 
+\begin{center}
+\textbf{Tabla 2.2.4 Conteo de valores faltantes por columna}
+\end{center}
 
 ```{r}
 # 1. Definimos la función de diagnóstico
@@ -172,7 +175,6 @@ reporte_final   <- diagnosticar_nulos(datos_finales)
 # 3. CREAMOS LA TABLA PARA EL PDF
 library(knitr)
 kable(reporte_inicial, 
-      caption = "Estado Inicial: Conteo de valores faltantes por columna",
       col.names = c("Variable", "Total Nulos", "Porcentaje (%)"),
       digits = 2,
       booktabs = TRUE)
@@ -186,6 +188,10 @@ la data además de poseer 10 mil datos completos, tiene en ella 9 columnas, de l
 \section{Distribución Salarial}
 
 En este apartado se analiza la estructura salarial de las distintas industrias representadas en el dataset. Tras procesar los datos, se observa que:
+
+\begin{center}
+\textbf{Tabla 3.1 Análisis Detallado de Salarios por Sector Industrial}
+\end{center}
 
 ```{r tabla_estilo_dashboard, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
@@ -209,7 +215,6 @@ estadisticas_industria <- datos_finales %>%
 estadisticas_industria %>%
   kable(
     format = "latex",
-    caption = "Análisis Detallado de Salarios por Sector Industrial",
     col.names = c("Industria", "Promedio", "Mediana", "Desv. Est.", "CV (%)", "N° Casos"),
     digits = 2,
     format.args = list(big.mark = ","),
@@ -312,6 +317,7 @@ El gráfico también menciona puntos rojos (aunque en la imagen se ven poco), qu
 
 Aquí analizamos qué tanto varía el salario según la modalidad que ofrezcen para cada industria, ¿Pagarían más si trabajaramos desde casa o llendo presencialmente al puesto de trabajo?
 
+
 ```{r comparativa_remoto, echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=6}
 # No repetimos dplyr ni ggplot2 si ya estan anteriormente en otro chunk
 # Solo cargamos 'tidyr' por si necesitamos reordenar algo.
@@ -352,6 +358,10 @@ ggplot(comparativa_data, aes(x = industry, y = Promedio, fill = remote_option)) 
 
 Lo primero que salta a la vista es que las barras de cada sector tienen alturas casi idénticas, indicando una semejanza salarial entre las modalidades remota y presencial en las industrias tecnológicas analizadas. Es decir, que en el mercado laboral moderno de alta tecnología (AI, Quantum, etc.), las empresas están valorando el talento y el resultado por encima de la ubicación física del trabajador. Si lo analizamos por industria, podemos ver que en *AI*, el trabajo remoto ($151,753) paga ligeramente más que el presencial ($149,600) y en *Quantum Computing*, ocurre lo mismo ($151,824 remoto vs $150,412 presencial). Esto sugiere que las empresas están dispuestas a pagar primas incluso superiores para captar especialistas globales en áreas críticas, sin importar dónde residan. Por otro lado, En *Blockchain* el salario presencial lidera por un margen mínimo ($149,961 vs $148,836) y en *Green Tech*, la diferencia es de menos de $800 dólares mensuales, aquí la modalidad es prácticamente indiferente para la compensación económica. 
 
+\begin{center}
+\textbf{Tabla 3.2.1 Comparativa Numérica de Salarios por Modalidad}
+\end{center}
+
 ```{r}
 # 3. Tabla Resumen
 # Transformamos los datos para que salgan en dos columnas: Remoto | Presencial
@@ -359,12 +369,15 @@ comparativa_data %>%
   pivot_wider(names_from = remote_option, values_from = Promedio) %>%
   rename(Industria = industry, Presencial = No, Remoto = Yes) %>%
   kable(format = "latex", booktabs = TRUE, digits = 2,
-        caption = "Comparativa Numérica de Salarios por Modalidad",
         format.args = list(big.mark = ",")) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 En resumen la diferencia salarial es mínima, lo que sugiere que el talento se valora por igual sin importar la modalidad, donde las brechas oscilan entre $700 y $2,100 USD aproximadamente, lo cual es estadísticamente poco significativo en salarios de este rango ($150k). 
+
+\begin{center}
+\textbf{Tabla 3.2.2 Análisis de Salarios por Industria y Modalidad}
+\end{center}
 
 ```{r tabla_estadistica_segura, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
@@ -385,8 +398,7 @@ analisis_modalidad <- datos_finales %>%
 
 # Usamos kable con formato "pandoc" que es el que menos errores da en LaTeX
 kable(analisis_modalidad, 
-      format = "pandoc", 
-      caption = "Análisis de Salarios por Industria y Modalidad",
+      format = "pandoc",
       col.names = c("Industria", "Remoto", "N", "Media (USD)", "Desv. Est.", "CV %"))
 ```
 
@@ -401,7 +413,85 @@ Ahora bien, en la parte estadística podemos observar algunas cosas:
 
 \section{Análisis Geográfico}
 
+En lugar de una sola industria ganando en todo el mundo, vemos que el liderazgo depende de la ubicación:
 
+```{r grafico_lineas_geo, echo=FALSE, message=FALSE, warning=FALSE, fig.width=10, fig.height=6}
+library(ggplot2)
+library(dplyr)
+
+# 1. Calculamos los promedios cruzados
+resumen_lineas <- datos_finales %>%
+  group_by(location, industry) %>%
+  summarise(Promedio = mean(salary_usd, na.rm = TRUE), .groups = 'drop')
+
+# 2. Creamos el gráfico de líneas
+ggplot(resumen_lineas, aes(x = location, y = Promedio, group = industry, color = industry)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  labs(
+    title = "Comparativa Salarial: Industrias por Ubicación Geográfica",
+    x = "Ciudad / País",
+    y = "Salario Promedio (USD)",
+    color = "Industria"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+New York y London son los "picos" del gráfico. Si nos fijamos, Quantum Computing alcanza su máximo en New York, mientras que AI domina claramente en London, esto sugiere que estas ciudades son un punto central especializados para esas tecnologías. A cambio Singapore y Tokyo, muestran una caída general en casi todas las líneas, ya que aunque son centros tecnológicos y potencias mundiales en tecnología (los datos aquí siempre tienen una explicación económica detrás), el rango salarial promedio en estas ciudades asiáticas es ligeramente más conservador en comparación con el mercado de habla inglés para estas industrias específicas. Además, Quantum Computing (Línea Morada) es la más "saltarina", ya que tiene picos muy altos en New York y Berlín, pero cae fuerte en Singapore, mientras que Blockchain (Línea Verde) es una de las más estables en el centro del gráfico (Dubai, London, New York) y parece ser una industria con sueldos más estandarizados a nivel global. La línea de Green Tech muestra un comportamiento de alta volatilidad y contrastes marcados dependiendo de la ubicación geográfica. La caída más estrepitosa, alcanzando el punto más bajo de todo el gráfico (aproximadamente $146,333 según las tablas de respaldo), que en industrias como Blockchain suben en Dubái, Green Tech parece tener la menor prioridad salarial en esta ubicación. Tras su caída en Dubái, la línea muestra una tendencia hacia arriba constante al pasar por Londres hasta llegar a su máximo en New York (alcanzando cerca de $153,675). En esta ciudad, Green Tech se posiciona como la segunda industria mejor pagada, solo por debajo de Quantum Computing.
+
+\begin{center}
+\textbf{Tabla 3.3 Análisis Salarial por Ubicación e Industria}
+\end{center}
+
+Ahora, los datos de la tabla nos da el "por qué" de lo que sucede en las líneas del gráfico
+
+```{r tabla_geo_desviacion, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# 1. Calculamos las métricas con Desviación Estándar
+resumen_geo <- datos_finales %>%
+  group_by(location, industry) %>%
+  summarise(
+    Vacantes = n(),
+    Promedio = mean(salary_usd, na.rm = TRUE),
+    Desv_Est = sd(salary_usd, na.rm = TRUE),  # Cambiamos varianza por desviación
+    `CV (%)` = (sd(salary_usd, na.rm = TRUE) / mean(salary_usd, na.rm = TRUE)) * 100,
+    .groups = 'drop'
+  ) %>%
+  arrange(location)
+
+# 2. Identificar grupos para los colores por país
+counts <- table(resumen_geo$location)
+
+# 3. Crear la tabla ajustada al PDF
+resumen_geo %>%
+  select(-location) %>% 
+  kable(
+    format = "latex",
+    booktabs = TRUE,
+    longtable = TRUE,
+    digits = 1,
+    format.args = list(big.mark = ","),
+    col.names = c("Industria", "N° Vacantes", "Sueldo Promedio", "Desv. Estándar", "CV (%)")
+  ) %>%
+  kable_styling(
+    latex_options = c("striped", "hold_position", "scale_down"),
+    full_width = FALSE,
+    font_size = 10
+  ) %>%
+  # Franja de color para separar países claramente
+  pack_rows(index = counts, 
+            latex_wrap_text = TRUE,
+            background = "#F2F2F2") %>% 
+  row_spec(0, bold = TRUE, color = "white", background = "#4A4A4A")
+```
+
+En el caso de New York y Quantum Computing, según el gráfico, esta es la línea que llega más alto ($155,611), si se ve la tabla, tiene el CV más bajo (36.5%) de ese grupo,es decir, en otras industrias/países Un CV cercano al 39% (como en AI en New York o Green Tech en Dubai) indica que hay mucha diferencia entre los sueldos más bajos y los más altos, es un mercado más "impredecible" pero en Quantum (NY) al ser el más bajo, significa que los salarios están más concentrados cerca del promedio ($155,611). Si se consigue un trabajo allí, es mucho más probable que el sueldo real esté muy cerca de esa cifra y no mucho más abajo. Además, en el número de vacantes por industria en cada ciudad es muy similar (alrededor de 400-440 por sector), Demostrando que los datos están balanceados. En resumen, a pesar de las subidas y bajadas, todas las líneas se mueven en un rango estrecho (entre $146k y $156k), así que la dispersión geográfica existe pero es moderada. ¿Pero por qué hay tanto cruces en las lineas? es evidencia de que no existe una "industria reina", sino que cada país compite ofreciendo mejores sueldos en el área donde quiere ser líder tecnológico.
+
+\section{Habilidades}
 
 \chapter{Conclusiones y Recomendaciones}
 
