@@ -72,7 +72,7 @@ Es aquí donde el análisis de datos se convierte en una herramienta indispensab
 
 En la última década, el mercado laboral global ha experimentado una transformación sin precedentes. Factores como la digitalización acelerada, la normalización del trabajo remoto y la demanda de habilidades técnicas específicas han redefinido cómo se valoran los puestos de trabajo. Ya no basta con mirar el "título del cargo"; la compensación económica ahora parece estar sujeta a una red compleja de variables interconectadas.
 
-¿Existe una penalización salarial por elegir la modalidad remota, o es ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades (skills) frente a la ubicación geográfica?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
+¿Es el tamaño de la empresa un predictor fiable del sueldo? o ¿Existe una consecuencia en el salario por elegir la modalidad remota, o es ahora un estándar competitivo?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
 
 \section{Justificación}
 
@@ -89,7 +89,7 @@ Analizar el panorama laboral de los sectores tecnológicos emergentes mediante e
 \begin{enumerate}
   \item Determinar el promedio, mediana y desviación estándar de los salarios por industria para identificar cuál es la más rentable.
   \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una diferencia en el beneficio económico por la modalidad.
-  \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
+  \item Identificar los países con mayores ofertas de empleo y su nivel de remuneración promedio.
   \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
   \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 \end{enumerate}
@@ -451,7 +451,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 
-# 1. Calculamos las métricas con Desviación Estándar
+# 1. Calculamos 
 resumen_geo <- datos_finales %>%
   group_by(location, industry) %>%
   summarise(
@@ -492,6 +492,104 @@ resumen_geo %>%
 En el caso de New York y Quantum Computing, según el gráfico, esta es la línea que llega más alto ($155,611), si se ve la tabla, tiene el CV más bajo (36.5%) de ese grupo,es decir, en otras industrias/países Un CV cercano al 39% (como en AI en New York o Green Tech en Dubai) indica que hay mucha diferencia entre los sueldos más bajos y los más altos, es un mercado más "impredecible" pero en Quantum (NY) al ser el más bajo, significa que los salarios están más concentrados cerca del promedio ($155,611). Si se consigue un trabajo allí, es mucho más probable que el sueldo real esté muy cerca de esa cifra y no mucho más abajo. Además, en el número de vacantes por industria en cada ciudad es muy similar (alrededor de 400-440 por sector), Demostrando que los datos están balanceados. En resumen, a pesar de las subidas y bajadas, todas las líneas se mueven en un rango estrecho (entre $146k y $156k), así que la dispersión geográfica existe pero es moderada. ¿Pero por qué hay tanto cruces en las lineas? es evidencia de que no existe una "industria reina", sino que cada país compite ofreciendo mejores sueldos en el área donde quiere ser líder tecnológico.
 
 \section{Habilidades}
+
+\section{Tamaño de las empresas}
+
+Lo primero que se piensa del dataset, es que una empresa grande es la que  está ofreciendo un salario mucho mejor al de una empresa pequeña, sea cual sea la industria. Si observamos los siguientes resultados tenemos:
+
+```{r analisis_empresa_salario_maroon, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(scales)
+
+# 1. Preparación de datos (forzamos el orden)
+df_boxplot <- datos_finales %>%
+  mutate(company_size = factor(company_size, levels = c("Small", "Medium", "Large")))
+
+# 2. Gráfico de Cajas Estilizado
+ggplot(df_boxplot, aes(x = company_size, y = salary_usd, fill = company_size)) +
+  # El boxplot tradicional
+  geom_boxplot(alpha = 0.7, outlier.colour = "red", outlier.shape = 1) +
+  
+  # promedio como un punto de color diferente (rombo negro para contraste)
+  stat_summary(fun = mean, geom = "point", shape = 18, size = 4, color = "black") +
+  
+  # Añadimos etiqueta de valor del promedio
+  stat_summary(fun = mean, geom = "text", aes(label = paste0("$", round(..y.., 0))),
+               vjust = -1.5, color = "black", fontface = "bold", size = 3.5) +
+  
+  # APLICAMOS LOS COLORES ESPECÍFICOS (maroon, maroon3, maroon4)
+  scale_fill_manual(values = c("Small" = "turquoise", "Medium" = "turquoise3", "Large" = "turquoise4")) +
+  
+  # Eje y
+  scale_y_continuous(labels = dollar_format(), 
+                     breaks = seq(0, 300000, by = 50000), # Cambia 300000 por tu máximo real si es necesario
+                     expand = expansion(mult = c(0.1, 0.2))) +
+  labs(
+    title = "Distribución Salarial por Tamaño de Empresa",
+    subtitle = "La línea negra es la mediana; el rombo negro es el promedio",
+    x = "Tamaño de la Organización",
+    y = "Salario Anual (USD)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold"),
+        panel.grid.minor = element_blank()) # Limpiamos la cuadrícula secundaria para que se vea más ordenado
+```
+
+Lo primero que salta a la vista es la homogeneidad. A diferencia de otros mercados, aquí no vemos que las empresas grandes paguen significativamente más que las pequeñas. El sector tecnológico valora el talento de forma similar independientemente del tamaño de la empresa, y las medianas de los tres grupos están casi alineadas cerca de los $150,000. La línea negra (mediana) y el rombo negro (promedio) están prácticamente en el mismo lugar en todas las cajas, esto indica una distribución simétrica: no hay salarios extremadamente bajos o altos que estén "jalando" el promedio hacia arriba o hacia abajo de manera exagerada.
+
+\begin{center}
+\textbf{Tabla 3.4 Salarios por Industria y Tamaño de Organización}
+\end{center}
+
+```{r tabla_combinada_industria_tamano, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# 1. Creación de la tabla resumida
+tabla_maestra <- datos_finales %>%
+  group_by(industry, company_size) %>%
+  summarise(
+    Promedio = mean(salary_usd, na.rm = TRUE),
+    Desv_Est = sd(salary_usd, na.rm = TRUE),
+    CV = (Desv_Est / Promedio) * 100,
+    Total_Vacantes = n(),
+    .groups = "drop"
+  ) %>%
+  # Redondeamos y damos formato
+  mutate(
+    Promedio = paste0("$", format(round(Promedio, 0), big.mark = ",")),
+    Desv_Est = paste0("$", format(round(Desv_Est, 0), big.mark = ",")),
+    CV = paste0(round(CV, 1), "%")
+  ) %>%
+  # Ordenamos por industria y luego tamaño
+  mutate(company_size = factor(company_size, levels = c("Small", "Medium", "Large"))) %>%
+  arrange(industry, company_size)
+
+# 2. Renderizado de la tabla con kableExtra
+tabla_maestra %>%
+  kable(
+    col.names = c("Industria", "Tamaño", "Promedio", "Desv. Estándar", "CV (%)", "N° Vacantes"),
+    align = "llcccc"
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = F, 
+                position = "center") %>%
+  # Agrupamos las filas por industria para que se vea más limpio
+  collapse_rows(columns = 1, valign = "middle")
+```
+
+Ya se hizo un análizas general de los salarios que puede ofrecer una empresa según su tamaño. Pero si miramos más de cerca, y ubicamos cada tamaño de estas por industrias obtenemos datos mas específicados.
+
+* **Inteligencia Artificial (AI):** Es el sector con mayor estabilidad en sus promedios sin importar el tamaño de la empresa, la diferencia entre una empresa Small ($150,497) y una Large ($150,675) es mínima, de apenas $178. Así que en el área de IA, la competencia por el talento es tan feroz que las empresas pequeñas se ven obligadas a igualar los salarios de los gigantes tecnológicos para ser competitivas. El CV aumenta ligeramente en las empresas grandes (39.1%), indicando quizás una estructura de bonos o rangos más amplia en corporaciones.
+
+* **Blockchain:** A diferencia de IA, aquí sí se observa una jerarquía salarial clara basada en el tamaño de la organización. Los salarios escalan de forma ascendente: $145,366 (Small) → $150,581 (Medium) → $152,130 (Large). En este sector, las empresas más grandes ofrecen una prima salarial notable, es interesante observar que el CV disminuye a medida que la empresa crece (del 39.8% al 37.5%), lo que significa que los salarios en las empresas grandes de Blockchain son más predecibles y estandarizados que en las empresas emergentes.
+
+* **Green Tech:** Este sector muestra un comportamiento atípico donde las empresas medianas lideran la remuneración. Las empresas Medium ofrecen el promedio más alto ($151,075), superando incluso a las empresas Large ($149,100). Esto podría indicar que las empresas de tamaño intermedio en tecnología verde están en una fase de expansión agresiva o cuentan con financiamiento especializado que les permite superar los topes salariales de las grandes corporaciones tradicionales del sector.
+
+* **Quantum Computing:** Es el único sector donde las empresas pequeñas (Small) ofrecen el promedio más alto de toda la tabla ($153,581). Una empresa pequeña en computación cuántica paga, en promedio, más que una grande en cualquier otra industria. Esto refleja la altísima especialización requerida, ya que las startups cuánticas suelen estar respaldadas por capital de riesgo masivo y necesitan atraer a científicos de muy alto nivel, ofreciendo salarios premium para compensar el riesgo de una empresa pequeña. Además, tiene el CV más bajo del grupo (37%), lo que indica que los salarios para estos especialistas están muy bien definidos y hay poca "negociación" a la baja.
 
 \chapter{Conclusiones y Recomendaciones}
 

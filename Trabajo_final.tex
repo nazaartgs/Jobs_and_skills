@@ -178,14 +178,14 @@ puestos de trabajo. Ya no basta con mirar el ``título del cargo''; la
 compensación económica ahora parece estar sujeta a una red compleja de
 variables interconectadas.
 
-¿Existe una penalización salarial por elegir la modalidad remota, o es
-ahora un estándar competitivo? ¿Qué tanto peso real tienen ciertas
-habilidades (skills) frente a la ubicación geográfica?. A pesar de la
-abundancia de ofertas de trabajo, existe una falta de claridad sobre
-cuáles son los verdaderos determinantes del salario en el mercado
-actual, por lo cual, este estudio busca aclarar esas dudas mediante la
-estadística descriptiva y el uso de la plataforma GitHub y lenguajes de
-programación conocidos como R y Python.
+¿Es el tamaño de la empresa un predictor fiable del sueldo? o ¿Existe
+una consecuencia en el salario por elegir la modalidad remota, o es
+ahora un estándar competitivo?. A pesar de la abundancia de ofertas de
+trabajo, existe una falta de claridad sobre cuáles son los verdaderos
+determinantes del salario en el mercado actual, por lo cual, este
+estudio busca aclarar esas dudas mediante la estadística descriptiva y
+el uso de la plataforma GitHub y lenguajes de programación conocidos
+como R y Python.
 
 \section{Justificación}
 
@@ -209,7 +209,7 @@ impactan en la oferta salarial y la demanda de talento.
 \begin{enumerate}
   \item Determinar el promedio, mediana y desviación estándar de los salarios por industria para identificar cuál es la más rentable.
   \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una diferencia en el beneficio económico por la modalidad.
-  \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
+  \item Identificar los países con mayores ofertas de empleo y su nivel de remuneración promedio.
   \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
   \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 \end{enumerate}
@@ -578,6 +578,107 @@ tanto cruces en las lineas? es evidencia de que no existe una
 sueldos en el área donde quiere ser líder tecnológico.
 
 \section{Habilidades}
+
+\section{Tamaño de las empresas}
+
+Lo primero que se piensa del dataset, es que una empresa grande es la
+que está ofreciendo un salario mucho mejor al de una empresa pequeña,
+sea cual sea la industria. Si observamos los siguientes resultados
+tenemos:
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/analisis_empresa_salario_maroon-1} \end{center}
+
+Lo primero que salta a la vista es la homogeneidad. A diferencia de
+otros mercados, aquí no vemos que las empresas grandes paguen
+significativamente más que las pequeñas. El sector tecnológico valora el
+talento de forma similar independientemente del tamaño de la empresa, y
+las medianas de los tres grupos están casi alineadas cerca de los
+\$150,000. La línea negra (mediana) y el rombo negro (promedio) están
+prácticamente en el mismo lugar en todas las cajas, esto indica una
+distribución simétrica: no hay salarios extremadamente bajos o altos que
+estén ``jalando'' el promedio hacia arriba o hacia abajo de manera
+exagerada.
+
+\begin{center}
+\textbf{Tabla 3.4 Salarios por Industria y Tamaño de Organización}
+\end{center}
+
+\begin{longtable}[t]{llcccc}
+\toprule
+Industria & Tamaño & Promedio & Desv. Estándar & CV (\%) & N° Vacantes\\
+\midrule
+ & Small & \$150,497 & \$57,209 & 38\% & 813\\
+\cmidrule{2-6}\nopagebreak
+ & Medium & \$150,839 & \$57,458 & 38.1\% & 837\\
+\cmidrule{2-6}\nopagebreak
+\multirow{-3}{*}{\raggedright\arraybackslash AI} & Large & \$150,675 & \$58,937 & 39.1\% & 842\\
+\cmidrule{1-6}\pagebreak[0]
+ & Small & \$145,366 & \$57,821 & 39.8\% & 826\\
+\cmidrule{2-6}\nopagebreak
+ & Medium & \$150,581 & \$57,807 & 38.4\% & 823\\
+\cmidrule{2-6}\nopagebreak
+\multirow{-3}{*}{\raggedright\arraybackslash Blockchain} & Large & \$152,130 & \$57,072 & 37.5\% & 850\\
+\cmidrule{1-6}\pagebreak[0]
+ & Small & \$147,776 & \$58,076 & 39.3\% & 819\\
+\cmidrule{2-6}\nopagebreak
+ & Medium & \$151,075 & \$57,240 & 37.9\% & 839\\
+\cmidrule{2-6}\nopagebreak
+\multirow{-3}{*}{\raggedright\arraybackslash Green Tech} & Large & \$149,100 & \$56,887 & 38.2\% & 832\\
+\cmidrule{1-6}\pagebreak[0]
+ & Small & \$153,581 & \$56,872 & 37\% & 829\\
+\cmidrule{2-6}\nopagebreak
+ & Medium & \$148,244 & \$57,377 & 38.7\% & 829\\
+\cmidrule{2-6}\nopagebreak
+\multirow{-3}{*}{\raggedright\arraybackslash Quantum Computing} & Large & \$151,552 & \$57,553 & 38\% & 861\\
+\bottomrule
+\end{longtable}
+
+Ya se hizo un análizas general de los salarios que puede ofrecer una
+empresa según su tamaño. Pero si miramos más de cerca, y ubicamos cada
+tamaño de estas por industrias obtenemos datos mas específicados.
+
+\begin{itemize}
+\item
+  \textbf{Inteligencia Artificial (AI):} Es el sector con mayor
+  estabilidad en sus promedios sin importar el tamaño de la empresa, la
+  diferencia entre una empresa Small (\$150,497) y una Large (\$150,675)
+  es mínima, de apenas \$178. Así que en el área de IA, la competencia
+  por el talento es tan feroz que las empresas pequeñas se ven obligadas
+  a igualar los salarios de los gigantes tecnológicos para ser
+  competitivas. El CV aumenta ligeramente en las empresas grandes
+  (39.1\%), indicando quizás una estructura de bonos o rangos más amplia
+  en corporaciones.
+\item
+  \textbf{Blockchain:} A diferencia de IA, aquí sí se observa una
+  jerarquía salarial clara basada en el tamaño de la organización. Los
+  salarios escalan de forma ascendente: \$145,366 (Small) → \$150,581
+  (Medium) → \$152,130 (Large). En este sector, las empresas más grandes
+  ofrecen una prima salarial notable, es interesante observar que el CV
+  disminuye a medida que la empresa crece (del 39.8\% al 37.5\%), lo que
+  significa que los salarios en las empresas grandes de Blockchain son
+  más predecibles y estandarizados que en las empresas emergentes.
+\item
+  \textbf{Green Tech:} Este sector muestra un comportamiento atípico
+  donde las empresas medianas lideran la remuneración. Las empresas
+  Medium ofrecen el promedio más alto (\$151,075), superando incluso a
+  las empresas Large (\$149,100). Esto podría indicar que las empresas
+  de tamaño intermedio en tecnología verde están en una fase de
+  expansión agresiva o cuentan con financiamiento especializado que les
+  permite superar los topes salariales de las grandes corporaciones
+  tradicionales del sector.
+\item
+  \textbf{Quantum Computing:} Es el único sector donde las empresas
+  pequeñas (Small) ofrecen el promedio más alto de toda la tabla
+  (\$153,581). Una empresa pequeña en computación cuántica paga, en
+  promedio, más que una grande en cualquier otra industria. Esto refleja
+  la altísima especialización requerida, ya que las startups cuánticas
+  suelen estar respaldadas por capital de riesgo masivo y necesitan
+  atraer a científicos de muy alto nivel, ofreciendo salarios premium
+  para compensar el riesgo de una empresa pequeña. Además, tiene el CV
+  más bajo del grupo (37\%), lo que indica que los salarios para estos
+  especialistas están muy bien definidos y hay poca ``negociación'' a la
+  baja.
+\end{itemize}
 
 \chapter{Conclusiones y Recomendaciones}
 
