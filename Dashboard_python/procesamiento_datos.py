@@ -15,7 +15,8 @@ def cargar_datos():
     df =pd.read_csv(ruta_csv)
 
     #Limpieza: Eliminas filas duplicadas, el drop_duplicates evita contar dos veces el mismo empleo
-    df = df.drop_duplicates(subset=['job_id'])
+    if 'job_id' in df.columns:
+        df = df.drop_duplicates(subset=['job_id'])
 
     #Limpieza: manejo de valores nulos (vacios)
     #Limpieza: si falta un dato de salario, dropna elimina la fila donde falta informacion critica
