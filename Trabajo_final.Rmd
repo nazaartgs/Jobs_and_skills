@@ -74,6 +74,8 @@ En la última década, el mercado laboral global ha experimentado una transforma
 
 ¿Es el tamaño de la empresa un predictor fiable del sueldo? o ¿Existe una consecuencia en el salario por elegir la modalidad remota, o es ahora un estándar competitivo?. A pesar de la abundancia de ofertas de trabajo, existe una falta de claridad sobre cuáles son los verdaderos determinantes del salario en el mercado actual, por lo cual, este estudio busca aclarar esas dudas mediante la estadística descriptiva y el uso de la plataforma GitHub y lenguajes de programación conocidos como R y Python.
 
+Fuente O. (5 de diciembre del 2024). "las 13 mayores tendencias tecnológicas para 2025" desde una pagina web llamada IBESbusiness school, nos habla de como la revolución digital con la llegada de la IA ha hecho que el ritmo de adopción de la tecnología se acelere exponencialmente, menciona algunas de las habilidades que tenemos en el dataset y analiza el posible campo que podria estar mejorando en 2025. a lo que nos llevó a plantear el siguiente trabajo para saber si en el caso de que alguien manejara esas industrias, qué beneficios o requisitos podría tener y necesitar.
+
 \section{Justificación}
 
 La importancia de este estudio reside en la necesidad de entender cómo se construye el salario en una era donde las reglas del mercado laboral han cambiado. Actualmente, existe una gran incertidumbre tanto para los profesionales como para las empresas sobre qué factores determinan realmente el pago de un trabajador. No se trata solo de un cargo, sino de una combinación de variables que este estudio analiza a fondo.
@@ -138,19 +140,19 @@ Como se observa en la siguiente tabla, se realizó un diagnóstico inicial sobre
 ```{r carga_y_limpieza_final, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 
-# A. Carga del archivo único
+# Carga del archivo único
 ruta_csv <- "Data/Data_sinprocesar/10. Job y Skills.csv"
 raw_data <- read_csv(ruta_csv, show_col_types = FALSE)
 
-# B. Limpieza 
+# Limpieza 
 datos_finales <- raw_data %>%
-  # 1. Separamos habilidades 
+  # Separamos habilidades 
   separate_rows(skills_required, sep = ",") %>%
-  # 2. Quitamos espacios en blanco
+  # Quitamos espacios en blanco
   mutate(skills_required = str_trim(skills_required)) %>%
-  # 3. Filtro de seguridad para salarios
+  # Filtro de seguridad para salarios
   filter(!is.na(salary_usd)) %>%
-  # 4.Eliminamos los duplicados creados por separate_rows
+  # Eliminamos los duplicados creados por separate_rows
   distinct(job_id, .keep_all = TRUE) 
 ```
 
@@ -159,7 +161,7 @@ datos_finales <- raw_data %>%
 \end{center}
 
 ```{r}
-# 1. Definimos la función de diagnóstico
+# Definimos la función de diagnóstico
 diagnosticar_nulos <- function(df) {
   df %>%
     summarise(across(everything(), ~sum(is.na(.)))) %>%
@@ -167,12 +169,12 @@ diagnosticar_nulos <- function(df) {
     mutate(Porcentaje = (Total_Nulos / nrow(df)) * 100)
 }
 
-# 2. cargamos los reportes (Aquí creamos los objetos para que no den error)
+# cargamos los reportes
 # Usamos 'raw_data' para el estado inicial y 'datos_finales' para el final
 reporte_inicial <- diagnosticar_nulos(raw_data)
 reporte_final   <- diagnosticar_nulos(datos_finales)
 
-# 3. CREAMOS LA TABLA PARA EL PDF
+# Creamos la tabla
 library(knitr)
 kable(reporte_inicial, 
       col.names = c("Variable", "Total Nulos", "Porcentaje (%)"),
@@ -235,16 +237,16 @@ library(ggplot2)
 library(scales)
 library(dplyr)
 
-# 1. Aseguramos que la tabla de datos esté lista
+# Aseguramos que la tabla de datos esté lista
 estadisticas_salario <- datos_finales %>%
   group_by(industry) %>%
   summarise(Promedio = mean(salary_usd, na.rm = TRUE)) %>%
   arrange(desc(Promedio))
 
-# 2. Colores
+# Colores
 mis_colores <- c("dodgerblue", "springgreen3", "gold", "deeppink")
 
-# 3. Gráfico
+# Gráfico
 ggplot(estadisticas_salario, aes(x = reorder(industry, -Promedio), y = Promedio, fill = industry)) +
   geom_col(color = "black", size = 0.3, width = 0.7) +
   # Ajuste del número: vjust = -1.5 para alejarlo de la punta
@@ -277,14 +279,14 @@ library(ggplot2)
 library(scales)
 library(dplyr)
 
-# 1. Aseguramos el orden de las industrias por el promedio de salario
+# Aseguramos el orden de las industrias por el promedio de salario
 datos_ordenados <- datos_finales %>%
   mutate(industry = reorder(industry, -salary_usd, FUN = mean))
 
-# 2. Definimos la paleta de colores para que coincida con el de barras
+# Definimos la paleta de colores
 mis_colores <- c("dodgerblue", "springgreen3", "gold", "deeppink")
 
-# 3. Creación del gráfico
+# Creación del gráfico
 ggplot(datos_ordenados, aes(x = industry, y = salary_usd, fill = industry)) +
   # Dibujamos las cajas con bordes negros finos
   geom_boxplot(color = "black", alpha = 0.8, outlier.color = "red", outlier.shape = 1) +
@@ -312,6 +314,8 @@ ggplot(datos_ordenados, aes(x = industry, y = salary_usd, fill = industry)) +
 Todas las cajas empiezan cerca de los $100k y terminan cerca de los $200k, esto significa que el 50% central de los trabajadores en cualquier sector gana en ese rango. Por otro lado, Las medianas (la línea negra dentro de la caja) están casi justo en el centro, indicando que la distribución de los salarios es bastante simétrica o "normal"; no hay un sesgo exagerado hacia salarios muy bajos o muy altos.
 
 El gráfico también menciona puntos rojos (aunque en la imagen se ven poco), que serían los salarios "estrella" o muy bajos, entonces al no haber puntos extremadamente alejados de los bigotes, se entiende que los sueldos están bien compactados en el rango de $60k a $240k. Finalmente el Green Tech es el único que tiene la mediana ligeramente más abajo que las demás, lo que coincide con que es el promedio más bajo de la tabla.
+
+\newpage
 
 \section{Impacto Remoto}
 
@@ -358,12 +362,14 @@ ggplot(comparativa_data, aes(x = industry, y = Promedio, fill = remote_option)) 
 
 Lo primero que salta a la vista es que las barras de cada sector tienen alturas casi idénticas, indicando una semejanza salarial entre las modalidades remota y presencial en las industrias tecnológicas analizadas. Es decir, que en el mercado laboral moderno de alta tecnología (AI, Quantum, etc.), las empresas están valorando el talento y el resultado por encima de la ubicación física del trabajador. Si lo analizamos por industria, podemos ver que en *AI*, el trabajo remoto ($151,753) paga ligeramente más que el presencial ($149,600) y en *Quantum Computing*, ocurre lo mismo ($151,824 remoto vs $150,412 presencial). Esto sugiere que las empresas están dispuestas a pagar primas incluso superiores para captar especialistas globales en áreas críticas, sin importar dónde residan. Por otro lado, En *Blockchain* el salario presencial lidera por un margen mínimo ($149,961 vs $148,836) y en *Green Tech*, la diferencia es de menos de $800 dólares mensuales, aquí la modalidad es prácticamente indiferente para la compensación económica. 
 
+\newpage
+
 \begin{center}
 \textbf{Tabla 3.2.1 Comparativa Numérica de Salarios por Modalidad}
 \end{center}
 
 ```{r}
-# 3. Tabla Resumen
+# Tabla Resumen
 # Transformamos los datos para que salgan en dos columnas: Remoto | Presencial
 comparativa_data %>%
   pivot_wider(names_from = remote_option, values_from = Promedio) %>%
@@ -411,6 +417,9 @@ Ahora bien, en la parte estadística podemos observar algunas cosas:
 
 * **La desviación estándar:** se mantiene constante cerca de los $57,000 - $58,000 USD. Esto refuerza la idea de la equidad salarial. Las empresas no solo están pagando promedios similares, sino que están ofreciendo rangos de sueldos (mínimos y máximos) muy parecidos, sin importar si el empleado está en la oficina o en su casa.
 
+
+\newpage
+
 \section{Análisis Geográfico}
 
 En lugar de una sola industria ganando en todo el mundo, vemos que el liderazgo depende de la ubicación:
@@ -419,12 +428,12 @@ En lugar de una sola industria ganando en todo el mundo, vemos que el liderazgo 
 library(ggplot2)
 library(dplyr)
 
-# 1. Calculamos los promedios cruzados
+# Calculamos los promedios cruzados
 resumen_lineas <- datos_finales %>%
   group_by(location, industry) %>%
   summarise(Promedio = mean(salary_usd, na.rm = TRUE), .groups = 'drop')
 
-# 2. Creamos el gráfico de líneas
+# Creamos el gráfico de líneas
 ggplot(resumen_lineas, aes(x = location, y = Promedio, group = industry, color = industry)) +
   geom_line(size = 1.2) +
   geom_point(size = 3) +
@@ -440,6 +449,8 @@ ggplot(resumen_lineas, aes(x = location, y = Promedio, group = industry, color =
 
 New York y London son los "picos" del gráfico. Si nos fijamos, Quantum Computing alcanza su máximo en New York, mientras que AI domina claramente en London, esto sugiere que estas ciudades son un punto central especializados para esas tecnologías. A cambio Singapore y Tokyo, muestran una caída general en casi todas las líneas, ya que aunque son centros tecnológicos y potencias mundiales en tecnología (los datos aquí siempre tienen una explicación económica detrás), el rango salarial promedio en estas ciudades asiáticas es ligeramente más conservador en comparación con el mercado de habla inglés para estas industrias específicas. Además, Quantum Computing (Línea Morada) es la más "saltarina", ya que tiene picos muy altos en New York y Berlín, pero cae fuerte en Singapore, mientras que Blockchain (Línea Verde) es una de las más estables en el centro del gráfico (Dubai, London, New York) y parece ser una industria con sueldos más estandarizados a nivel global. La línea de Green Tech muestra un comportamiento de alta volatilidad y contrastes marcados dependiendo de la ubicación geográfica. La caída más estrepitosa, alcanzando el punto más bajo de todo el gráfico (aproximadamente $146,333 según las tablas de respaldo), que en industrias como Blockchain suben en Dubái, Green Tech parece tener la menor prioridad salarial en esta ubicación. Tras su caída en Dubái, la línea muestra una tendencia hacia arriba constante al pasar por Londres hasta llegar a su máximo en New York (alcanzando cerca de $153,675). En esta ciudad, Green Tech se posiciona como la segunda industria mejor pagada, solo por debajo de Quantum Computing.
 
+\newpage
+
 \begin{center}
 \textbf{Tabla 3.3 Análisis Salarial por Ubicación e Industria}
 \end{center}
@@ -451,7 +462,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 
-# 1. Calculamos 
+# Calculamos 
 resumen_geo <- datos_finales %>%
   group_by(location, industry) %>%
   summarise(
@@ -463,10 +474,10 @@ resumen_geo <- datos_finales %>%
   ) %>%
   arrange(location)
 
-# 2. Identificar grupos para los colores por país
+# Identificar grupos para los colores por país
 counts <- table(resumen_geo$location)
 
-# 3. Crear la tabla ajustada al PDF
+# Crear la tabla
 resumen_geo %>%
   select(-location) %>% 
   kable(
@@ -491,7 +502,177 @@ resumen_geo %>%
 
 En el caso de New York y Quantum Computing, según el gráfico, esta es la línea que llega más alto ($155,611), si se ve la tabla, tiene el CV más bajo (36.5%) de ese grupo,es decir, en otras industrias/países Un CV cercano al 39% (como en AI en New York o Green Tech en Dubai) indica que hay mucha diferencia entre los sueldos más bajos y los más altos, es un mercado más "impredecible" pero en Quantum (NY) al ser el más bajo, significa que los salarios están más concentrados cerca del promedio ($155,611). Si se consigue un trabajo allí, es mucho más probable que el sueldo real esté muy cerca de esa cifra y no mucho más abajo. Además, en el número de vacantes por industria en cada ciudad es muy similar (alrededor de 400-440 por sector), Demostrando que los datos están balanceados. En resumen, a pesar de las subidas y bajadas, todas las líneas se mueven en un rango estrecho (entre $146k y $156k), así que la dispersión geográfica existe pero es moderada. ¿Pero por qué hay tanto cruces en las lineas? es evidencia de que no existe una "industria reina", sino que cada país compite ofreciendo mejores sueldos en el área donde quiere ser líder tecnológico.
 
+\newpage
+
 \section{Habilidades}
+
+Hemos visto los salarios promedios, también si hay diferencias importantes en alguna modalidad de trabajo y como se maneja el sueldo segun la industria tecnológica. Pero sería importante explorar cuantas habilidades son solicitadas por industria y que tanto aparecen en ellas.
+
+```{r grafico_habilidades_ia, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7, fig.height=5}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+# Procesamiento exacto para IA 
+df_ia <- datos_finales %>%
+  separate_rows(skills_required, sep = ",") %>%
+  mutate(Habilidad = str_trim(skills_required) %>% str_to_title()) %>%
+  filter(Habilidad != "", industry == "AI") %>%
+  group_by(Habilidad) %>%
+  summarise(Frecuencia = n(), .groups = "drop") %>%
+  slice_max(Frecuencia, n = 8, with_ties = FALSE)
+
+# Creación del gráfico 
+ggplot(df_ia, aes(x = reorder(Habilidad, Frecuencia), y = Frecuencia)) +
+  geom_col(fill = "maroon2", alpha = 0.8) +
+  geom_text(aes(label = Frecuencia), 
+            hjust = -0.2, 
+            size = 4, 
+            fontface = "bold") +
+  coord_flip() +
+  # Expandimos el eje Y
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) + 
+  labs(
+    title = "Inteligencia Artificial (AI)",
+    subtitle = "Menciones totales detectadas en vacantes del sector",
+    x = "Habilidad",
+    y = "Cantidad de Menciones"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank(),
+    # Añadimos un margen derecho extra al gráfico completo para evitar el corte
+    plot.margin = margin(10, 30, 10, 10) 
+  )
+```
+
+Tensorflow (*1,690* menciones) y Pytorch (*1,637* menciones) están prácticamente en un empate técnico. Esto indica que para trabajar en IA, no basta con saber uno; el mercado demanda el dominio de ambas librerías principales de redes neuronales (modelos matemáticos inspirados en el cerebro humano) siendo TensorFlow y PyTorch simplemente las "calculadoras gigantes" o librerías que los programadores usan para no tener que escribir todas las fórmulas matemáticas desde cero. Y Python (*1,657* menciones) aparece como el lenguaje base indispensable que conecta todo el ecosistema.
+
+```{r grafico_habilidades_blockchain, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7, fig.height=5}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+# Procesamiento de datos específico para Blockchain
+df_blockchain <- datos_finales %>%
+  separate_rows(skills_required, sep = ",") %>%
+  mutate(Habilidad = str_trim(skills_required) %>% str_to_title()) %>%
+  filter(Habilidad != "", industry == "Blockchain") %>%
+  group_by(Habilidad) %>%
+  summarise(Frecuencia = n(), .groups = "drop") %>%
+  slice_max(Frecuencia, n = 8, with_ties = FALSE)
+
+# Creación del gráfico
+ggplot(df_blockchain, aes(x = reorder(Habilidad, Frecuencia), y = Frecuencia)) +
+  geom_col(fill = "green2", alpha = 0.8) + 
+  # Etiquetas de datos
+  geom_text(aes(label = Frecuencia), 
+            hjust = -0.2, 
+            size = 4, 
+            fontface = "bold") +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) + 
+  labs(
+    title = "Blockchain",
+    subtitle = "Cantidad de menciones por habilidades",
+    x = "Habilidad",
+    y = "Cantidad de Menciones"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank(),
+    plot.margin = margin(10, 30, 10, 10)
+  )
+``` 
+
+Ethereum (*1,683* menciones) lidera como la plataforma principal de ejecución. Solidity (*1,669* menciones), al ser el lenguaje específico para contratos en *Ethereum* (Es como una computadora global gigante donde cualquiera puede subir programas que nadie puede borrar ni editar, no es solo una moneda, es una plataforma para ejecutar aplicaciones.), confirma que la mayoría de las vacantes buscan desarrolladores "Backend Web3". El "Backend" es todo lo que pasa detrás de una aplicación (donde están los datos y la lógica), en la "Web3" (internet basada en blockchain), en lugar de usar una base de datos normal, el backend son esos programas (contratos inteligentes) que corren en Ethereum usando el lenguaje Solidity. y Rust (*1,646* menciones) es la habilidad que cierra el podio, destacando su importancia para la seguridad y el rendimiento en redes como Solana o Polkadot, que son redes de blockchain (competidoras de Ethereum) que se enfocan en ser muy rápidas (rendimiento). Usan Rust porque necesitan procesar miles de transacciones por segundo sin fallar.
+
+```{r grafico_habilidades_quantum, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7, fig.height=5}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+# Procesamiento de datos específico para Quantum Computing
+df_quantum <- datos_finales %>%
+  separate_rows(skills_required, sep = ",") %>%
+  mutate(Habilidad = str_trim(skills_required) %>% str_to_title()) %>%
+  filter(Habilidad != "", industry == "Quantum Computing") %>%
+  group_by(Habilidad) %>%
+  summarise(Frecuencia = n(), .groups = "drop") %>%
+  slice_max(Frecuencia, n = 8, with_ties = FALSE)
+
+#Creación del gráfico
+ggplot(df_quantum, aes(x = reorder(Habilidad, Frecuencia), y = Frecuencia)) +
+  geom_col(fill = "yellow2", alpha = 0.8) + 
+  geom_text(aes(label = Frecuencia), 
+            hjust = -0.2, 
+            size = 4, 
+            fontface = "bold") +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) + 
+  labs(
+    title = "Quantum Computing",
+    subtitle = "Demanda de competencias técnicas especializadas",
+    x = "Habilidad",
+    y = "Cantidad de Menciones"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank(),
+    plot.margin = margin(10, 35, 10, 10)
+  )
+```
+
+Aquí los datos reflejan un sector donde la teoría matemática es tan importante como la programación.
+
+Quantum Algorithms (*1,690* menciones) es la competencia más buscada, lo que sugiere que las empresas necesitan gente que sepa diseñar soluciones antes de codificarlas. Qiskit (*1,682* menciones) se posiciona como el estándar de la industria para la programación cuántica práctica (impulsado por IBM), qiskit es un software de código abierto creado por IBM para que la gente pueda programar experimentos en sus computadoras cuánticas reales a través de la nube, es el estándar actual porque IBM fue de los primeros en dejar que el público usara sus procesadores cuánticos. Asi que, si sabes Qiskit, básicamente sabes usar la tecnología de IBM. Y Linear Algebra tiene *1,666* menciones, es muy interesante ver una habilidad puramente matemática con tantas menciones, confirmando que en Computación Cuántica, el fundamento teórico es un requisito eliminatorio.
+
+Es decir, En el mundo laboral, un requisito eliminatorio (o deal-breaker) significa que si no lo tienes, quedas fuera del proceso de selección inmediatamente. En Computación Cuántica, no basta con saber programar, como todo se basa en espacios vectoriales, matrices y números complejos, si un candidato no domina el Álgebra Lineal, no podrá entender cómo funcionan los cubits o las compuertas cuánticas. Es el "filtro" principal antes de ver cualquier otra habilidad.
+
+```{r grafico_habilidades_greentech, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7, fig.height=5}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+# Procesamiento de datos específico para Green Tech
+df_green <- datos_finales %>%
+  separate_rows(skills_required, sep = ",") %>%
+  mutate(Habilidad = str_trim(skills_required) %>% str_to_title()) %>%
+  filter(Habilidad != "", industry == "Green Tech") %>%
+  group_by(Habilidad) %>%
+  summarise(Frecuencia = n(), .groups = "drop") %>%
+  slice_max(Frecuencia, n = 8, with_ties = FALSE)
+
+# Creación del gráfico
+ggplot(df_green, aes(x = reorder(Habilidad, Frecuencia), y = Frecuencia)) +
+  geom_col(fill = "cyan2", alpha = 0.8) + 
+  # Etiquetas de datos con ajuste horizontal
+  geom_text(aes(label = Frecuencia), 
+            hjust = -0.2, 
+            size = 4, 
+            fontface = "bold") +
+  coord_flip() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) + 
+  labs(
+    title = "Green Tech",
+    subtitle = "Competencias más solicitadas en tecnología ambiental",
+    x = "Habilidad",
+    y = "Cantidad de Menciones"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank(),
+    plot.margin = margin(10, 35, 10, 10)
+  )
+```
+
+A diferencia de los otros, este sector tiene menciones mucho más altas ($2,490$ cada una), lo que indica una alta concentración de requisitos específicos. Energy Modeling ($2,490$ menciones) y Climate Data Analysis ($2,490$ menciones) aparecen con el mismo peso exacto. Esto sugiere que las empresas de tecnología ambiental buscan perfiles híbridos que puedan simular sistemas de energía y, al mismo tiempo, procesar grandes volúmenes de datos climáticos para la toma de decisiones. Es un sector donde la ciencia de datos se aplica directamente a la sostenibilidad operativa.
+
+\newpage 
 
 \section{Tamaño de las empresas}
 
@@ -502,13 +683,12 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 
-# 1. Preparación de datos (forzamos el orden)
+# Preparación de datos
 df_boxplot <- datos_finales %>%
   mutate(company_size = factor(company_size, levels = c("Small", "Medium", "Large")))
 
-# 2. Gráfico de Cajas Estilizado
+# Gráfico de Cajas
 ggplot(df_boxplot, aes(x = company_size, y = salary_usd, fill = company_size)) +
-  # El boxplot tradicional
   geom_boxplot(alpha = 0.7, outlier.colour = "red", outlier.shape = 1) +
   
   # promedio como un punto de color diferente (rombo negro para contraste)
@@ -518,7 +698,7 @@ ggplot(df_boxplot, aes(x = company_size, y = salary_usd, fill = company_size)) +
   stat_summary(fun = mean, geom = "text", aes(label = paste0("$", round(..y.., 0))),
                vjust = -1.5, color = "black", fontface = "bold", size = 3.5) +
   
-  # APLICAMOS LOS COLORES ESPECÍFICOS (maroon, maroon3, maroon4)
+  # Aplicamos colores
   scale_fill_manual(values = c("Small" = "turquoise", "Medium" = "turquoise3", "Large" = "turquoise4")) +
   
   # Eje y
@@ -539,6 +719,9 @@ ggplot(df_boxplot, aes(x = company_size, y = salary_usd, fill = company_size)) +
 
 Lo primero que salta a la vista es la homogeneidad. A diferencia de otros mercados, aquí no vemos que las empresas grandes paguen significativamente más que las pequeñas. El sector tecnológico valora el talento de forma similar independientemente del tamaño de la empresa, y las medianas de los tres grupos están casi alineadas cerca de los $150,000. La línea negra (mediana) y el rombo negro (promedio) están prácticamente en el mismo lugar en todas las cajas, esto indica una distribución simétrica: no hay salarios extremadamente bajos o altos que estén "jalando" el promedio hacia arriba o hacia abajo de manera exagerada.
 
+
+\newpage
+
 \begin{center}
 \textbf{Tabla 3.4 Salarios por Industria y Tamaño de Organización}
 \end{center}
@@ -548,7 +731,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 
-# 1. Creación de la tabla resumida
+# Creación de la tabla resumida
 tabla_maestra <- datos_finales %>%
   group_by(industry, company_size) %>%
   summarise(
@@ -568,7 +751,7 @@ tabla_maestra <- datos_finales %>%
   mutate(company_size = factor(company_size, levels = c("Small", "Medium", "Large"))) %>%
   arrange(industry, company_size)
 
-# 2. Renderizado de la tabla con kableExtra
+# tabla con kableExtra
 tabla_maestra %>%
   kable(
     col.names = c("Industria", "Tamaño", "Promedio", "Desv. Estándar", "CV (%)", "N° Vacantes"),
@@ -592,5 +775,15 @@ Ya se hizo un análizas general de los salarios que puede ofrecer una empresa se
 * **Quantum Computing:** Es el único sector donde las empresas pequeñas (Small) ofrecen el promedio más alto de toda la tabla ($153,581). Una empresa pequeña en computación cuántica paga, en promedio, más que una grande en cualquier otra industria. Esto refleja la altísima especialización requerida, ya que las startups cuánticas suelen estar respaldadas por capital de riesgo masivo y necesitan atraer a científicos de muy alto nivel, ofreciendo salarios premium para compensar el riesgo de una empresa pequeña. Además, tiene el CV más bajo del grupo (37%), lo que indica que los salarios para estos especialistas están muy bien definidos y hay poca "negociación" a la baja.
 
 \chapter{Conclusiones y Recomendaciones}
+
+Tras el análisis estadístico descriptivo de las variables salariales y los requerimientos técnicos en las industrias de IA, Blockchain, Green Tech y Quantum Computing, se presentan lo siguiente:
+
+Uno de los hallazgos más importantes de esta investigación es que el tamaño de la organización no condiciona el salario. Al observar las distribuciones en los diagramas de caja, las medianas se mantienen estables alrededor de los $150,000. Esto demuestra que en sectores de alta tecnología, el valor de mercado está en el conocimiento y no en la infraestructura de la empresa; una startup pequeña está dispuesta a pagar lo mismo que una gran corporación para atraer al talento adecuado.  Por otro lado, se logró identificar con éxito que cada sector tiene "habilidades clave" que son requisitos casi obligatorios para entrar al mercado; En IA y Blockchain, el mercado es puramente práctico. El dominio de herramientas como TensorFlow/PyTorch o el lenguaje Solidity son los pilares que sostienen la demanda laboral. A cambio, en Quantum Computing y Green Tech, la investigación revela un perfil más académico y analítico, no solo se busca programar, sino entender la base científica detrás, como el Álgebra Lineal y el Modelado de Datos Climáticos. Asimismo, A pesar de ser industrias modernas y a veces consideradas volátiles, los datos muestran una homogeneidad salarial notable. Los Coeficientes de Variación cercanos al 38% indican que, aunque hay espacio para la negociación, existe un "estándar de industria" bien definido. La computación cuántica resalta como la mayor oportunidad para profesionales de alto nivel, presentando los salarios más competitivos incluso en sus etapas más tempranas de desarrollo.
+
+También, basado en los análisis que hemos realizado, la industria más rentable (la que presenta el promedio salarial más alto) es Quantum Computing. Aunque tiene el promedio más alto, la desviación estándar nos indica que existe una dispersión importante. Dándonos a entender que, si bien puedes encontrar sueldos muy altos, también hay variabilidad dependiendo de la especialización exacta (como vimos con el peso del Álgebra Lineal). Y Quantum Computing es el sector con el CV más bajo (37%) del estudio, sugiriendo que los salarios aquí son un poco más predecibles y estables en comparación con áreas como IA o Blockchain, donde la variación es ligeramente mayor. Con respecto a la identificación de los países con mayor volumen de vacantes y sus niveles salariales, se descubrió que hay países que tienen muchísimas ofertas de empleo (los "centros comerciales" de la tecnología). Pero lo curioso es que, aunque haya muchos empleos, el sueldo promedio no cambia mucho de un país a otro, si un país tiene muchas ofertas en IA o Quantum, el sueldo será alto por defecto porque la competencia es *mundial*. La razón es que como estas habilidades son tan difíciles de encontrar, las empresas de todo el mundo compiten entre sí, si una empresa en un país paga poco, el trabajador simplemente se va a otra que pague el estándar de $150,000. Para un profesional de estas áreas, la ubicación geográfica está dejando de ser una limitante para acceder a sueldos de alto nivel, ya que la naturaleza crítica de las habilidades (como las identificadas en IA o Blockchain) estandariza la remuneración en los principales mercados del mundo. En conclusión, este estudio cumple con todos los objetivos planteados, entregando una visión clara y estadísticamente respaldada del panorama laboral actual.
+
+Se recomienda a los aspirantes a ingresar al mercado tecnológico no limitar su formación al aprendizaje de lenguajes de programación básicos. Los datos sugieren que la especialización en herramientas críticas (como Qiskit para cuántica o Solidity para blockchain) es lo que realmente permite acceder a los rangos salariales superiores. Además, para sectores como Quantum Computing, es vital fortalecer la base en Ciencias Exactas (Álgebra Lineal y Probabilidad), ya que actúan como un filtro de selección en las ofertas de empleo. Y dado que el tamaño de la empresa no es un factor determinante para el salario, las Startups y empresas pequeñas deben enfocar sus esfuerzos de reclutamiento en ofrecer beneficios no monetarios (cultura laboral, flexibilidad, trabajo remoto) para competir con las grandes corporaciones, ya que a nivel de remuneración base, el mercado está muy equilibrado y la competencia por el talento especializado es feroz. también, se sugiere ampliar este análisis estadístico incorporando la variable de "Años de Experiencia" y "Nivel Educativo", para determinar si la estabilidad salarial observada se mantiene en niveles Junior o si es una característica exclusiva de perfiles Senior. Asimismo, sería valioso realizar un estudio longitudinal para observar cómo evolucionan las habilidades en Green Tech, dado que es un sector en constante cambio por las regulaciones climáticas globales.
+
+
 
 
