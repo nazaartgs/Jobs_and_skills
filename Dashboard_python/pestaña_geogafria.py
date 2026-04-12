@@ -2,24 +2,49 @@ import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
 
-def tierra():  
+def tierra(df):  
 
-    df_prueba = pd.DataFrame({
-        'ciudad': ['Singapore', 'Tokyo', 'London', 'New York', 'Dubai', 'Berlin'],
-        'salario_promedio': [150194, 149483, 152260, 152266, 148622, 147965],
-        'vacantes': [1640, 1660, 1656, 1689, 1682, 1673],
-        'lat': [1.3521, 35.6895, 51.5074, 40.7128, 25.2048, 52.5200],
-        'lon': [103.8198, 139.6917, -0.1278, -74.0060, 55.2708, 13.4050]
-    })
+    st.subheader("Análisis Geográfico: Salarios y Vacantes por Industria")
+
+    coordenadas = {
+        'Singapore': {'lat': 1.3521, 'lon': 103.8198},
+        'Tokyo': {'lat': 35.6895, 'lon': 139.6917},
+        'London': {'lat': 51.5074, 'lon': -0.1278},
+        'New York': {'lat': 40.7128, 'lon': -74.0060},
+        'Dubai': {'lat': 25.2048, 'lon': 55.2708},
+        'Berlin': {'lat': 52.5200, 'lon': 13.4050}
+    }
+
+    df_geo = df.groupby(['location', 'industry']).agg(
+        salario_promedio=('salary_usd', 'mean'),
+        vacantes=('job_id', 'count')
+    ).reset_index()
+
+    df_mapa = df.groupby('location').agg(
+    salario_promedio=('salary_usd', 'mean'),
+    vacantes=('job_id', 'count')
+).reset_index()
+
+    df_mapa['lat'] = df_mapa['location'].map(lambda x: coordenadas.get(x, {}).get('lat'))
+    df_mapa['lon'] = df_mapa['location'].map(lambda x: coordenadas.get(x, {}).get('lon'))
+    df_mapa = df_mapa.dropna(subset=['lat', 'lon'])
+
+    hover_text = []
+    for loc in df_mapa['location']:
+        detalles = df_geo[df_geo['location'] == loc]
+        texto = f"<b>{loc}</b><br>"
+        for _, row in detalles.iterrows():
+            texto += f"• {row['industry']}: {row['vacantes']} vacantes<br>"
+        hover_text.append(texto)
 
     fig = go.Figure(
         data=go.Scattergeo(
-            lat=df_prueba['lat'],
-            lon=df_prueba['lon'],
+            lat=df_mapa['lat'],
+            lon=df_mapa['lon'],
             mode='markers',
             marker=dict(
-                size=df_prueba['vacantes']/50, 
-                color=df_prueba['salario_promedio'],
+                size=df_mapa['vacantes'] / df_mapa['vacantes'].max() * 50, 
+                color=df_mapa['salario_promedio'],
                 colorscale='Plasma',
                 showscale=True,
                 colorbar=dict(
@@ -30,9 +55,8 @@ def tierra():
                     len=0.4
                 )
             ),
-            text=df_prueba['ciudad'],
-            hovertemplate=(
-                "<b>%{text}</b><br>" + "Salario: $%{marker.color:,.0f}<br>" + "Lat: %{lat:.2f}, Lon: %{lon:.2f}" + "<extra></extra>")
+            text=hover_text,
+            hoverinfo='text'
         ),
     )
 
