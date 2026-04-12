@@ -22,8 +22,7 @@ def tierra(df):
 
     df_mapa = df.groupby('location').agg(
     salario_promedio=('salary_usd', 'mean'),
-    vacantes=('job_id', 'count')
-).reset_index()
+    vacantes=('job_id', 'count')).reset_index()
 
     df_mapa['lat'] = df_mapa['location'].map(lambda x: coordenadas.get(x, {}).get('lat'))
     df_mapa['lon'] = df_mapa['location'].map(lambda x: coordenadas.get(x, {}).get('lon'))
@@ -37,6 +36,42 @@ def tierra(df):
             texto += f"• {row['industry']}: {row['vacantes']} vacantes<br>"
         hover_text.append(texto)
 
+    # --- Sección de Consulta Detallada ---
+    st.divider()
+    st.subheader("Consulta de Salarios por Industria")
+
+    # 1. Creamos dos columnas para los selectores
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # Lista única de ubicaciones disponibles en el dataset procesado
+        ubicaciones = sorted(df_geo['location'].unique())
+        loc_seleccionada = st.selectbox("Selecciona una Ciudad:", ubicaciones)
+
+    with col2:
+        # Filtramos industrias que solo existan en esa ciudad
+        industrias_disponibles = sorted(df_geo[df_geo['location'] == loc_seleccionada]['industry'].unique())
+        ind_seleccionada = st.selectbox("Selecciona una Industria:", industrias_disponibles)
+
+    # 2. Filtrar el dato específico
+    dato_final = df_geo[
+        (df_geo['location'] == loc_seleccionada) & 
+        (df_geo['industry'] == ind_seleccionada)
+    ]
+
+    if not dato_final.empty:
+        salario = dato_final['salario_promedio'].values[0]
+        vacantes = dato_final['vacantes'].values[0]
+
+        # 3. Mostrar el resultado de forma atractiva con st.metric
+        c1, c2 = st.columns(2)
+        c1.metric(label=f"Salario Promedio en {ind_seleccionada}", value=f"${salario:,.2f} USD")
+        c2.metric(label="Vacantes Disponibles", value=int(vacantes))
+    else:
+        st.warning("No se encontraron datos para esta combinación.")
+
+    st.divider()
+    
     fig = go.Figure(
         data=go.Scattergeo(
             lat=df_mapa['lat'],
