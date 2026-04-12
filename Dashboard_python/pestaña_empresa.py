@@ -6,7 +6,7 @@ def empresa(Datos_para_pestaña):
     
     df_empresa = Datos_para_pestaña.copy()
 
-    # --- MÉTRICAS GENERALES (Tus métricas actuales) ---
+ 
     col1, col2, col3 = st.columns(3)
     orden_tamaño = ["Small", "Medium", "Large"]
 
@@ -22,22 +22,19 @@ def empresa(Datos_para_pestaña):
 
     st.divider()
 
-    # --- NUEVA SECCIÓN: FILTRADO DINÁMICO POR EMPRESA E INDUSTRIA ---
     st.subheader("Buscador Personalizado: Empresa e Industria")
     
     c1, c2 = st.columns(2)
     
     with c1:
-        # Selector de Tamaño de Empresa
         tamaños_disponibles = sorted(df_empresa['company_size'].unique())
         size_selected = st.selectbox("Selecciona Tamaño de Empresa", tamaños_disponibles, index=0)
 
     with c2:
-        # Filtrar industrias disponibles solo para ese tamaño de empresa
+
         industrias_filtradas = sorted(df_empresa[df_empresa['company_size'] == size_selected]['industry'].unique())
         ind_selected = st.selectbox("Selecciona la Industria", industrias_filtradas)
 
-    # Cálculo de los resultados filtrados
     df_filtrado = df_empresa[
         (df_empresa['company_size'] == size_selected) & 
         (df_empresa['industry'] == ind_selected)
@@ -61,7 +58,6 @@ def empresa(Datos_para_pestaña):
 
     st.divider()
 
-    # --- GRÁFICO DE CAJA (Boxplot) ---
     fig_box = px.box(
         df_empresa,
         x="company_size",
@@ -84,7 +80,6 @@ def empresa(Datos_para_pestaña):
 
     st.divider()
 
-    # --- CONCLUSIÓN Y DETALLE ---
     st.subheader("Conclusión del Análisis")
     
     max_diff = stats['mean'].max() - stats['mean'].min()
