@@ -178,15 +178,14 @@ puestos de trabajo. Ya no basta con mirar el ``título del cargo''; la
 compensación económica ahora parece estar sujeta a una red compleja de
 variables interconectadas.
 
-¿Es el tamaño de la empresa un predictor fiable del sueldo? ¿Existe una
-penalización salarial por elegir la modalidad remota, o es ahora un
-estándar competitivo? ¿Qué tanto peso real tienen ciertas habilidades
-(skills) frente a la ubicación geográfica?. A pesar de la abundancia de
-ofertas de trabajo, existe una falta de claridad sobre cuáles son los
-verdaderos determinantes del salario en el mercado actual, por lo cual,
-este estudio busca aclarar esas dudas mediante la estadística
-descriptiva y el uso de la plataforma GitHub y lenguajes de programación
-conocidos como R y Python.
+¿Es el tamaño de la empresa un predictor fiable del sueldo? o ¿Existe
+una consecuencia en el salario por elegir la modalidad remota, o es
+ahora un estándar competitivo?. A pesar de la abundancia de ofertas de
+trabajo, existe una falta de claridad sobre cuáles son los verdaderos
+determinantes del salario en el mercado actual, por lo cual, este
+estudio busca aclarar esas dudas mediante la estadística descriptiva y
+el uso de la plataforma GitHub y lenguajes de programación conocidos
+como R y Python.
 
 \section{Justificación}
 
@@ -210,8 +209,9 @@ impactan en la oferta salarial y la demanda de talento.
 \begin{enumerate}
   \item Determinar el promedio, mediana y desviación estándar de los salarios por industria para identificar cuál es la más rentable.
   \item Comparar las medias salariales entre puestos remotos y presenciales para verificar si existe una diferencia en el beneficio económico por la modalidad.
-  \item Identificar las ciudades con mayores ofertas de empleo y su nivel de remuneración promedio.
+  \item Identificar los países con mayores ofertas de empleo y su nivel de remuneración promedio.
   \item Clasificar las habilidades más solicitadas en cada sector y su frecuencia de aparición en las vacantes.
+  \item Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 \end{enumerate}
 
 \section{Variables}
@@ -285,13 +285,11 @@ valores nulos. Este paso es fundamental para garantizar que los cálculos
 posteriores de promedio y dispersión salarial no se vean afectados por
 datos faltantes.
 
+\begin{center}
+\textbf{Tabla 2.2.4 Conteo de valores faltantes por columna}
+\end{center}
+
 \begin{longtable}[]{@{}lrr@{}}
-\caption{Estado Inicial: Conteo de valores faltantes por
-columna}\tabularnewline
-\toprule\noalign{}
-Variable & Total Nulos & Porcentaje (\%) \\
-\midrule\noalign{}
-\endfirsthead
 \toprule\noalign{}
 Variable & Total Nulos & Porcentaje (\%) \\
 \midrule\noalign{}
@@ -319,25 +317,27 @@ columnas, de la cual tomaremos 7 (\texttt{job\_title},
 una para así darle respuesta a los objetivos y planes que se tienen con
 nuestro trabajo
 
-\section{\texorpdfstring{\emph{Salary\_usd}}{Salary\_usd}}\label{salary_usd}
+\section{Distribución Salarial}
 
 En este apartado se analiza la estructura salarial de las distintas
 industrias representadas en el dataset. Tras procesar los datos, se
 observa que:
 
+\begin{center}
+\textbf{Tabla 3.1 Análisis Detallado de Salarios por Sector Industrial}
+\end{center}
+
 \begin{table}[!h]
 \centering
-\caption{\label{tab:tabla_estilo_dashboard}Análisis Detallado de Salarios por Sector Industrial}
-\centering
 \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
-\begin{tabular}[t]{>{}l|rrrrr}
+\begin{tabular}{>{}l|rrrrr}
 \toprule
 Industria & Promedio & Mediana & Desv. Est. & CV (\%) & N° Casos\\
 \midrule
-\textbf{\cellcolor{gray!10}{Quantum Computing}} & \cellcolor{gray!10}{151,130.7} & \cellcolor{gray!10}{151,810.0} & \cellcolor{gray!10}{57,284.85} & \cellcolor{gray!10}{37.90} & \cellcolor{gray!10}{5,038}\\
-\textbf{AI} & 150,672.4 & 151,389.5 & 57,852.50 & 38.40 & 4,984\\
-\textbf{\cellcolor{gray!10}{Blockchain}} & \cellcolor{gray!10}{149,383.8} & \cellcolor{gray!10}{150,395.0} & \cellcolor{gray!10}{57,606.61} & \cellcolor{gray!10}{38.56} & \cellcolor{gray!10}{4,998}\\
-\textbf{Green Tech} & 149,329.9 & 147,856.5 & 57,386.34 & 38.43 & 4,980\\
+\textbf{\cellcolor{gray!10}{Quantum Computing}} & \cellcolor{gray!10}{151,130.7} & \cellcolor{gray!10}{151,810.0} & \cellcolor{gray!10}{57,290.54} & \cellcolor{gray!10}{37.91} & \cellcolor{gray!10}{2,519}\\
+\textbf{AI} & 150,672.4 & 151,389.5 & 57,858.30 & 38.40 & 2,492\\
+\textbf{\cellcolor{gray!10}{Blockchain}} & \cellcolor{gray!10}{149,383.8} & \cellcolor{gray!10}{150,395.0} & \cellcolor{gray!10}{57,612.37} & \cellcolor{gray!10}{38.57} & \cellcolor{gray!10}{2,499}\\
+\textbf{Green Tech} & 149,329.9 & 147,856.5 & 57,392.10 & 38.43 & 2,490\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -349,7 +349,7 @@ más alto (Quantum) y el más bajo (Green Tech) es de apenas unos \$1,800
 dólares anuales, sugiriendo que el mercado laboral para estas
 tecnologías está muy equilibrado. Mientras que la desviación estándar es
 alta (cerca de \$57,000 en todas), esto significa que, aunque el
-promedio sea 150k, hay gente ganando mucho menos y gente ganando mucho
+promedio sea 150k, hay gente ganando mucho menos o gente ganando mucho
 más. Y el CV (Coeficiente de Variación) de \textasciitilde38\% confirma
 que hay una variabilidad moderada-alta en los sueldos.
 
@@ -375,6 +375,310 @@ haber puntos extremadamente alejados de los bigotes, se entiende que los
 sueldos están bien compactados en el rango de \$60k a \$240k. Finalmente
 el Green Tech es el único que tiene la mediana ligeramente más abajo que
 las demás, lo que coincide con que es el promedio más bajo de la tabla.
+
+\section{Impacto Remoto}
+
+Aquí analizamos qué tanto varía el salario según la modalidad que
+ofrezcen para cada industria, ¿Pagarían más si trabajaramos desde casa o
+llendo presencialmente al puesto de trabajo?
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/Gráfico de Barras Agrupadas (Brecha Salarial)-1} \end{center}
+
+Lo primero que salta a la vista es que las barras de cada sector tienen
+alturas casi idénticas, indicando una semejanza salarial entre las
+modalidades remota y presencial en las industrias tecnológicas
+analizadas. Es decir, que en el mercado laboral moderno de alta
+tecnología (AI, Quantum, etc.), las empresas están valorando el talento
+y el resultado por encima de la ubicación física del trabajador. Si lo
+analizamos por industria, podemos ver que en \emph{AI}, el trabajo
+remoto (\$151,753) paga ligeramente más que el presencial (\$149,600) y
+en \emph{Quantum Computing}, ocurre lo mismo (\$151,824 remoto vs
+\$150,412 presencial). Esto sugiere que las empresas están dispuestas a
+pagar primas incluso superiores para captar especialistas globales en
+áreas críticas, sin importar dónde residan. Por otro lado, En
+\emph{Blockchain} el salario presencial lidera por un margen mínimo
+(\$149,961 vs \$148,836) y en \emph{Green Tech}, la diferencia es de
+menos de \$800 dólares mensuales, aquí la modalidad es prácticamente
+indiferente para la compensación económica.
+
+\begin{center}
+\textbf{Tabla 3.2.1 Comparativa Numérica de Salarios por Modalidad}
+\end{center}
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{lrr}
+\toprule
+Industria & Presencial & Remoto\\
+\midrule
+\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{151,753.3} & \cellcolor{gray!10}{149,600.1}\\
+Blockchain & 149,961.5 & 148,836.2\\
+\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{149,726.1} & \cellcolor{gray!10}{148,951.1}\\
+Quantum Computing & 150,412.1 & 151,824.1\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En resumen la diferencia salarial es mínima, lo que sugiere que el
+talento se valora por igual sin importar la modalidad, donde las brechas
+oscilan entre \$700 y \$2,100 USD aproximadamente, lo cual es
+estadísticamente poco significativo en salarios de este rango (\$150k).
+
+\begin{center}
+\textbf{Tabla 3.2.2 Análisis de Salarios por Industria y Modalidad}
+\end{center}
+
+\begin{longtable}[]{@{}llrrrr@{}}
+\toprule\noalign{}
+Industria & Remoto & N & Media (USD) & Desv. Est. & CV \% \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AI & No & 1241 & 151753.3 & 58219.95 & 38.36 \\
+AI & Yes & 1251 & 149600.1 & 57500.49 & 38.44 \\
+Blockchain & No & 1216 & 149961.5 & 57513.37 & 38.35 \\
+Blockchain & Yes & 1283 & 148836.2 & 57723.13 & 38.78 \\
+Green Tech & No & 1217 & 149726.1 & 57440.01 & 38.36 \\
+Green Tech & Yes & 1273 & 148951.1 & 57366.28 & 38.51 \\
+Quantum Computing & No & 1237 & 150412.1 & 56908.09 & 37.83 \\
+Quantum Computing & Yes & 1282 & 151824.1 & 57670.87 & 37.99 \\
+\end{longtable}
+
+Ahora bien, en la parte estadística podemos observar algunas cosas:
+
+\begin{itemize}
+\item
+  \textbf{El tamaño de la muestra ``N'':} Observamos que la muestra está
+  muy bien balanceada entre las modalidades de opcion remota (Yes, No)
+  en todos los sectores. Cada subgrupo tiene un poco más de 1,200
+  observaciones, desde el punto de vista estadístico, esto le da una
+  robustez alta a los resultados, ya que se supera por mucho el mínimo
+  necesario para que los promedios sean estables y significativos.
+\item
+  \textbf{Estabilidad Salarial (El Coeficiente de Variación - CV):} el
+  \emph{CV} es casi idéntico para el trabajo presencial y remoto en
+  todas las industrias, situándose alrededor del 38\%. Esto indica que
+  el ``riesgo'' o la variabilidad del salario no cambia por la
+  modalidad, y no es que en remoto haya más disparidad que en
+  presencial; la estructura de sueldos sigue la misma lógica de
+  distribución en ambos casos. Además, en estadística, un CV entre el
+  30\% y 40\% se considera una variabilidad moderada-alta, esto es
+  normal en tecnología, ya que refleja la brecha natural entre puestos
+  Junior y Senior.
+\item
+  \textbf{La desviación estándar:} se mantiene constante cerca de los
+  \$57,000 - \$58,000 USD. Esto refuerza la idea de la equidad salarial.
+  Las empresas no solo están pagando promedios similares, sino que están
+  ofreciendo rangos de sueldos (mínimos y máximos) muy parecidos, sin
+  importar si el empleado está en la oficina o en su casa.
+\end{itemize}
+
+\section{Análisis Geográfico}
+
+En lugar de una sola industria ganando en todo el mundo, vemos que el
+liderazgo depende de la ubicación:
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/grafico_lineas_geo-1} \end{center}
+
+New York y London son los ``picos'' del gráfico. Si nos fijamos, Quantum
+Computing alcanza su máximo en New York, mientras que AI domina
+claramente en London, esto sugiere que estas ciudades son un punto
+central especializados para esas tecnologías. A cambio Singapore y
+Tokyo, muestran una caída general en casi todas las líneas, ya que
+aunque son centros tecnológicos y potencias mundiales en tecnología (los
+datos aquí siempre tienen una explicación económica detrás), el rango
+salarial promedio en estas ciudades asiáticas es ligeramente más
+conservador en comparación con el mercado de habla inglés para estas
+industrias específicas. Además, Quantum Computing (Línea Morada) es la
+más ``saltarina'', ya que tiene picos muy altos en New York y Berlín,
+pero cae fuerte en Singapore, mientras que Blockchain (Línea Verde) es
+una de las más estables en el centro del gráfico (Dubai, London, New
+York) y parece ser una industria con sueldos más estandarizados a nivel
+global. La línea de Green Tech muestra un comportamiento de alta
+volatilidad y contrastes marcados dependiendo de la ubicación
+geográfica. La caída más estrepitosa, alcanzando el punto más bajo de
+todo el gráfico (aproximadamente \$146,333 según las tablas de
+respaldo), que en industrias como Blockchain suben en Dubái, Green Tech
+parece tener la menor prioridad salarial en esta ubicación. Tras su
+caída en Dubái, la línea muestra una tendencia hacia arriba constante al
+pasar por Londres hasta llegar a su máximo en New York (alcanzando cerca
+de \$153,675). En esta ciudad, Green Tech se posiciona como la segunda
+industria mejor pagada, solo por debajo de Quantum Computing.
+
+\begin{center}
+\textbf{Tabla 3.3 Análisis Salarial por Ubicación e Industria}
+\end{center}
+
+Ahora, los datos de la tabla nos da el ``por qué'' de lo que sucede en
+las líneas del gráfico
+
+\begingroup\fontsize{10}{12}\selectfont
+
+\begin{longtable}{lrrrr}
+\toprule
+\cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{Industria}}} & \cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{N° Vacantes}}} & \cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{Sueldo Promedio}}} & \cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{Desv. Estándar}}} & \cellcolor[HTML]{4A4A4A}{\textcolor{white}{\textbf{CV (\%)}}}\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{Berlin}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{405} & \cellcolor{gray!10}{150,973.3} & \cellcolor{gray!10}{57,725.0} & \cellcolor{gray!10}{38.2}\\
+\hspace{1em}Blockchain & 406 & 147,499.7 & 56,860.1 & 38.5\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{410} & \cellcolor{gray!10}{149,263.6} & \cellcolor{gray!10}{57,156.9} & \cellcolor{gray!10}{38.3}\\
+\hspace{1em}Quantum Computing & 419 & 152,965.1 & 56,990.4 & 37.3\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{Dubai}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{429} & \cellcolor{gray!10}{149,590.6} & \cellcolor{gray!10}{58,053.3} & \cellcolor{gray!10}{38.8}\\
+\hspace{1em}Blockchain & 386 & 151,904.4 & 56,475.2 & 37.2\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{428} & \cellcolor{gray!10}{146,333.6} & \cellcolor{gray!10}{56,924.8} & \cellcolor{gray!10}{38.9}\\
+\hspace{1em}Quantum Computing & 417 & 150,366.8 & 59,238.7 & 39.4\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{London}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{389} & \cellcolor{gray!10}{154,976.3} & \cellcolor{gray!10}{58,226.0} & \cellcolor{gray!10}{37.6}\\
+\hspace{1em}Blockchain & 423 & 150,033.0 & 58,484.6 & 39.0\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{400} & \cellcolor{gray!10}{152,419.4} & \cellcolor{gray!10}{57,888.4} & \cellcolor{gray!10}{38.0}\\
+\hspace{1em}Quantum Computing & 444 & 151,861.8 & 57,612.8 & 37.9\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{New York}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{413} & \cellcolor{gray!10}{149,882.0} & \cellcolor{gray!10}{59,496.9} & \cellcolor{gray!10}{39.7}\\
+\hspace{1em}Blockchain & 423 & 149,812.4 & 59,495.1 & 39.7\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{429} & \cellcolor{gray!10}{153,675.9} & \cellcolor{gray!10}{59,698.2} & \cellcolor{gray!10}{38.8}\\
+\hspace{1em}Quantum Computing & 424 & 155,611.7 & 56,820.5 & 36.5\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{Singapore}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{429} & \cellcolor{gray!10}{150,491.1} & \cellcolor{gray!10}{56,749.4} & \cellcolor{gray!10}{37.7}\\
+\hspace{1em}Blockchain & 432 & 150,590.0 & 57,404.3 & 38.1\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{413} & \cellcolor{gray!10}{146,985.9} & \cellcolor{gray!10}{55,776.5} & \cellcolor{gray!10}{37.9}\\
+\hspace{1em}Quantum Computing & 408 & 146,231.1 & 55,652.8 & 38.1\\
+\addlinespace[0.3em]
+\multicolumn{5}{p{\linewidth}}{\cellcolor[HTML]{F2F2F2}{\textbf{Tokyo}}}\\
+\hspace{1em}\cellcolor{gray!10}{AI} & \cellcolor{gray!10}{427} & \cellcolor{gray!10}{148,499.4} & \cellcolor{gray!10}{57,079.3} & \cellcolor{gray!10}{38.4}\\
+\hspace{1em}Blockchain & 429 & 146,621.3 & 56,957.9 & 38.8\\
+\hspace{1em}\cellcolor{gray!10}{Green Tech} & \cellcolor{gray!10}{410} & \cellcolor{gray!10}{147,323.6} & \cellcolor{gray!10}{56,696.7} & \cellcolor{gray!10}{38.5}\\
+\hspace{1em}Quantum Computing & 407 & 149,470.7 & 57,216.5 & 38.3\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+En el caso de New York y Quantum Computing, según el gráfico, esta es la
+línea que llega más alto (\$155,611), si se ve la tabla, tiene el CV más
+bajo (36.5\%) de ese grupo,es decir, en otras industrias/países Un CV
+cercano al 39\% (como en AI en New York o Green Tech en Dubai) indica
+que hay mucha diferencia entre los sueldos más bajos y los más altos, es
+un mercado más ``impredecible'' pero en Quantum (NY) al ser el más bajo,
+significa que los salarios están más concentrados cerca del promedio
+(\$155,611). Si se consigue un trabajo allí, es mucho más probable que
+el sueldo real esté muy cerca de esa cifra y no mucho más abajo. Además,
+en el número de vacantes por industria en cada ciudad es muy similar
+(alrededor de 400-440 por sector), Demostrando que los datos están
+balanceados. En resumen, a pesar de las subidas y bajadas, todas las
+líneas se mueven en un rango estrecho (entre \$146k y \$156k), así que
+la dispersión geográfica existe pero es moderada. ¿Pero por qué hay
+tanto cruces en las lineas? es evidencia de que no existe una
+``industria reina'', sino que cada país compite ofreciendo mejores
+sueldos en el área donde quiere ser líder tecnológico.
+
+\section{Habilidades}
+
+\section{Tamaño de las empresas}
+
+Lo primero que se piensa del dataset, es que una empresa grande es la
+que está ofreciendo un salario mucho mejor al de una empresa pequeña,
+sea cual sea la industria. Si observamos los siguientes resultados
+tenemos:
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{Trabajo_final_files/figure-latex/analisis_empresa_salario_maroon-1} \end{center}
+
+Lo primero que salta a la vista es la homogeneidad. A diferencia de
+otros mercados, aquí no vemos que las empresas grandes paguen
+significativamente más que las pequeñas. El sector tecnológico valora el
+talento de forma similar independientemente del tamaño de la empresa, y
+las medianas de los tres grupos están casi alineadas cerca de los
+\$150,000. La línea negra (mediana) y el rombo negro (promedio) están
+prácticamente en el mismo lugar en todas las cajas, esto indica una
+distribución simétrica: no hay salarios extremadamente bajos o altos que
+estén ``jalando'' el promedio hacia arriba o hacia abajo de manera
+exagerada.
+
+\begin{center}
+\textbf{Tabla 3.4 Salarios por Industria y Tamaño de Organización}
+\end{center}
+
+\begin{longtable}[t]{llcccc}
+\toprule
+Industria & Tamaño & Promedio & Desv. Estándar & CV (\%) & N° Vacantes\\
+\midrule
+ & Small & \$150,497 & \$57,209 & 38\% & 813\\
+\cmidrule{2-6}\nopagebreak
+ & Medium & \$150,839 & \$57,458 & 38.1\% & 837\\
+\cmidrule{2-6}\nopagebreak
+\multirow{-3}{*}{\raggedright\arraybackslash AI} & Large & \$150,675 & \$58,937 & 39.1\% & 842\\
+\cmidrule{1-6}\pagebreak[0]
+ & Small & \$145,366 & \$57,821 & 39.8\% & 826\\
+\cmidrule{2-6}\nopagebreak
+ & Medium & \$150,581 & \$57,807 & 38.4\% & 823\\
+\cmidrule{2-6}\nopagebreak
+\multirow{-3}{*}{\raggedright\arraybackslash Blockchain} & Large & \$152,130 & \$57,072 & 37.5\% & 850\\
+\cmidrule{1-6}\pagebreak[0]
+ & Small & \$147,776 & \$58,076 & 39.3\% & 819\\
+\cmidrule{2-6}\nopagebreak
+ & Medium & \$151,075 & \$57,240 & 37.9\% & 839\\
+\cmidrule{2-6}\nopagebreak
+\multirow{-3}{*}{\raggedright\arraybackslash Green Tech} & Large & \$149,100 & \$56,887 & 38.2\% & 832\\
+\cmidrule{1-6}\pagebreak[0]
+ & Small & \$153,581 & \$56,872 & 37\% & 829\\
+\cmidrule{2-6}\nopagebreak
+ & Medium & \$148,244 & \$57,377 & 38.7\% & 829\\
+\cmidrule{2-6}\nopagebreak
+\multirow{-3}{*}{\raggedright\arraybackslash Quantum Computing} & Large & \$151,552 & \$57,553 & 38\% & 861\\
+\bottomrule
+\end{longtable}
+
+Ya se hizo un análizas general de los salarios que puede ofrecer una
+empresa según su tamaño. Pero si miramos más de cerca, y ubicamos cada
+tamaño de estas por industrias obtenemos datos mas específicados.
+
+\begin{itemize}
+\item
+  \textbf{Inteligencia Artificial (AI):} Es el sector con mayor
+  estabilidad en sus promedios sin importar el tamaño de la empresa, la
+  diferencia entre una empresa Small (\$150,497) y una Large (\$150,675)
+  es mínima, de apenas \$178. Así que en el área de IA, la competencia
+  por el talento es tan feroz que las empresas pequeñas se ven obligadas
+  a igualar los salarios de los gigantes tecnológicos para ser
+  competitivas. El CV aumenta ligeramente en las empresas grandes
+  (39.1\%), indicando quizás una estructura de bonos o rangos más amplia
+  en corporaciones.
+\item
+  \textbf{Blockchain:} A diferencia de IA, aquí sí se observa una
+  jerarquía salarial clara basada en el tamaño de la organización. Los
+  salarios escalan de forma ascendente: \$145,366 (Small) → \$150,581
+  (Medium) → \$152,130 (Large). En este sector, las empresas más grandes
+  ofrecen una prima salarial notable, es interesante observar que el CV
+  disminuye a medida que la empresa crece (del 39.8\% al 37.5\%), lo que
+  significa que los salarios en las empresas grandes de Blockchain son
+  más predecibles y estandarizados que en las empresas emergentes.
+\item
+  \textbf{Green Tech:} Este sector muestra un comportamiento atípico
+  donde las empresas medianas lideran la remuneración. Las empresas
+  Medium ofrecen el promedio más alto (\$151,075), superando incluso a
+  las empresas Large (\$149,100). Esto podría indicar que las empresas
+  de tamaño intermedio en tecnología verde están en una fase de
+  expansión agresiva o cuentan con financiamiento especializado que les
+  permite superar los topes salariales de las grandes corporaciones
+  tradicionales del sector.
+\item
+  \textbf{Quantum Computing:} Es el único sector donde las empresas
+  pequeñas (Small) ofrecen el promedio más alto de toda la tabla
+  (\$153,581). Una empresa pequeña en computación cuántica paga, en
+  promedio, más que una grande en cualquier otra industria. Esto refleja
+  la altísima especialización requerida, ya que las startups cuánticas
+  suelen estar respaldadas por capital de riesgo masivo y necesitan
+  atraer a científicos de muy alto nivel, ofreciendo salarios premium
+  para compensar el riesgo de una empresa pequeña. Además, tiene el CV
+  más bajo del grupo (37\%), lo que indica que los salarios para estos
+  especialistas están muy bien definidos y hay poca ``negociación'' a la
+  baja.
+\end{itemize}
 
 \chapter{Conclusiones y Recomendaciones}
 
