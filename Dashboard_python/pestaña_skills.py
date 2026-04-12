@@ -47,7 +47,7 @@ def habilidades(Datos_para_pestaña):
         orientation='h',
         title=f"Top Habilidades en el sector: {sector_seleccionado}",
         color='Frecuencia',
-        color_continuous_scale='Blues'
+        color_continuous_scale='rdylbu'
     )
 
     fig_bar.update_layout(
