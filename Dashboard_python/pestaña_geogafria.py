@@ -21,8 +21,9 @@ def tierra(df):
     ).reset_index()
 
     df_mapa = df.groupby('location').agg(
-    salario_promedio=('salary_usd', 'mean'),
-    vacantes=('job_id', 'count')).reset_index()
+        salario_promedio=('salary_usd', 'mean'),
+        vacantes=('job_id', 'count')
+    ).reset_index()
 
     df_mapa['lat'] = df_mapa['location'].map(lambda x: coordenadas.get(x, {}).get('lat'))
     df_mapa['lon'] = df_mapa['location'].map(lambda x: coordenadas.get(x, {}).get('lon'))
@@ -36,24 +37,19 @@ def tierra(df):
             texto += f"• {row['industry']}: {row['vacantes']} vacantes<br>"
         hover_text.append(texto)
 
-    # --- Sección de Consulta Detallada ---
     st.divider()
     st.subheader("Consulta de Salarios por Industria")
 
-    # 1. Creamos dos columnas para los selectores
     col1, col2 = st.columns(2)
 
     with col1:
-        # Lista única de ubicaciones disponibles en el dataset procesado
         ubicaciones = sorted(df_geo['location'].unique())
         loc_seleccionada = st.selectbox("Selecciona una Ciudad:", ubicaciones)
 
     with col2:
-        # Filtramos industrias que solo existan en esa ciudad
         industrias_disponibles = sorted(df_geo[df_geo['location'] == loc_seleccionada]['industry'].unique())
         ind_seleccionada = st.selectbox("Selecciona una Industria:", industrias_disponibles)
 
-    # 2. Filtrar el dato específico
     dato_final = df_geo[
         (df_geo['location'] == loc_seleccionada) & 
         (df_geo['industry'] == ind_seleccionada)
@@ -63,7 +59,6 @@ def tierra(df):
         salario = dato_final['salario_promedio'].values[0]
         vacantes = dato_final['vacantes'].values[0]
 
-        # 3. Mostrar el resultado de forma atractiva con st.metric
         c1, c2 = st.columns(2)
         c1.metric(label=f"Salario Promedio en {ind_seleccionada}", value=f"${salario:,.2f} USD")
         c2.metric(label="Vacantes Disponibles", value=int(vacantes))
@@ -78,16 +73,25 @@ def tierra(df):
             lon=df_mapa['lon'],
             mode='markers',
             marker=dict(
-                size=df_mapa['vacantes'] / df_mapa['vacantes'].max() * 50, 
+                size=df_mapa['vacantes'] / df_mapa['vacantes'].max() * 45, 
                 color=df_mapa['salario_promedio'],
-                colorscale='Plasma',
+                colorscale='Viridis', 
                 showscale=True,
+                opacity=0.8,
+                line=dict(width=1, color='white'),
                 colorbar=dict(
-                    title="Salario Promedio (USD)",
+                    title=dict(
+                        text="Salario Promedio (USD)",
+                        side="top"
+                    ),
+                    thickness=15,
+                    outlinecolor="rgba(0,0,0,0)",
+                    ticks="outside",
+                    tickformat="$,.0f",
                     orientation="h",
-                    x=0.5, y=1.1,
+                    x=0.5, y=-0.15,
                     xanchor="center",
-                    len=0.4
+                    len=0.5
                 )
             ),
             text=hover_text,
@@ -96,18 +100,26 @@ def tierra(df):
     )
 
     fig.update_geos(
-        projection_type="orthographic",
-        showcountries=True, countrycolor="white",
-        showland=True, landcolor="#228b22",
-        showocean=True, oceancolor="#1a5e8a",
+        projection_type="equirectangular",
+        showcountries=True, 
+        countrycolor="#444444", 
+        showland=True, 
+        landcolor="#F8F9FA", 
+        showocean=True, 
+        oceancolor="#E5ECF6", 
+        showlakes=True,
+        lakecolor="#E5ECF6",
         bgcolor="rgba(0,0,0,0)",
-        resolution=110
+        resolution=110,
+        lataxis={"range": [-50, 80]}, 
+        lonaxis={"range": [-140, 160]}
     )
 
     fig.update_layout(
-        height=800,
+        height=650,
         paper_bgcolor='rgba(0,0,0,0)',
-        margin={"r":0,"t":100,"l":0,"b":0},
+        plot_bgcolor='rgba(0,0,0,0)',
+        margin={"r":0,"t":20,"l":0,"b":0},
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
