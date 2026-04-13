@@ -828,11 +828,13 @@ Se recomienda a los aspirantes a ingresar al mercado tecnológico no limitar su 
 
 \chapter{Bibliografías}
 
+\begin{flushleft}
 \begin{itemize}
   \item O. Fuente (5 Diciembre del 2024). Las 13 mayores tendencias tecnológicas para 2025. disponible en: https://www.iebschool.com/hub/29-tendencias-tecnologicas-que-cambiaran-nuestra-forma-de-vivir-en-tecnologia/
   \item Todopedia. Conceptos estadísticos básicos: media, desviación estándar, coeficiente de variación y regresión. Disponible en: https://www.todopedia.online/conceptos-estadisticos-basicos-media-desviacion-estandar-coeficiente-variacion-y-regresion-16682
   \item R. Rodrigo (22 abril del 2025). Medidas de Dispersión: Varianza, Desviación Estándar y Coeficiente de Variación. Disponible en: https://estudyando.com/medidas-de-dispersion-varianza-desviacion-estandar-y-coeficiente-de-variacion/
-  \item Malwarebytes. Explicación de la computación cuántica: qué es, cómo funciona y por qué es importante. Disponible en: https://www.malwarebytes.com/es
+  \item Malwarebytes. Explicación de la computación cuántica: qué es, cómo funciona y por qué es importante. Disponible en: 
+  https://www.malwarebytes.com/es
 /cybersecurity/basics/quantum-computing
   \item S. Rodríguez (9 de febrero del 2024). Green Tech: Tecnología para salvar el planeta. Disponible en: https://alveritmos.com/que-es-green-tech/
   \item Binance Academy (8 de noviembre del 2024). ¿Qué es blockchain y cómo funciona?. Disponible en: https://www.binance.com/es/academy/articles/what-is-blockchain-and-how-does-it-work
@@ -848,5 +850,6 @@ https://ethereum.org/es/what-is-ethereum/
   \item WTS Energy (11 de abril del 2023). Modelización energética. Disponible en: https://www.wtsenergy.com/es/glossary/modelizacion-energetica/
   \item Tutiempo.net (8 de junio del 2025). El poder de los datos climáticos: Tu guía esencial para entender el tiempo y el clima. Disponible: 
 \end{itemize}
+\end{flushleft}
 
 
