@@ -21,4 +21,4 @@ Analizar el panorama laboral de los sectores tecnológicos emergentes mediante e
 
 Link Dashboard: https://mercadolaboral.streamlit.app/
 
-Link PDF: https://jobs-and-skills-f9zn.onrender.com/
+Link PDF: https://jobs-and-skills-5h12.onrender.com
