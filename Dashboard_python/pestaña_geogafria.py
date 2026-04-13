@@ -37,7 +37,6 @@ def tierra(df):
             texto += f"• {row['industry']}: {row['vacantes']} vacantes<br>"
         hover_text.append(texto)
 
-    # --- Sección de Consulta Detallada ---
     st.divider()
     st.subheader("Consulta de Salarios por Industria")
 
@@ -67,8 +66,6 @@ def tierra(df):
         st.warning("No se encontraron datos para esta combinación.")
 
     st.divider()
-    
-    # --- Configuración estética del Mapa ---
     
     fig = go.Figure(
         data=go.Scattergeo(
