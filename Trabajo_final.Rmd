@@ -832,15 +832,17 @@ Se recomienda a los aspirantes a ingresar al mercado tecnológico no limitar su 
   \item O. Fuente (5 Diciembre del 2024). Las 13 mayores tendencias tecnológicas para 2025. disponible en: https://www.iebschool.com/hub/29-tendencias-tecnologicas-que-cambiaran-nuestra-forma-de-vivir-en-tecnologia/
   \item Todopedia. Conceptos estadísticos básicos: media, desviación estándar, coeficiente de variación y regresión. Disponible en: https://www.todopedia.online/conceptos-estadisticos-basicos-media-desviacion-estandar-coeficiente-variacion-y-regresion-16682
   \item R. Rodrigo (22 abril del 2025). Medidas de Dispersión: Varianza, Desviación Estándar y Coeficiente de Variación. Disponible en: https://estudyando.com/medidas-de-dispersion-varianza-desviacion-estandar-y-coeficiente-de-variacion/
-  \item Malwarebytes. Explicación de la computación cuántica: qué es, cómo funciona y por qué es importante. Disponible en: https://www.malwarebytes.com/es/cybersecurity/basics/quantum-computing
+  \item Malwarebytes. Explicación de la computación cuántica: qué es, cómo funciona y por qué es importante. Disponible en: https://www.malwarebytes.com/es
+/cybersecurity/basics/quantum-computing
   \item S. Rodríguez (9 de febrero del 2024). Green Tech: Tecnología para salvar el planeta. Disponible en: https://alveritmos.com/que-es-green-tech/
   \item Binance Academy (8 de noviembre del 2024). ¿Qué es blockchain y cómo funciona?. Disponible en: https://www.binance.com/es/academy/articles/what-is-blockchain-and-how-does-it-work
   \item Goggle cloud  Inteligencia Artificial (IA): una guía fácil de entender. Disponible en: https://cloud.google.com/learn/what-is-artificial-intelligence?hl=es-419
   \item EBIS business Techschool (7 de febrero del 2025). TensorFlow: Qué es, para qué sirve y cómo funciona (2025). Disponible en: https://www.ebiseducation.com/tensorflow-que-es-para-que-sirve-y-como-funciona
-  \item Coursera (29 de noviembre del 2023). ¿Qué es Python y para qué se usa? Guía para principiantes. Disponible en: https://www.coursera.org/mx/articles/what-is-python-used-for-a-beginners-guide-to-using-python?msockid=34
-  33475b0625660e2d8c51b907a767f2
+  \item Coursera (29 de noviembre del 2023). ¿Qué es Python y para qué se usa? Guía para principiantes. Disponible en: https://www.coursera.org/mx/articles/what-is-python-used-for-a-beginners-guide-t
+o-using-python?msockid=3433475b0625660e2d8c51b907a767f2
   \item M. Martín lópez (20 de febrero del 2025). ¿Qué es PyTorch y para qué sirve en inteligencia artificial?. Disponible en:https://keepcoding.io/blog/que-es-pytorch-y-para-que-sirve-en-ia/
-  \item ethereum.org (3 de abril de 2026). ¿Qué es Ethereum?. Disponible en: https://ethereum.org/es/what-is-ethereum/
+  \item ethereum.org (3 de abril de 2026). ¿Qué es Ethereum?. Disponible en: 
+https://ethereum.org/es/what-is-ethereum/
   \item Binance (23 de febrero del 2023). ¿Qué es y cómo entender la programación Solidity?. Disponible en: https://www.binance.com/es/blog/ecosistema/123441753330585687
   \item DE INGENIERÍAS (1 de septiembre del 2025). ¿Qué es el álgebra lineal? Definición, aplicaciones y cómo aprenderla. disponible en: https://deingenierias.com/cursos/que-es-el-algebra-lineal-para-que-sirve-y-sus-aplicaciones/
   \item WTS Energy (11 de abril del 2023). Modelización energética. Disponible en: https://www.wtsenergy.com/es/glossary/modelizacion-energetica/
