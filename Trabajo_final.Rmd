@@ -385,28 +385,37 @@ En resumen la diferencia salarial es mínima, lo que sugiere que el talento se v
 \textbf{Tabla 3.2.2 Análisis de Salarios por Industria y Modalidad}
 \end{center}
 
-```{r tabla_estadistica_segura, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, tabla_estadistica_segura, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
 library(knitr)
+library(scales) # Cargamos scales para el formato de números
 
 # Generamos los cálculos
 analisis_modalidad <- datos_finales %>%
   group_by(industry, remote_option) %>%
   summarise(
-    n= n(),
+    n = n(),
     Promedio = mean(salary_usd, na.rm = TRUE),
     Desviacion = sd(salary_usd, na.rm = TRUE),
     CV = (Desviacion / Promedio) * 100,
     .groups = 'drop'
   ) %>%
-  # Redondeamos antes de mostrar para evitar problemas de formato
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
+  # Aplicamos el formato de comas y redondeo a las columnas numéricas
+  mutate(
+    Media_USD = comma(Promedio, accuracy = 0.01),
+    Desv_Est = comma(Desviacion, accuracy = 0.01),
+    CV_Perc = paste0(round(CV, 2), "%")
+  ) %>%
+  # Seleccionamos las columnas finales para que no se repitan
+  select(industry, remote_option, n, Media_USD, Desv_Est, CV_Perc)
 
-# Usamos kable con formato "pandoc" que es el que menos errores da en LaTeX
+# Usamos kable con formato "pandoc" como lo tenías
 kable(analisis_modalidad, 
       format = "pandoc",
+      align = "c",
       col.names = c("Industria", "Remoto", "N", "Media (USD)", "Desv. Est.", "CV %"))
 ```
+
 
 
 Ahora bien, en la parte estadística podemos observar algunas cosas:
@@ -416,7 +425,6 @@ Ahora bien, en la parte estadística podemos observar algunas cosas:
 * **Estabilidad Salarial (El Coeficiente de Variación - CV):** el *CV* es casi idéntico para el trabajo presencial y remoto en todas las industrias, situándose alrededor del 38%. Esto indica que el "riesgo" o la variabilidad del salario no cambia por la modalidad, y no es que en remoto haya más disparidad que en presencial; la estructura de sueldos sigue la misma lógica de distribución en ambos casos. Además, en estadística, un CV entre el 30% y 40% se considera una variabilidad moderada-alta, esto es normal en tecnología, ya que refleja la brecha natural entre puestos Junior y Senior.
 
 * **La desviación estándar:** se mantiene constante cerca de los $57,000 - $58,000 USD. Esto refuerza la idea de la equidad salarial. Las empresas no solo están pagando promedios similares, sino que están ofreciendo rangos de sueldos (mínimos y máximos) muy parecidos, sin importar si el empleado está en la oficina o en su casa.
-
 
 \newpage
 
