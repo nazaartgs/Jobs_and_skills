@@ -20,3 +20,5 @@ Analizar el panorama laboral de los sectores tecnológicos emergentes mediante e
 5. Evaluar si el tamaño de la empresa (Small, Medium, Large) influye significativamente en los rangos salariales ofrecidos.
 
 Link Dashboard: https://mercadolaboral.streamlit.app/
+
+Link PDF: https://jobs-and-skills-f9zn.onrender.com/
