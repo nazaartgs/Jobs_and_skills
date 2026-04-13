@@ -118,6 +118,44 @@ Como variables explicativas o independientes se analizan:
 
 * **Teoría de la segmentación del mercado laboral:** surgió a finales de los años sesenta para explicar fenómenos como las desigualdades salariales, la discriminación y el desempleo. Esta teoría sostiene que el mercado laboral está compuesto por varios segmentos, cada uno con diferentes mecanismos de determinación salarial y barreras a la movilidad entre ellos.
 
+Algunos conceptos claves que son importantes definir para mejor comprensión del trabajo:
+
+* **Promedio:** El promedio o media aritmética representa el valor central de un conjunto de datos y se calcula sumando todos los valores y dividiendo entre el número total de observaciones. Su utilidad principal es proporcionar una estimación del valor típico de los datos, lo que permite resumir la información de manera sencilla.
+
+* **Desviación Estándar:** La desviación estándar (SD) mide la dispersión de los datos alrededor de la media, indicando cuánto se alejan, en promedio, los valores individuales del promedio. Una desviación estándar baja indica que los datos están cercanos a la media, mientras que una alta indica mayor variabilidad o presencia de valores atípicos.
+
+* **Coeficiente de Variacion (CV):** El coeficiente de variación (CV) es una medida relativa de dispersión que compara la desviación estándar con la media, expresándose generalmente en porcentaje.
+
+* **Quantum Computing:** La computación cuántica es una forma avanzada de computación basada en los principios de la física cuántica (la ciencia que estudia el comportamiento de partículas diminutas como los átomos). Mientras que los bits normales pueden ser 0 o 1, los ordenadores cuánticos utilizan bits cuánticos (qubits) que pueden ser 0 y 1 al mismo tiempo. Esto permite a los ordenadores cuánticos manejar enormes cantidades de información y explorar innumerables soluciones posibles a la vez. Pueden abordar problemas en áreas como la química y la logística que a los ordenadores clásicos les llevaría millones de años resolver. 
+
+* **Green tech:** Green Tech, o tecnología verde, se refiere al desarrollo y aplicación de soluciones tecnológicas innovadoras que abordan desafíos ambientales y promueven la sostenibilidad. Desde la energía renovable hasta la gestión de residuos, el Green Tech, abarca una amplia gama de áreas y disciplinas, todas con el objetivo común de reducir el impacto ambiental y promover un futuro más sostenible.
+
+* **Blockchain:** Es un tipo especial de base de datos, un libro de contabilidad digital descentralizado mantenido por una red distribuida de computadoras. Los datos de la blockchain se organizan en bloques ordenados cronológicamente y protegidos por criptografía. Esta estructura garantiza que los datos sean transparentes, seguros e inmutables, y es prácticamente imposible cambiar los datos almacenados en un bloque después de confirmarlo y agregarlo a la cadena. Existen diferentes tipos de blockchains con diversos grados de descentralización, aun así, el término "blockchain" suele hacer referencia a un libro de contabilidad digital descentralizado que se utiliza para registrar transacciones de criptomonedas.
+
+* **IA:**  La IA es un campo de la informática que se enfoca en crear máquinas inteligentes que puedan realizar tareas que normalmente requieren inteligencia humana, como aprender, razonar y resolver problemas. Los sistemas de IA aprenden de grandes cantidades de datos, identifican patrones para hacer predicciones o tomar decisiones sin estar programados explícitamente para cada situación.
+
+* **Tensorflow:** TensorFlow es una biblioteca de código abierto creada por Google para desarrollar e implementar modelos de aprendizaje automático y redes neuronales. Su objetivo es ayudar a los desarrolladores a crear sistemas inteligentes para reconocer patrones, realizar predicciones y tomar decisiones basadas en datos.
+
+* **Python:** Python es un lenguaje de programación informático que se utiliza a menudo para crear sitios web y software, automatizar tareas y realizar análisis de datos. Python es un lenguaje de propósito general, lo que significa que se puede utilizar para crear una variedad de programas diferentes y no está especializado en ningún problema específico
+
+* **Pytorch** Es un marco de aprendizaje profundo de código abierto diseñado para desarrollar redes neuronales y modelos de inteligencia artificial, siendo una herramienta esencial para quienes buscan desarrollar modelos de inteligencia artificial eficientes y escalables, ya sea en visión por computadora, NLP o creatividad artificial. Su enfoque dinámico y su integración con GPU lo convierten en una opción preferida tanto en investigación como en producción.
+
+* **Ethereum:** Puede pensar en la red de Ethereum como una infraestructura global digital que cualquiera puede usar, pero de la que nadie puede abusar. La red está compuesta por miles de ordenadores independientes en todo el mundo llamados nodos. Estos nodos los ejecutan personas normales y corrientes, y trabajan juntos para proporcionar servicios financieros y aplicaciones digitales a cualquier persona, en cualquier lugar.
+
+* **Solidity:** Solidity es un lenguaje de programación de contratos inteligentes, se ejecutan en la máquina virtual de Ethereum, también conocida como EVM. Permite a los desarrolladores crear y administrar contratos inteligentes, lo que permite la creación de aplicaciones descentralizadas (dApps). Fué creado específicamente para la plataforma Ethereum, pero también se usa en Binance; Con Solidity, los desarrolladores pueden crear y ejecutar contratos inteligentes en la blockchain
+
+* **Rust:** Rust es un lenguaje de programación que tiene un todo en uno muy interesante: velocidad, seguridad y control. Tiene mecanismos internos que evitan errores de memoria antes de que se ejecute el programa, que en otros lenguajes, estos fallos pueden dar pie a bloqueos, pérdida de datos o incluso vulnerabilidades de seguridad. El secreto está en su sistema de propiedad y préstamos, cada dato en Rust tiene un 'dueño' y solo puede ser usado o modificado de manera controlada. Por así decirlo, cada archivo en tu ordenador tiene una especie de guardián que supervisa que nadie lo toque mientras tú lo estás usando: eso es básicamente lo que Rust hace con la memoria. Gracias a esto, los errores que en otros lenguajes son inevitables se eliminan antes de que aparezcan.
+
+* **Quantum Algorithms:** Los algoritmos cuánticos son procedimientos diseñados para ejecutarse en una computadora cuántica, aprovechando los principios de la mecánica cuántica para resolver problemas de manera más eficiente que los algoritmos clásicos. A diferencia de los algoritmos clásicos, que operan con bits que representan un 0 o un 1, los algoritmos cuánticos utilizan bits cuánticos, o cúbits, que pueden existir en múltiples estados simultáneamente debido a la superposición. Esta diferencia fundamental permite a estos algoritmos explorar un vasto espacio de soluciones con mayor rapidez, lo que los hace particularmente poderosos para tipos específicos de cálculos. 
+
+* **Qiskit:** Qiskit es un kit de herramientas diseñado para trabajar con computadoras cuánticas a nivel de circuitos, pulsos y algoritmos. Permite a los usuarios crear y manipular programas cuánticos, ejecutándolos en dispositivos cuánticos reales o en simuladores locales. También sigue el modelo de circuito para la computación cuántica universal y es compatible con diferentes tipos de hardware cuántico, como qubits superconductores e iones atrapados.
+
+* **Linear álgebra:** Es una rama de las matemáticas que estudia los vectores, matrices, espacios vectoriales y transformaciones lineales. En términos sencillos, se encarga de analizar cómo distintos elementos se relacionan entre sí a través de ecuaciones lineales, lo que la convierte en una herramienta esencial para resolver problemas de manera ordenada y lógica.
+
+* **Energy modeling:** El modelado energético es una herramienta fundamental que permite a las empresas, los gobiernos y las personas predecir, analizar y optimizar su consumo de energía. Implica la creación de una representación virtual de los sistemas energéticos, la identificación de los factores que afectan al consumo de energía y la estimación del uso de la energía en diferentes escenarios.
+
+* **Climate data analysis:** El análisis climático implica la recopilación, procesamiento e interpretación de datos meteorológicos e históricos. Los métodos y herramientas utilizados en este campo incluyen la recolección de datos mediante estaciones meteorológicas, técnicas de interpolación espacial, y el uso de proxies climáticos. Estos métodos son fundamentales para identificar patrones y tendencias a largo plazo, y son esenciales para la planificación ambiental y la mitigación de riesgos asociados al cambio climático. 
+ 
 \section{Marco metodológico} 
 
 \subsection{Enfoque y tipo de investigación}
@@ -144,16 +182,17 @@ library(tidyverse)
 ruta_csv <- "Data/Data_sinprocesar/10. Job y Skills.csv"
 raw_data <- read_csv(ruta_csv, show_col_types = FALSE)
 
-# Limpieza 
+# Limpieza
+#Uso para el salario
 datos_finales <- raw_data %>%
-  # Separamos habilidades 
-  separate_rows(skills_required, sep = ",") %>%
-  # Quitamos espacios en blanco
-  mutate(skills_required = str_trim(skills_required)) %>%
-  # Filtro de seguridad para salarios
   filter(!is.na(salary_usd)) %>%
-  # Eliminamos los duplicados creados por separate_rows
-  distinct(job_id, .keep_all = TRUE) 
+  distinct(job_id, .keep_all = TRUE)
+
+#Uso para las habilidades
+ datos_habilidades <- raw_data %>%
+  filter(!is.na(salary_usd)) %>%
+  separate_rows(skills_required, sep = ",") %>%
+  mutate(skills_required = str_trim(skills_required))
 ```
 
 \begin{center}
@@ -517,29 +556,25 @@ En el caso de New York y Quantum Computing, según el gráfico, esta es la líne
 Hemos visto los salarios promedios, también si hay diferencias importantes en alguna modalidad de trabajo y como se maneja el sueldo segun la industria tecnológica. Pero sería importante explorar cuantas habilidades son solicitadas por industria y que tanto aparecen en ellas.
 
 ```{r grafico_habilidades_ia, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7, fig.height=5}
-library(dplyr)
-library(ggplot2)
-library(stringr)
+library(scales) # Para las comas en los números
 
-# Procesamiento exacto para IA 
-df_ia <- datos_finales %>%
-  separate_rows(skills_required, sep = ",") %>%
-  mutate(Habilidad = str_trim(skills_required) %>% str_to_title()) %>%
+# Procesamiento usando el nuevo dataset de habilidades
+df_ia <- datos_habilidades %>%
+  mutate(Habilidad = str_to_title(skills_required)) %>%
   filter(Habilidad != "", industry == "AI") %>%
   group_by(Habilidad) %>%
   summarise(Frecuencia = n(), .groups = "drop") %>%
   slice_max(Frecuencia, n = 8, with_ties = FALSE)
 
-# Creación del gráfico 
+# Creación del gráfico
 ggplot(df_ia, aes(x = reorder(Habilidad, Frecuencia), y = Frecuencia)) +
   geom_col(fill = "maroon2", alpha = 0.8) +
-  geom_text(aes(label = Frecuencia), 
+  geom_text(aes(label = comma(Frecuencia)), # Agregamos comas aquí
             hjust = -0.2, 
             size = 4, 
             fontface = "bold") +
   coord_flip() +
-  # Expandimos el eje Y
-  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) + 
+  scale_y_continuous(labels = comma, expand = expansion(mult = c(0, 0.2))) + 
   labs(
     title = "Inteligencia Artificial (AI)",
     subtitle = "Menciones totales detectadas en vacantes del sector",
@@ -550,8 +585,7 @@ ggplot(df_ia, aes(x = reorder(Habilidad, Frecuencia), y = Frecuencia)) +
   theme(
     plot.title = element_text(face = "bold", size = 14),
     panel.grid.minor = element_blank(),
-    # Añadimos un margen derecho extra al gráfico completo para evitar el corte
-    plot.margin = margin(10, 30, 10, 10) 
+    plot.margin = margin(10, 35, 10, 10) 
   )
 ```
 
@@ -563,7 +597,7 @@ library(ggplot2)
 library(stringr)
 
 # Procesamiento de datos específico para Blockchain
-df_blockchain <- datos_finales %>%
+df_blockchain <- datos_habilidades %>%
   separate_rows(skills_required, sep = ",") %>%
   mutate(Habilidad = str_trim(skills_required) %>% str_to_title()) %>%
   filter(Habilidad != "", industry == "Blockchain") %>%
@@ -603,7 +637,7 @@ library(ggplot2)
 library(stringr)
 
 # Procesamiento de datos específico para Quantum Computing
-df_quantum <- datos_finales %>%
+df_quantum <- datos_habilidades %>%
   separate_rows(skills_required, sep = ",") %>%
   mutate(Habilidad = str_trim(skills_required) %>% str_to_title()) %>%
   filter(Habilidad != "", industry == "Quantum Computing") %>%
@@ -646,7 +680,7 @@ library(ggplot2)
 library(stringr)
 
 # Procesamiento de datos específico para Green Tech
-df_green <- datos_finales %>%
+df_green <- datos_habilidades %>%
   separate_rows(skills_required, sep = ",") %>%
   mutate(Habilidad = str_trim(skills_required) %>% str_to_title()) %>%
   filter(Habilidad != "", industry == "Green Tech") %>%
@@ -751,8 +785,8 @@ tabla_maestra <- datos_finales %>%
   ) %>%
   # Redondeamos y damos formato
   mutate(
-    Promedio = paste0("$", format(round(Promedio, 0), big.mark = ",")),
-    Desv_Est = paste0("$", format(round(Desv_Est, 0), big.mark = ",")),
+    Promedio = paste0("", format(round(Promedio, 0), big.mark = ",")),
+    Desv_Est = paste0("", format(round(Desv_Est, 0), big.mark = ",")),
     CV = paste0(round(CV, 1), "%")
   ) %>%
   # Ordenamos por industria y luego tamaño
@@ -762,13 +796,13 @@ tabla_maestra <- datos_finales %>%
 # tabla con kableExtra
 tabla_maestra %>%
   kable(
-    col.names = c("Industria", "Tamaño", "Promedio", "Desv. Estándar", "CV (%)", "N° Vacantes"),
+    col.names = c("Industria", "Tamaño", "Salario", "Desv. Estándar", "CV (%)", "N° Vacantes"),
     align = "llcccc"
   ) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 full_width = F, 
                 position = "center") %>%
-  # Agrupamos las filas por industria para que se vea más limpio
+  # Agrupamos las filas por industria
   collapse_rows(columns = 1, valign = "middle")
 ```
 
@@ -792,6 +826,25 @@ También, basado en los análisis que hemos realizado, la industria más rentabl
 
 Se recomienda a los aspirantes a ingresar al mercado tecnológico no limitar su formación al aprendizaje de lenguajes de programación básicos. Los datos sugieren que la especialización en herramientas críticas (como Qiskit para cuántica o Solidity para blockchain) es lo que realmente permite acceder a los rangos salariales superiores. Además, para sectores como Quantum Computing, es vital fortalecer la base en Ciencias Exactas (Álgebra Lineal y Probabilidad), ya que actúan como un filtro de selección en las ofertas de empleo. Y dado que el tamaño de la empresa no es un factor determinante para el salario, las Startups y empresas pequeñas deben enfocar sus esfuerzos de reclutamiento en ofrecer beneficios no monetarios (cultura laboral, flexibilidad, trabajo remoto) para competir con las grandes corporaciones, ya que a nivel de remuneración base, el mercado está muy equilibrado y la competencia por el talento especializado es feroz. también, se sugiere ampliar este análisis estadístico incorporando la variable de "Años de Experiencia" y "Nivel Educativo", para determinar si la estabilidad salarial observada se mantiene en niveles Junior o si es una característica exclusiva de perfiles Senior. Asimismo, sería valioso realizar un estudio longitudinal para observar cómo evolucionan las habilidades en Green Tech, dado que es un sector en constante cambio por las regulaciones climáticas globales.
 
+\chapter{Bibliografías}
 
+\begin{itemize}
+  \item O. Fuente (5 Diciembre del 2024). Las 13 mayores tendencias tecnológicas para 2025. disponible en: https://www.iebschool.com/hub/29-tendencias-tecnologicas-que-cambiaran-nuestra-forma-de-vivir-en-tecnologia/
+  \item Todopedia. Conceptos estadísticos básicos: media, desviación estándar, coeficiente de variación y regresión. Disponible en: https://www.todopedia.online/conceptos-estadisticos-basicos-media-desviacion-estandar-coeficiente-variacion-y-regresion-16682
+  \item R. Rodrigo (22 abril del 2025). Medidas de Dispersión: Varianza, Desviación Estándar y Coeficiente de Variación. Disponible en: https://estudyando.com/medidas-de-dispersion-varianza-desviacion-estandar-y-coeficiente-de-variacion/
+  \item Malwarebytes. Explicación de la computación cuántica: qué es, cómo funciona y por qué es importante. Disponible en: https://www.malwarebytes.com/es/cybersecurity/basics/quantum-computing
+  \item S. Rodríguez (9 de febrero del 2024). Green Tech: Tecnología para salvar el planeta. Disponible en: https://alveritmos.com/que-es-green-tech/
+  \item Binance Academy (8 de noviembre del 2024). ¿Qué es blockchain y cómo funciona?. Disponible en: https://www.binance.com/es/academy/articles/what-is-blockchain-and-how-does-it-work
+  \item Goggle cloud  Inteligencia Artificial (IA): una guía fácil de entender. Disponible en: https://cloud.google.com/learn/what-is-artificial-intelligence?hl=es-419
+  \item EBIS business Techschool (7 de febrero del 2025). TensorFlow: Qué es, para qué sirve y cómo funciona (2025). Disponible en: https://www.ebiseducation.com/tensorflow-que-es-para-que-sirve-y-como-funciona
+  \item Coursera (29 de noviembre del 2023). ¿Qué es Python y para qué se usa? Guía para principiantes. Disponible en: https://www.coursera.org/mx/articles/what-is-python-used-for-a-beginners-guide-to-using-python?msockid=34
+  33475b0625660e2d8c51b907a767f2
+  \item M. Martín lópez (20 de febrero del 2025). ¿Qué es PyTorch y para qué sirve en inteligencia artificial?. Disponible en:https://keepcoding.io/blog/que-es-pytorch-y-para-que-sirve-en-ia/
+  \item ethereum.org (3 de abril de 2026). ¿Qué es Ethereum?. Disponible en: https://ethereum.org/es/what-is-ethereum/
+  \item Binance (23 de febrero del 2023). ¿Qué es y cómo entender la programación Solidity?. Disponible en: https://www.binance.com/es/blog/ecosistema/123441753330585687
+  \item DE INGENIERÍAS (1 de septiembre del 2025). ¿Qué es el álgebra lineal? Definición, aplicaciones y cómo aprenderla. disponible en: https://deingenierias.com/cursos/que-es-el-algebra-lineal-para-que-sirve-y-sus-aplicaciones/
+  \item WTS Energy (11 de abril del 2023). Modelización energética. Disponible en: https://www.wtsenergy.com/es/glossary/modelizacion-energetica/
+  \item Tutiempo.net (8 de junio del 2025). El poder de los datos climáticos: Tu guía esencial para entender el tiempo y el clima. Disponible: 
+\end{itemize}
 
 
