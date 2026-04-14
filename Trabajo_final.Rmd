@@ -383,7 +383,7 @@ ggplot(comparativa_data, aes(x = industry, y = Promedio, fill = remote_option)) 
   geom_text(aes(label = dollar(Promedio, accuracy = 1)), 
             position = position_dodge(width = 0.8), 
             vjust = -1, size = 3, fontface = "bold") +
-  # Colores profesionales (Azul para remoto, Gris para presencial por ejemplo)
+  # Colores
   scale_fill_manual(values = c("Yes" = "#8B1A1A", "No" = "snow4"),
                     labels = c("No" = "Presencial", "Yes" = "Remoto")) +
   scale_y_continuous(labels = dollar_format(), expand = expansion(mult = c(0, 0.2))) +
@@ -448,7 +448,7 @@ analisis_modalidad <- datos_finales %>%
   # Seleccionamos las columnas finales para que no se repitan
   select(industry, remote_option, n, Media_USD, Desv_Est, CV_Perc)
 
-# Usamos kable con formato "pandoc" como lo tenías
+# Usamos kable con formato "pandoc"
 kable(analisis_modalidad, 
       format = "pandoc",
       align = "c",
@@ -806,7 +806,7 @@ tabla_maestra %>%
   collapse_rows(columns = 1, valign = "middle")
 ```
 
-Ya se hizo un análizas general de los salarios que puede ofrecer una empresa según su tamaño. Pero si miramos más de cerca, y ubicamos cada tamaño de estas por industrias obtenemos datos mas específicados.
+Ya se hizo un análizas general de los salarios que puede ofrecer una empresa según su tamaño. Pero si miramos más de cerca, y ubicamos cada tamaño de estas por industrias obtenemos datos mas específicos:
 
 * **Inteligencia Artificial (AI):** Es el sector con mayor estabilidad en sus promedios sin importar el tamaño de la empresa, la diferencia entre una empresa Small ($150,497) y una Large ($150,675) es mínima, de apenas $178. Así que en el área de IA, la competencia por el talento es tan feroz que las empresas pequeñas se ven obligadas a igualar los salarios de los gigantes tecnológicos para ser competitivas. El CV aumenta ligeramente en las empresas grandes (39.1%), indicando quizás una estructura de bonos o rangos más amplia en corporaciones.
 
